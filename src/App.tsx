@@ -5,6 +5,7 @@ import {
   Routes
 } from 'react-router-dom'
 import { MoviesList } from './components/MovieList'
+import { MovieDetails } from './components/MovieDetails'
 
 export const App: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ export const App: React.FC = () => {
       <CssBaseline />
       <Router>
         <Routes>
-          {/* <Route path="/movie/:id" element={<MovieDetails />} /> */}
+          <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/" element={<MoviesList />}/>
         </Routes>
       </Router>

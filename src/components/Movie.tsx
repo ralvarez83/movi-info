@@ -6,10 +6,15 @@ interface Props {
 }
 
 export const Movie: React.FC<Props> = ({ movie }) => {
+
+  const truncate = (str: string, n: number): string => {
+    return (str.length > n) ? str.slice(0, n-1) + '...' : str;
+  };
+
   return (
     <Grid item>
       <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea>
+        <CardActionArea LinkComponent='a' href={"/movie/" + movie.id}>
           <CardMedia
             component="img"
             alt="green iguana"
@@ -17,12 +22,12 @@ export const Movie: React.FC<Props> = ({ movie }) => {
             image={movie.backdrop_path}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {movie.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {movie.overview}
-            </Typography>
+              <Typography gutterBottom variant="h5" component="div">
+                {truncate(movie.title, 25)}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {truncate(movie.overview, 100)}
+              </Typography>
           </CardContent>
         </CardActionArea>
       </Card>

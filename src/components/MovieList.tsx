@@ -1,6 +1,7 @@
-import { Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { Movie } from './Movie'
 import { useMovies } from '../hooks/useMovies'
+import { wrap } from 'module'
 
 export const MoviesList = (): JSX.Element => {
   const {
@@ -8,10 +9,17 @@ export const MoviesList = (): JSX.Element => {
   } = useMovies()
 
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-      {movies.map((movie) => (
-          <Movie key={movie.id} movie={movie} />
-        ))}
-    </Grid>
+    <>
+       <Box>
+        <Typography variant="h1" gutterBottom align="center">
+          Movi - INFO
+        </Typography>
+      </Box>
+      <Grid sx={{ flexGrow: 1}} container={true} spacing={2} className='MuiGrid-root'>
+        {movies.map((movie) => (
+            <Movie key={movie.id} movie={movie} />
+          ))}
+      </Grid>
+    </>
   )
 }
