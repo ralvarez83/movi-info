@@ -1,4 +1,4 @@
-import { ImageList } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Movie } from './Movie'
 import { useMovies } from '../hooks/useMovies'
 
@@ -8,10 +8,10 @@ export const MoviesList = (): JSX.Element => {
   } = useMovies()
 
   return (
-    <ImageList variant="quilted" rowHeight={164}>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
       {movies.map((movie) => (
           <Movie key={movie.id} movie={movie} />
         ))}
-    </ImageList>
+    </Grid>
   )
 }

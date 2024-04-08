@@ -69,6 +69,6 @@ export const fetchConfig = async (): Promise<ConfigMovie> =>{
   }
 
   const config = await res.json()
-  console.log("config", config);
+  // console.log("config", config);
   return config
 }

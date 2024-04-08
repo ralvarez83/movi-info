@@ -1,5 +1,5 @@
 import { type Movie as MovieType } from '../types'
-import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 
 interface Props {
   movie: MovieType
@@ -7,15 +7,27 @@ interface Props {
 
 export const Movie: React.FC<Props> = ({ movie }) => {
   return (
-    <ImageListItem key={movie.id}>
-      <img
-          srcSet={movie.poster_path}
-          src={movie.poster_path}
-          alt={movie.title}
-          loading="lazy"
-        />
-      
-      <ImageListItemBar
+    <Grid item>
+      <Card sx={{ maxWidth: 345 }}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="140"
+            image={movie.backdrop_path}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {movie.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {movie.overview}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+
+      {/* <ImageListItemBar
             title={movie.title}
             subtitle={movie.author}
             actionIcon={
@@ -25,7 +37,7 @@ export const Movie: React.FC<Props> = ({ movie }) => {
               >
               </IconButton>
             }
-          />
-    </ImageListItem>
+          /> */}
+    </Grid>
   )
 }
