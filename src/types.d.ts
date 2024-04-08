@@ -3,6 +3,8 @@ export interface Movie {
   id: string
   age: number
   author: string
+  backdrop_path: string,
+  poster_path: string
 }
 
 export type MovieId = Pick<Movie, 'id'>

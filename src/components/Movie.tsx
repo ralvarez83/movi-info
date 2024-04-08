@@ -9,8 +9,8 @@ export const Movie: React.FC<Props> = ({ movie }) => {
   return (
     <ImageListItem key={movie.id}>
       <img
-          srcSet={`https://tse4.mm.bing.net/th?id=OIP.2i_sj6KVnFiP263JidPW8gHaHa&pid=Api?w=248&fit=crop&auto=format&dpr=2 2x`}
-          src={`https://tse4.mm.bing.net/th?id=OIP.2i_sj6KVnFiP263JidPW8gHaHa&pid=Api?w=248&fit=crop&auto=format`}
+          srcSet={movie.poster_path}
+          src={movie.poster_path}
           alt={movie.title}
           loading="lazy"
         />
