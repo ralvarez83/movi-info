@@ -11,11 +11,11 @@ export const MoviesList = (): JSX.Element => {
   return (
     <>
        <Box>
-        <Typography variant="h1" gutterBottom align="center">
+        <Typography variant="h1" gutterBottom align={'center'}>
           Movi - INFO
         </Typography>
       </Box>
-      <Grid sx={{ flexGrow: 1}} container={true} spacing={2} className='MuiGrid-root'>
+      <Grid sx={{ flexGrow: 1}} container={true} spacing={2} className='MuiGrid-root' justifyContent={'space-around'}>
         {movies.map((movie) => (
             <Movie key={movie.id} movie={movie} />
           ))}
