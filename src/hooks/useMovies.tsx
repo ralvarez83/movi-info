@@ -1,6 +1,8 @@
 import { useEffect, useReducer } from 'react'
-import { type State, type MovieList } from '../types'
-import { fetchMovies } from '../services/movies'
+import { type MovieList } from '../movies/domain/Movie'
+import { getConfig } from '../movies/infraestruture/MoviesConfig'
+import { getMovies } from '../movies/infraestruture/movies'
+import { State } from '../types'
 
 const initialState = {
   movies: []
@@ -29,11 +31,16 @@ export const useMovies = (): {
   const [{ movies }, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
-    fetchMovies()
-      .then(movies => {
-        dispatch({ type: ACTIONS.INIT, payload: { movies } })
-      })
-      .catch(err => { console.error(err) })
+    getConfig()
+      .then(config => {
+        getMovies(config)
+        .then(movies => {
+          dispatch({ type: ACTIONS.INIT, payload: { movies } })
+        })
+        .catch(err => { console.error(err) })
+      }
+      )
+      .catch(err => {console.error(err)})
   }, [])
 
   return {

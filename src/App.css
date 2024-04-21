@@ -1,42 +1,91 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+
+
+.movie-list{
   text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+  section{
+    text-align: center;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+    padding: 0rem;
+    margin: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  @media (min-width: 600px) {
+    section{
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 900px) {
+    section{
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1200px) {
+    section{
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  article {
+    --size: 345px;   /* the size of the image */
+
+    margin: 2rem;
+    max-width: --size;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    cursor: pointer;
+    a{
+      text-decoration: none;
+    }
+
+    figure{
+      padding: 0px;
+      margin: 0px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      img{
+        max-height: 15rem;
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+      }
+      figcaption{
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.457);
+        color: white;
+        display: block;
+        float: left;
+        position: relative;
+        bottom: 1.5rem;
+      }
+    }
+    p{
+      margin: 1rem;
+      text-align: left;
+    }
+
+    &:hover{
+      img{
+        transform: scale3d(1.5,1.5,1);
+        transition: transform 3s ease-in-out;
+      }
+      a{
+        color: white;
+        transition: all 1s ease-in-out;
+      }
+      background-color: rgba(26, 26, 26, 0.834);
+      transition: all 1s ease-in-out;
+    }
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.movie-details{
+  text-align: center;
 }

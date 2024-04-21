@@ -5,6 +5,9 @@ export const MovieDetails = (): JSX.Element => {
   const {id} = useParams();
 
   return(
-    <>{id}</>
+    <main className="movie-details">
+      <h2>{id}</h2>
+      
+    </main>
   )
 }
