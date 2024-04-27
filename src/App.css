@@ -32,7 +32,6 @@
 
     margin: 2rem;
     max-width: --size;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -79,7 +78,6 @@
         color: white;
         transition: all 1s ease-in-out;
       }
-      background-color: rgba(26, 26, 26, 0.834);
       transition: all 1s ease-in-out;
     }
   }
@@ -88,4 +86,78 @@
 
 .movie-details{
   text-align: center;
+}
+
+header{
+  nav{
+    position: fixed;
+    top:0px;
+    left: 0px;
+    height: 4rem;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+    display: flex;
+    width: 100%;
+    box-sizing:border-box;
+    background-color: #1a1a1ab5;
+    color:#ffff;
+    vertical-align: middle;
+    align-items: center;
+    ul{
+      font-size: 1.3rem;
+      font-weight: 450;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      li{
+        a{
+          cursor: pointer;
+          &:hover{
+            color: #dfdbdbd0;  
+          }
+        }
+      }
+    }
+  }
+  h1{
+    margin-top: 4rem;
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  .movie-list{
+    article {
+      background-color: white;
+      box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+      
+      &:hover{
+        background-color: rgba(26, 26, 26, 0.834);
+        transition: all 1s ease-in-out;
+      }
+      
+    }
+  }
+  
+}
+
+@media (prefers-color-scheme: dark) {
+  header{
+    nav{
+      background-color: #b1b1b1b5;   
+      box-shadow: 0px 2px 4px -1px rgba(255,255,255,0.2),0px 4px 5px 0px rgba(255,255,255,0.14),0px 1px 10px 0px rgba(255,255,255,0.12); 
+    }
+  }
+  .movie-list{
+    article {
+      background-color: #585757b5;
+      box-shadow: 0px 2px 1px -1px rgba(255,255,255,0.2),0px 1px 1px 0px rgba(255,255,255,0.14),0px 1px 3px 0px rgba(255,255,255,0.12);
+      
+      &:hover{
+        background-color:  #848383b5;
+        transition: all 1s ease-in-out;
+      } 
+    }
+  }
+  
 }

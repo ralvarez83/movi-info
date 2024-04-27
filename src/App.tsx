@@ -1,16 +1,18 @@
 import {
-  BrowserRouter as Router,
   Route,
+  BrowserRouter as Router,
   Routes
 } from 'react-router-dom'
-import { MoviesList } from './components/MovieList'
-import { MovieDetails } from './components/MovieDetails'
 import './App.css'
+import { MovieDetails } from './apps/frontend/components/MovieDetails'
+import { MoviesList } from './apps/frontend/components/MovieList'
+import { Navbar } from './components/Navbar'
 
 export const App: React.FC = () => {
   return (
     <>
       <header>
+        <Navbar/>
         <h1 className="main-title">
           Movi - INFO
         </h1>
