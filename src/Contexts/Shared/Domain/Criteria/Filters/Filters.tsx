@@ -1,15 +1,13 @@
-import { Filter } from "./Filter";
+import { type Filter } from "./FilterTypes.d";
 
 export class Filters {
   filtersFiled: Filter[] = []
 
   public add(newFilter: Filter): void{
-    if (newFilter instanceof Filter){
-      this.filtersFiled = [ 
-        ... this.filtersFiled.filter(filter => { return filter.getField() !== newFilter.getField()}),
-        newFilter
-      ]
-    }
+    this.filtersFiled = [ 
+      ... this.filtersFiled.filter(filter => { return filter.field !== newFilter.field}),
+      newFilter
+    ]
   }  
 
   public hasFilters(): boolean {

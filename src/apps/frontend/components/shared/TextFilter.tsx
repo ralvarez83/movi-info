@@ -1,15 +1,27 @@
+import { Filter } from "../../../../Contexts/Shared/Domain/Criteria/Filters/FilterTypes.d"
 
 interface Props {
-  name: string
+  filter: Filter
   placeholder: string
-  setFilterValue: (value:string) => void
+  setFilter: React.Dispatch<React.SetStateAction<Filter>>,
+  minSearchLenght?: number
 }
 
-export const TextFilter: React.FC<Props> = ({ name, placeholder, setFilterValue}) => {
+export const TextFilter: React.FC<Props> = ({ filter, placeholder, setFilter, minSearchLenght = 3}) => {
+
+  const setFilterValue = (value:string): void => {
+    if (value.length >= minSearchLenght){
+      const newFilter : Filter = {
+        ... filter,
+        value
+      }
+      setFilter(newFilter)
+    }
+  }
 
   return (
     <>
-      <input name={name} placeholder={placeholder} onChange={(e) => setFilterValue(e.target.value)} />
+      <input name={filter.field.toString()} placeholder={placeholder} onChange={(e) => setFilterValue(e.target.value)} />
     </>
   )
 }

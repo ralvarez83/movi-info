@@ -12,7 +12,7 @@ export class MoviesSearchAll implements MoviesSearch {
 
   async search () : Promise<MovieList> {
     const order: Order = new Order("", OrderType.NONE)
-    const pagination: Pagination = new Pagination()
+    const pagination: Pagination = new Pagination(1)
     const filters: Filters = new Filters()
     const criteria: Criteria = new Criteria(filters, order, pagination)
 

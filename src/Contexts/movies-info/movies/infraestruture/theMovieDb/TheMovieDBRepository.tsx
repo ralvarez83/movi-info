@@ -1,29 +1,40 @@
 import { MovieList } from "../../domain/Movie.d"
 import { MovieRepository } from "../../domain/MovieRepository"
-import { Movie as MovieDB } from "./Movie.d"
-import { BASE_URL, DISCOVER, MOVIE_API_CONFIG_GET } from "./const.d"
+import { Movie as MovieDB } from "./Entities/Movie"
+import { BASE_URL, DISCOVER, MOVIE_API_CONFIG_GET, SEARCH } from "./const.d"
 import { ConfigMovie } from "./types.d"
-import { TheMovieDBCriteria } from "./TheMovieDBCriteria"
+import { TheMovieDBCriteriaTransformation } from "./TheMovieDBCriteriaTransformation"
 import { getConfig } from "./MoviesConfig"
+import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria"
+import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
 
 export class TheMovieDBRepository implements MovieRepository{
   #config?: ConfigMovie = undefined
 
-  async searchByCriteria(criteria: TheMovieDBCriteria): Promise<MovieList> {
+  async searchByCriteria(criteria: Criteria): Promise<MovieList> {
+
+    const criteriaTransformation = new TheMovieDBCriteriaTransformation(criteria)
 
     if (this.#config === undefined) 
       this.#config = await getConfig()
 
-    const res = await fetch(BASE_URL + DISCOVER, MOVIE_API_CONFIG_GET)
+    const queryType: string = (criteriaTransformation.isSearch())? SEARCH: DISCOVER
+
+    console.log('QueryType: ', queryType)
+
+    const res = await fetch(BASE_URL + queryType + criteriaTransformation.getCriterias(), MOVIE_API_CONFIG_GET)
     // console.log('res', res);
     if (!res.ok) {
       console.error('Error fetching movies')
-      return []
+      return {
+        movies: [],
+        pagination: criteriaTransformation.getPagination()
+      }
     }
 
-    const movies = await res.json()
+    const newMovieList = await res.json()
 
-    const newMovieList = movies.results.map((movie: MovieDB) => {
+    const movies = newMovieList.results.map((movie: MovieDB) => {
       if (this.#config === undefined || this.#config?.images.base_url === '')
         return {
           ... movie,
@@ -42,7 +53,10 @@ export class TheMovieDBRepository implements MovieRepository{
         }
     })
     //console.log("movies", newMovieList);
-    return newMovieList
+    return {
+      movies,
+      pagination: new Pagination(newMovieList.page, newMovieList.total_pages) 
+    }
   }
 
 }

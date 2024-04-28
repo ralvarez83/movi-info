@@ -9,3 +9,9 @@ export const enum FilterOperator {
   CONTAINS = 'CONTAINS',
   NOT_CONTAINS = 'NOT_CONTAINS'
 }
+
+export type Filter ={
+  field: FilterField
+  operator: FilterOperator
+  value: FilterValue
+}

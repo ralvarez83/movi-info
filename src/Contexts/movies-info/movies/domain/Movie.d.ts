@@ -1,4 +1,6 @@
-export interface Movie {
+import { Pagination } from "../../../Shared/Domain/Criteria/Pagination";
+
+export type Movie = {
   adult:                 boolean;
   vertical_image_path:   string;
   horizontal_image_path: string;
@@ -8,4 +10,7 @@ export interface Movie {
  }
 
 
-export type MovieList = Movie[]
+export type MovieList = {
+  movies: Movie[]
+  pagination: Pagination
+}

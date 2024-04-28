@@ -7,6 +7,7 @@ import './App.css'
 import { MovieDetails } from './apps/frontend/components/MovieDetails'
 import { MoviesList } from './apps/frontend/components/MovieList'
 import { Navbar } from './components/Navbar'
+import { MovieListInfinite } from './apps/frontend/components/MovieListInfinite'
 
 export const App: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ export const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/movie/:id" element={<MovieDetails />} />
-          <Route path="/" element={<MoviesList />}/>
+          <Route path="/" element={<MovieListInfinite />}/>
         </Routes>
       </Router>
     </>

@@ -1,9 +1,17 @@
 export class Pagination {
-  offset: number | undefined
-  limit: number |  undefined
+  pageSize?: number
 
-  constructor(offset?: number, limit?: number) {
-    this.offset = offset
-    this.limit = limit
+  constructor(readonly page: number, readonly totalPage?: number) {
+  }
+
+  public isLastPage() : boolean {
+    return this.totalPage === this.page
+  }
+
+  /**
+   * getNextPage
+   */
+  public getNextPage(): Pagination {
+    return (this.totalPage === this.page)? this: new Pagination(this.page + 1, this.totalPage)
   }
 }
