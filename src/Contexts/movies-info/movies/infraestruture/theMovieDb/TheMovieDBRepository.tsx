@@ -1,4 +1,4 @@
-import { MovieList } from "../../domain/Movie.d"
+import { MovieSearchResults } from "../../domain/Movie.d"
 import { MovieRepository } from "../../domain/MovieRepository"
 import { Movie as MovieDB } from "./Entities/Movie"
 import { BASE_URL, DISCOVER, MOVIE_API_CONFIG_GET, SEARCH } from "./const.d"
@@ -11,7 +11,7 @@ import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
 export class TheMovieDBRepository implements MovieRepository{
   #config?: ConfigMovie = undefined
 
-  async searchByCriteria(criteria: Criteria): Promise<MovieList> {
+  async searchByCriteria(criteria: Criteria): Promise<MovieSearchResults> {
 
     const criteriaTransformation = new TheMovieDBCriteriaTransformation(criteria)
 

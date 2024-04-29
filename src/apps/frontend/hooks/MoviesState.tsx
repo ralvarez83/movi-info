@@ -13,81 +13,76 @@ import { MoviesSearchByCriteria } from '../../../Contexts/movies-info/movies/app
 export function moviesState(): {
   movieList: MovieList
   textFilter: Filter,
-  // pagination: Pagination,
+  pagination: Pagination,
   isLoading: boolean,
   observerTargetEndPage: React.MutableRefObject<null>,
-  setTextFilter: React.Dispatch<React.SetStateAction<Filter>>,
-  // setPagination: React.Dispatch<React.SetStateAction<Pagination>>
+  setTextFilter: React.Dispatch<React.SetStateAction<Filter>>
 } {
-  const initialMovies : MovieList = {
-    movies: [],
-    pagination: new Pagination(0)
-  }
+
+  const initialMovies : MovieList = []
   const [movieList, setMoviesList] = useState(initialMovies);
+
   const initialFilter: Filter = {
     field: 'byText',
     operator: FilterOperator.CONTAINS,
     value: ''
   }
   const [textFilter, setTextFilter] = useState(initialFilter);
-  // const [pagination, setPagination] = useState(initialMovies.pagination);
+  const [pagination, setPagination] = useState(new Pagination(0));
   const [isLoading, setIsLoading] = useState(false);
+
 	const observerTargetEndPage = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) {
-          if(!movieList.pagination.isLastPage()){    
-            setIsLoading(true);
-            const order: Order = new Order("", OrderType.NONE)
-            const filters: Filters = new Filters()
-            filters.add(textFilter)
-            console.log("Current page: ", movieList.pagination.page)
-            const criteria: Criteria = new Criteria(filters, order, movieList.pagination.getNextPage())
-            
-            const movieSearcherRepository = new TheMovieDBRepository()
-            console.log("Next page: ", criteria.pagination.page)
-            const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
-            //const movieSearcher = new MoviesSearchAll(movieSearcherRepository)
-            movieSearcher.search()
-              .then(newMovieList => {
-                // let concatMovieList : MovieList = {
-                //   movies:  movieList.movies.concat(newMovieList.movies),
-                //   pagination: newMovieList.pagination
-                // }
-                // setMoviesList(concatMovieList)
-                setMoviesList(newMovieList)
-                console.log("Page return: ", newMovieList.pagination.page)
-              })
-              .catch(err => { console.error(err) })
-              .catch(err => { console.error(err) })
-        
-            setIsLoading(false);
-          }
-        }
-      },
-      { threshold: 1 }
-    );
-  
-    if (observerTargetEndPage.current) {
-      observer.observe(observerTargetEndPage.current);
-    }
-  
+    const observer = new IntersectionObserver(onIntersection);
+    
+    if(observer && observerTargetEndPage.current) observer.observe(observerTargetEndPage.current);
+    
     return () => {
-      if (observerTargetEndPage.current) {
-        observer.unobserve(observerTargetEndPage.current);
-      }
+      if (observer) observer.disconnect();
     };
-  }, [textFilter, observerTargetEndPage])
+  }, [movieList])
+
+  useEffect(() => {
+    
+    setPagination(new Pagination(0))
+    setMoviesList([])
+
+  }, [textFilter]);
+
+
+  const onIntersection = async(entries:IntersectionObserverEntry[]) => {
+    const firstEntry = entries[0]
+    if (firstEntry.isIntersecting && !pagination.isLastPage()) getMovies();
+  }
+
+  const getMovies = () => {
+    setIsLoading(true);
+    const order: Order = new Order("", OrderType.NONE)
+    const filters: Filters = new Filters()
+    filters.add(textFilter)
+    console.log("Current page: ", pagination.page)
+    const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
+
+    const movieSearcherRepository = new TheMovieDBRepository()
+    console.log("Next page: ", criteria.pagination.page)
+    const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
+    movieSearcher.search().then (moviesFound => {
+      setMoviesList([
+        ... movieList,
+        ... moviesFound.movies
+      ])
+      setPagination(moviesFound.pagination)
+    }
+    );
+  }
 
   return {
     movieList,
     textFilter,
-    // pagination,
+    pagination,
     observerTargetEndPage,
     isLoading,
-    setTextFilter,
-    // setPagination
+    setTextFilter
   }
 }

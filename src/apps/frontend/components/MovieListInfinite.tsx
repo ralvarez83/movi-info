@@ -4,12 +4,14 @@ import { moviesState } from '../hooks/MoviesState'
 import { Movie } from './Movie';
 import { TextFilter } from './shared/TextFilter';
 import { Pagination } from '../../../Contexts/Shared/Domain/Criteria/Pagination';
+import { DevFooter } from './shared/DevFooter';
 
 export const MovieListInfinite = (): JSX.Element => {
   const {
     movieList,
     textFilter,
 		isLoading,
+		pagination,
 		observerTargetEndPage,
     setTextFilter
   } = moviesState()
@@ -21,13 +23,14 @@ export const MovieListInfinite = (): JSX.Element => {
 			<TextFilter filter={textFilter} placeholder='Busca por texto...' setFilter={setTextFilter} />
 		</aside>
 		<section>
-			{movieList.movies.map((movie) => (
+			{movieList.map((movie) => (
 					<Movie key={movie.id} image_path={movie.horizontal_image_path} {... movie} />
 				))}
 
 			{isLoading && <p>Cargando...</p>}
-    <div ref={observerTargetEndPage}>{movieList.pagination.page}-{movieList.pagination.totalPage}</div>
 		</section>
+    <div ref={observerTargetEndPage}></div>
+		<DevFooter pagination={pagination} />
 	</main>
 	);
 };

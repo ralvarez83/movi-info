@@ -124,6 +124,14 @@ header{
   }
 }
 
+.dev-footer{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
 
 @media (prefers-color-scheme: light) {
   .movie-list{
@@ -137,6 +145,11 @@ header{
       }
       
     }
+  }
+
+  .dev-footer{
+    background-color: #1a1a1a9e;
+    color: white;
   }
   
 }
@@ -160,4 +173,8 @@ header{
     }
   }
   
+  .dev-footer{
+    background-color: #dad4d49e;
+    color: black;
+  }
 }

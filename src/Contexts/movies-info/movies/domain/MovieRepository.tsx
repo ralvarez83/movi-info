@@ -1,8 +1,8 @@
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
-import { MovieList } from "./Movie";
+import { MovieSearchResults } from "./Movie";
 
 export interface MovieRepository {
 
-  searchByCriteria(criteria: Criteria): Promise<MovieList>
+  searchByCriteria(criteria: Criteria): Promise<MovieSearchResults>
   
 }

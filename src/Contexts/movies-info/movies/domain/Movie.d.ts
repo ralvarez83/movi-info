@@ -10,7 +10,9 @@ export type Movie = {
  }
 
 
-export type MovieList = {
-  movies: Movie[]
+export type MovieList =  Movie[]
+
+export type MovieSearchResults = {
+  movies: MovieList,
   pagination: Pagination
 }

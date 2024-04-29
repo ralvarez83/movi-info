@@ -1,3 +1,3 @@
 export interface MoviesSearch{
-  search () : Promise<MovieList>
+  search () : Promise<MovieSearchResults>
 }

@@ -10,7 +10,7 @@ interface Props {
 export const TextFilter: React.FC<Props> = ({ filter, placeholder, setFilter, minSearchLenght = 3}) => {
 
   const setFilterValue = (value:string): void => {
-    if (value.length >= minSearchLenght){
+    if (value.length >= minSearchLenght || value.length < filter.value.length){
       const newFilter : Filter = {
         ... filter,
         value
