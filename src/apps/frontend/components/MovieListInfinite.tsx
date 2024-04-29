@@ -9,41 +9,10 @@ export const MovieListInfinite = (): JSX.Element => {
   const {
     movieList,
     textFilter,
-		pagination,
 		isLoading,
-    setTextFilter,
-		setPagination
+		observerTargetEndPage,
+    setTextFilter
   } = moviesState()
-
-	const observerTarget = useRef(null);
-
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			entries => {
-				if (entries[0].isIntersecting) {
-					if(!movieList.pagination.isLastPage()){
-						console.log("Page loaded: ", movieList.pagination.page)
-						console.log("Total pages: ", movieList.pagination.totalPage)
-						const newPagination: Pagination = movieList.pagination.getNextPage()
-						console.log("Page loading: ", newPagination.page)
-						setPagination(newPagination)
-					}
-				}
-			},
-			{ threshold: 1 }
-		);
-	
-		if (observerTarget.current) {
-			observer.observe(observerTarget.current);
-		}
-	
-		return () => {
-			if (observerTarget.current) {
-				observer.unobserve(observerTarget.current);
-			}
-		};
-	}, [observerTarget]);
 	
 	return (
 		<main className='movie-list'>
@@ -57,7 +26,7 @@ export const MovieListInfinite = (): JSX.Element => {
 				))}
 
 			{isLoading && <p>Cargando...</p>}
-    <div ref={observerTarget}>{movieList.pagination.page}-{movieList.pagination.totalPage}</div>
+    <div ref={observerTargetEndPage}>{movieList.pagination.page}-{movieList.pagination.totalPage}</div>
 		</section>
 	</main>
 	);
