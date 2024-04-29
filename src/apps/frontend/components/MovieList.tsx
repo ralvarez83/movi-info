@@ -4,7 +4,7 @@ import { TextFilter } from './shared/TextFilter'
 
 export const MoviesList = (): JSX.Element => {
   const {
-    movies,
+    movieList,
     textFilter,
     setTextFilter
   } = moviesState()
@@ -16,7 +16,7 @@ export const MoviesList = (): JSX.Element => {
         <TextFilter filter={textFilter} placeholder='Busca por texto...' setFilter={setTextFilter} />
       </aside>
       <section>
-        {movies.map((movie) => (
+        {movieList.map((movie) => (
             <Movie key={movie.id} image_path={movie.horizontal_image_path} {... movie} />
           ))}
       </section>
