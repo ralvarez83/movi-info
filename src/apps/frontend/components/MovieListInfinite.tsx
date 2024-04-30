@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useRef } from 'react';
 import { moviesState } from '../hooks/MoviesState'
 import { Movie } from './Movie';
 import { TextFilter } from './shared/TextFilter';
-import { Pagination } from '../../../Contexts/Shared/Domain/Criteria/Pagination';
 import { DevFooter } from './shared/DevFooter';
+import { InfinitePagination } from './shared/InfinitePagination';
 
 export const MovieListInfinite = (): JSX.Element => {
   const {
@@ -12,8 +11,8 @@ export const MovieListInfinite = (): JSX.Element => {
     textFilter,
 		isLoading,
 		pagination,
-		observerTargetEndPage,
-    setTextFilter
+    setTextFilter,
+		getMovies
   } = moviesState()
 	
 	return (
@@ -22,14 +21,15 @@ export const MovieListInfinite = (): JSX.Element => {
 		<aside>
 			<TextFilter filter={textFilter} placeholder='Busca por texto...' setFilter={setTextFilter} />
 		</aside>
-		<section>
-			{movieList.map((movie) => (
-					<Movie key={movie.id} image_path={movie.horizontal_image_path} {... movie} />
-				))}
+		<InfinitePagination dataList={movieList} getMoreData={getMovies}>
+			<section>
+				{movieList.map((movie) => (
+						<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontal_image_path} {... movie} />
+					))}
 
-			{isLoading && <p>Cargando...</p>}
-		</section>
-    <div ref={observerTargetEndPage}></div>
+				{isLoading && <p>Cargando...</p>}
+			</section>
+		</InfinitePagination>
 		<DevFooter pagination={pagination} />
 	</main>
 	);
