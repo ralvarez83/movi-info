@@ -29,5 +29,6 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Listado de elementos Movile-First (Responsive)
 - [x] Scroll infinito cargando datos desde la API (componente reutilizable)
 - [x] Filtrado de contenidos del listado (componente reutilizable)
+- [x] Footer fijo con la última página cargada y el número total de páginas.
 - [ ] Poner bonito el mensaje de "Cargando..."
 - [ ] Dar estilos y poblar de información la página de 1 película.
