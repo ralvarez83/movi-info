@@ -23,11 +23,11 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] HTML Sintáctico
 - [x] CSS3
   - [x] Herencia
-  - [x] Modo **día/noche*
+  - [x] Modo **día/noche**
   - [x] Efectos cuando te colocas encima de un elmento del listado
 - [x] Acceso a una API con autenticación (con fetch)
 - [x] Listado de elementos Movile-First (Responsive)
 - [x] Scroll infinito cargando datos desde la API (componente reutilizable)
 - [x] Filtrado de contenidos del listado (componente reutilizable)
-- [] Poner bonito el mensaje de "Cargando..."
-- [] Dar estilos y poblar de información la página de 1 película.
+- [ ] Poner bonito el mensaje de "Cargando..."
+- [ ] Dar estilos y poblar de información la página de 1 película.
