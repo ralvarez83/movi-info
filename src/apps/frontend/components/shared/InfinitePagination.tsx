@@ -1,8 +1,7 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
-import { MovieList } from '../../../../Contexts/movies-info/movies/domain/Movie';
 
 interface Props {
-  dataList: MovieList,
+  dataList: any,
   getMoreData: () => void
 }
 
