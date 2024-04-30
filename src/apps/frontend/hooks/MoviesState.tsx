@@ -15,7 +15,6 @@ export function moviesState(): {
   textFilter: Filter,
   pagination: Pagination,
   isLoading: boolean,
-  // observerTargetEndPage: React.MutableRefObject<null>,
   setTextFilter: React.Dispatch<React.SetStateAction<Filter>>,
   getMovies: () => void
 } {
@@ -32,30 +31,12 @@ export function moviesState(): {
   const [pagination, setPagination] = useState(new Pagination(0));
   const [isLoading, setIsLoading] = useState(false);
 
-	// const observerTargetEndPage = useRef(null);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(onIntersection);
-    
-  //   if(observer && observerTargetEndPage.current) observer.observe(observerTargetEndPage.current);
-    
-  //   return () => {
-  //     if (observer) observer.disconnect();
-  //   };
-  // }, [movieList])
-
   useEffect(() => {
     
     setPagination(new Pagination(0))
     setMoviesList([])
 
   }, [textFilter]);
-
-
-  // const onIntersection = async(entries:IntersectionObserverEntry[]) => {
-  //   const firstEntry = entries[0]
-  //   if (firstEntry.isIntersecting && !pagination.isLastPage()) getMovies();
-  // }
 
   const getMovies = () => {
     if (!pagination.isLastPage()){
@@ -85,7 +66,6 @@ export function moviesState(): {
     movieList,
     textFilter,
     pagination,
-    // observerTargetEndPage,
     isLoading,
     setTextFilter,
     getMovies
