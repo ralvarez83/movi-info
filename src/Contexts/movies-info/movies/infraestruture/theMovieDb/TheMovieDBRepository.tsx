@@ -4,7 +4,7 @@ import { Movie as MovieDB } from "./Entities/Movie"
 import { BASE_URL, DISCOVER, MOVIE_API_CONFIG_GET, SEARCH } from "./const.d"
 import { ConfigMovie } from "./types.d"
 import { TheMovieDBCriteriaTransformation } from "./TheMovieDBCriteriaTransformation"
-import { getConfig } from "./MoviesConfig"
+import { getTheMovieDBConfig } from "./TheMovieDBMoviesConfig"
 import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria"
 import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
 
@@ -16,7 +16,7 @@ export class TheMovieDBRepository implements MovieRepository{
     const criteriaTransformation = new TheMovieDBCriteriaTransformation(criteria)
 
     if (this.#config === undefined) 
-      this.#config = await getConfig()
+      this.#config = await getTheMovieDBConfig()
 
     const queryType: string = (criteriaTransformation.isSearch())? SEARCH: DISCOVER
 

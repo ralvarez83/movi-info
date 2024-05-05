@@ -26,9 +26,9 @@ export const MovieListInfinite = (): JSX.Element => {
 				{movieList.map((movie) => (
 						<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontal_image_path} {... movie} />
 					))}
-
-				{isLoading && <p>Cargando...</p>}
 			</section>
+				{isLoading && 
+				<aside className='cargando'></aside>}
 		</InfinitePagination>
 		<DevFooter pagination={pagination} />
 	</main>

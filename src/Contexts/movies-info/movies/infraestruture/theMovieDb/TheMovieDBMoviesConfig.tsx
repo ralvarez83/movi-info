@@ -1,7 +1,7 @@
 import { BASE_URL, CONFIG, MOVIE_API_CONFIG_GET } from "./const.d"
 import { ConfigMovie } from "./types.d"
 
-export const getConfig = async (): Promise<ConfigMovie> =>{
+export const getTheMovieDBConfig = async (): Promise<ConfigMovie> =>{
   const res = await fetch(BASE_URL + CONFIG, MOVIE_API_CONFIG_GET)
   // console.log('res', res);
   if (!res.ok) {
