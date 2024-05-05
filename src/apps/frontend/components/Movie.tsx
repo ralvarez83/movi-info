@@ -21,27 +21,6 @@ export const Movie: React.FC<Props> = ({ id, title, image_path, overview }) => {
         <p>
           {truncate(overview, 100)}
         </p>
-        {/* <Grid item>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea LinkComponent='a' href={"/movie/" + movie.id}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                height="140"
-                image={movie.backdrop_path}
-              />
-              <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {truncate(movie.title, 25)}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {truncate(movie.overview, 100)}
-                  </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid> */}
-
       </a>
     </article>
   )

@@ -1,5 +1,6 @@
 import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria";
 import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination";
+import { FILTER_CONCATENATION, FIXED_FILTER_ADULT, FIXED_FILTER_LANGUAJE } from "./const.d";
 
 const FILTER_DOMAIN_QUERY = 'byText'
 export class TheMovieDBCriteriaTransformation {
@@ -8,16 +9,14 @@ export class TheMovieDBCriteriaTransformation {
   }
 
   public getCriterias(): string {
-    const fixedFilters = 'include_adult=false&language=es-ES'
     const paginationFilter = '&page='
-    const filterConcatenation = '&'
 
-    let filters = fixedFilters
+    let filters = FIXED_FILTER_ADULT + FILTER_CONCATENATION + FIXED_FILTER_LANGUAJE
 
     this.criteria.filters.filtersFiled.map(filter => {
       let filterField = (filter.field === FILTER_DOMAIN_QUERY) ? 'query': filter.field
       
-      filters = filters + filterConcatenation  + filterField + '=' + filter.value
+      filters = filters + FILTER_CONCATENATION  + filterField + '=' + filter.value
     })
 
     return filters + paginationFilter + this.criteria.pagination.page
