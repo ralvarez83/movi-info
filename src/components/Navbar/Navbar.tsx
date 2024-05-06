@@ -29,6 +29,10 @@ const Navbar: React.FC<NavbarProps>  = ({}) => {
 				
       </AppBar> */}
 			<nav>
+
+				<h1 className="main-title">
+						Movi - INFO
+				</h1>
 				<ul>
 					<li>
 						<a>

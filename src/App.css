@@ -84,7 +84,9 @@
 }
 
 .movie-details{
-  article{
+  text-align: center;
+  section{
+    margin-bottom: 3rem;
     figure{
       margin: 0px;
       img{
@@ -96,7 +98,48 @@
     }
     h2{
       text-align: left;
+      font-weight: bold;
       padding-left: 3rem;
+    }
+    &> aside {
+      display: flex;
+      p{
+        text-align: justify;
+        padding-left: 3rem;
+        max-width: 60rem;
+        flex: 60%;
+      }
+      .more-info{
+        flex: 40%;
+        text-align: left;
+        margin-left: 4rem;
+        display: flex;
+        div {
+          max-height: 6rem;
+          display: flex;
+          align-items: center;
+          label {
+            background-color: #757575;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 2rem;
+            font-size: .75rem;
+            position: absolute;
+            margin-top: 7rem;
+            transition: visibility 0s, opacity 0.5s linear;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 100;
+          }
+          &:hover{
+            label{
+              visibility:visible;
+              opacity: 1;
+            }
+          }
+        }
+      }
+
     }
   }
 }
@@ -118,6 +161,39 @@
   font-size: 2rem;
 }
 
+.percentajeCircular{
+  --sizePercentaje: 4rem;
+  --sizePercentajeInner: 3rem;
+  --fontSizePercentaje: 1rem;
+
+  display: flex;
+  height: var(--sizePercentaje);
+  .circle {
+    position: relative;
+    width: var(--sizePercentaje);
+    height: var(--sizePercentaje);
+    margin: 0.5rem;
+    border-radius: 50%;
+    background: #757575;
+    overflow: hidden;
+
+    .inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: var(--sizePercentajeInner);
+      height: var(--sizePercentajeInner);
+      border-radius: 50%;
+      font-size: var(--fontSizePercentaje);
+      font-weight: 600;
+    }
+  }
+}
+
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -127,11 +203,6 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-
-.movie-details{
-  text-align: center;
 }
 
 header{
@@ -148,6 +219,12 @@ header{
     color:#ffff;
     vertical-align: middle;
     align-items: center;
+
+    h1{
+      font-size: 2.2rem;
+      padding-left: 2.2rem;
+    }
+
     ul{
       font-size: 1.3rem;
       font-weight: 450;
@@ -164,9 +241,6 @@ header{
         }
       }
     }
-  }
-  h1{
-    margin-top: 4rem;
   }
 }
 
@@ -186,7 +260,7 @@ header{
       box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
       
       &:hover{
-        background-color: rgba(26, 26, 26, 0.834);
+        background-color: rgba(114, 112, 112, 0.834);
         transition: all 1s ease-in-out;
       }
       
@@ -196,6 +270,13 @@ header{
   .dev-footer{
     background-color: #1a1a1a9e;
     color: white;
+  }
+
+  .percentajeCircular{
+    .inner {
+      background: white;
+      color: rgba(0, 0, 0, 0.75);
+    }
   }
   
 }
@@ -225,5 +306,12 @@ header{
   .dev-footer{
     background-color: #dad4d49e;
     color: black;
+  }
+
+  .percentajeCircular{
+    .inner {
+      background: black;
+      color: rgba(255, 255, 255, 0.75);
+    }
   }
 }

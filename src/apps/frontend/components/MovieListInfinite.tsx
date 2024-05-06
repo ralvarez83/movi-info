@@ -24,7 +24,7 @@ export const MovieListInfinite = (): JSX.Element => {
 		<InfinitePagination dataList={movieList} getMoreData={getMovies}>
 			<section>
 				{movieList.map((movie) => (
-						<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontal_image_path} {... movie} />
+						<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontalImagePath} {... movie} />
 					))}
 			</section>
 				{isLoading && 

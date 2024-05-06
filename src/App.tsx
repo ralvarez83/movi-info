@@ -15,9 +15,6 @@ export const App: React.FC = () => {
     <>
       <header>
         <Navbar/>
-        <h1 className="main-title">
-          Movi - INFO
-        </h1>
       </header>
       <Router>
         <Routes>

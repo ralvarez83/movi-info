@@ -2,11 +2,13 @@ import { Pagination } from "../../../Shared/Domain/Criteria/Pagination";
 
 export type Movie = {
   adult:                 boolean;
-  vertical_image_path:   string;
-  horizontal_image_path: string;
+  verticalImagePath:   string;
+  horizontalImagePath: string;
   id:                    string;
   overview:              string;
   title:                 string;
+  imdbLink:              string;
+  usersVote:             number;
  }
 
 
