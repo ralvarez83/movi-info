@@ -31,4 +31,4 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Filtrado de contenidos del listado (componente reutilizable)
 - [x] Footer fijo con la última página cargada y el número total de páginas.
 - [x] Poner bonito el mensaje de "Cargando..."
-- [ ] Dar estilos y poblar de información la página de 1 película.
+- [x] Dar estilos y poblar de información la página de 1 película.
