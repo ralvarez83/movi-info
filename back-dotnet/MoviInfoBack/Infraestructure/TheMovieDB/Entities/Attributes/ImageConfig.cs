@@ -1,8 +1,9 @@
 namespace Infraestructure.TheMovieDb.Entities.Attributes
 {
-  public sealed record ImageConfig(
-    string base_url,
-    string[] backdrop_siezes,
-    string[] poster_sizes
-  );
+  public sealed class ImageConfig
+  {
+    public string base_url {get; set;} = "";
+    public string[] backdrop_sizes {get; set;} = [];
+    public string[] poster_sizes {get; set;} = [];
+  }
 }

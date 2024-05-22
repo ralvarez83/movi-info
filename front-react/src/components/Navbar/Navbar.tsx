@@ -1,5 +1,4 @@
 "use client";
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import React from 'react';
 
 export type NavbarProps = {

@@ -17,7 +17,7 @@ export const MoviesList = (): JSX.Element => {
       </aside>
       <section>
         {movieList.map((movie) => (
-            <Movie key={movie.id} image_path={movie.horizontal_image_path} {... movie} />
+            <Movie key={movie.id} image_path={movie.horizontalImagePath} {... movie} />
           ))}
       </section>
     </main>

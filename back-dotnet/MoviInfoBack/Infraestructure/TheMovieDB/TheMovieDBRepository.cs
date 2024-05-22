@@ -14,12 +14,13 @@ namespace Infraestructure.TheMovieDb
     public class TheMovieDBRepository : MovieRepository
     {
 
-      private ConfigMovie _config;
+      private readonly ConfigMovie _config;
 
       public TheMovieDBRepository(ConfigMovie config) => _config = config;
 
       public async Task<MovieDomain?> findById(MovieId movieId)
       {
+        
         TheMovieDBCriteriaTransformation criteriaTransformation = new TheMovieDBCriteriaTransformation();
         string apiURL = ConfigMovie.MOVIE_FIND + movieId.value + criteriaTransformation.getEmptyCriteria() ; 
 
@@ -29,8 +30,7 @@ namespace Infraestructure.TheMovieDb
           return null;
 
         Entities.Movie movie = await response.Content.ReadAsAsync<Entities.Movie>();
-        
-        return movie.toMovieDomain(_config.images.base_url);
+        return movie.toMovieDomain(_config.images.base_url + _config.images.backdrop_sizes[2]);
       }
 
       public async Task<MovieSearchResults> searchByCriteria(Criteria criteria)

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { Movie } from "../../../Contexts/movies-info/movies/domain/Movie";
 import { TheMovieDBRepository } from "../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository";
-import { Criteria } from "../../../Contexts/Shared/Domain/Criteria/Criteria";
-import { Filter, FilterOperator } from "../../../Contexts/Shared/Domain/Criteria/Filters/FilterTypes.d";
-import { Filters } from "../../../Contexts/Shared/Domain/Criteria/Filters/Filters";
 import { MovieFindById } from "../../../Contexts/movies-info/movies/application/MovieFindById";
 
 export function movieDetails(movieId:String): {
@@ -14,11 +11,13 @@ export function movieDetails(movieId:String): {
 
   const emptyMovie : Movie = {
     adult: false,
-    vertical_image_path: '',
-    horizontal_image_path: '',
+    verticalImagePath: '',
+    horizontalImagePath: '',
     title: '',
     overview: '',
-    id: ''
+    id: '',
+    imdbLink: '',
+    usersVote: 0
   }
   const [movie, setMovie] = useState(emptyMovie);
   const [isLoading, setIsLoading] = useState(false);

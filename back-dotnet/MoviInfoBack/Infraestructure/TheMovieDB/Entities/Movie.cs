@@ -18,7 +18,7 @@ namespace Infraestructure.TheMovieDb.Entities
     public string original_language {get; set;}  = string.Empty;
     public string original_title {get; set;} = string.Empty;
     public string overview {get; set;} = string.Empty;
-    public int popularity {get; set;}
+    public float popularity {get; set;}
     public string poster_path {get; set;} = string.Empty;
     public ProductionCompany[] production_companies {get; set;}  = [];
     public ProductionCountry[] production_contries {get; set;}  = [];

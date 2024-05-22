@@ -16,7 +16,7 @@ namespace Infraestructure.TheMovieDb.Entities
 
     public ImageConfig images {get; set;}
     
-    public async static Task<ConfigMovie?> GetConfig (string authorization){
+    public async static Task<ConfigMovie?> GetConfig (string authorization, Uri baseURL, string authorizationType){
        HttpClient client = new HttpClient
         {
             BaseAddress = new Uri(ConfigMovie.BASE_URL)
@@ -25,9 +25,9 @@ namespace Infraestructure.TheMovieDb.Entities
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authorization);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authorizationType, authorization);
 
-        string apiURL = ConfigMovie.MOVIE_FIND + ConfigMovie.CONFIG ; 
+        string apiURL = ConfigMovie.CONFIG; 
 
         HttpResponseMessage response = await client.GetAsync(apiURL);
 

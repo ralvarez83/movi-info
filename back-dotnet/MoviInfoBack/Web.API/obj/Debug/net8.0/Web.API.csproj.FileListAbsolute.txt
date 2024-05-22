@@ -38,3 +38,7 @@
 /Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/obj/Debug/net8.0/Web.API.pdb
 /Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/obj/Debug/net8.0/Web.API.genruntimeconfig.cache
 /Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/obj/Debug/net8.0/ref/Web.API.dll
+/Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/bin/Debug/net8.0/ErrorOr.dll
+/Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/bin/Debug/net8.0/System.Net.Http.Formatting.dll
+/Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/rubenalvarezgonzalez/development/movi-info/back-dotnet/MoviInfoBack/Web.API/bin/Debug/net8.0/Newtonsoft.Json.Bson.dll
