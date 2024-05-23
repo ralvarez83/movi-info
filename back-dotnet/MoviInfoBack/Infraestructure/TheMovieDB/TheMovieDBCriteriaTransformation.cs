@@ -1,4 +1,5 @@
 using Domain.Shared.Criteria;
+using Domain.Shared.Criteria.Filters;
 
 namespace Infraestructure.TheMovieDb
 {
@@ -9,7 +10,7 @@ namespace Infraestructure.TheMovieDb
     private const string FILTER_CONCATENATION = "&";
     private const string FILTER_STARTED = "?";
     private const string FILTER_ASIGNATION_VALUE = "=";
-    private const string FILTER_DOMAIN_QUERY = "byText";
+    
     private Criteria? _criteria;
     public TheMovieDBCriteriaTransformation(Criteria criteria)
     {
@@ -28,7 +29,7 @@ namespace Infraestructure.TheMovieDb
         return filters;
 
       _criteria.filters.filtersFiled.ForEach(filter => {
-        string filterField = (filter.field == FILTER_DOMAIN_QUERY)? "query": filter.field;
+        string filterField = (filter.field == Filter.FILTER_BY_TEXT)? "query": filter.field;
 
         filters += FILTER_CONCATENATION + filterField + FILTER_ASIGNATION_VALUE + filter.value;
       });
@@ -38,7 +39,7 @@ namespace Infraestructure.TheMovieDb
 
     public bool isSearch() {
       return _criteria?.filters.filtersFiled.Find(filter => {
-        return (filter.field == FILTER_DOMAIN_QUERY && !string.IsNullOrEmpty(filter.value));
+        return (filter.field == Filter.FILTER_BY_TEXT && !string.IsNullOrEmpty(filter.value));
       }) != null;
     }
 

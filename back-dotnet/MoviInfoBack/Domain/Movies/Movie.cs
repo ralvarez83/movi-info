@@ -1,5 +1,4 @@
 using Domain.Movies.ValueObjects;
-using Domain.Shared.ValueObjects;
 using Domain.Shared.ValueObjects.Links;
 
 namespace Domain.Movies

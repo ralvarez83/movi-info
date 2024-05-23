@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Configurations;
 using Movie = Domain.Movies.Movie;
+using MovieDTO = WebAPI.dto.Movie;
 
 namespace WebAPI.Controllers.Movies
 {
@@ -20,7 +21,7 @@ namespace WebAPI.Controllers.Movies
     }
     
     [HttpGet]
-    public async Task<ActionResult<Movie>> Get(string id){
+    public async Task<ActionResult<MovieDTO>> Get(string id){
 
       string authorization = _theMovieDBConfiguration.Authorization;
       Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
@@ -33,14 +34,14 @@ namespace WebAPI.Controllers.Movies
 
       TheMovieDBRepository repository = new TheMovieDBRepository(repositoryConfig);
       MovieId movieIdentificator = new MovieId(id);
-      MoviFindById finder = new MoviFindById(repository, movieIdentificator);
+      MoviFindById movieFinder = new MoviFindById(repository, movieIdentificator);
 
-      Movie movie = await finder.find();
+      Movie movie = await movieFinder.find();
 
       if (null == movie)
         return NotFound();
 
-      return movie;
+      return new MovieDTO(movie);
     }
   }
 }

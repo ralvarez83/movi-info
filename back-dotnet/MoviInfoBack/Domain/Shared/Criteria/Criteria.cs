@@ -14,5 +14,10 @@ namespace Domain.Shared.Criteria
       this.order = order;
       this.pagination = pagination;
     }
+    public Criteria( Filters.Filters filters, Pagination pagination){
+      this.filters = filters;
+      this.pagination = pagination;
+      this.order = new Order.Order("",Order.OrderType.NONE);
+    }
   }
 }
