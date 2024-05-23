@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { type MovieList} from '../../../Contexts/movies-info/movies/domain/Movie'
-import { TheMovieDBRepository } from '../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository'
+// import { TheMovieDBRepository } from '../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository'
 import { Filter, FilterOperator } from '../../../Contexts/Shared/Domain/Criteria/Filters/FilterTypes.d'
 import { Order } from '../../../Contexts/Shared/Domain/Criteria/Order/Order'
 import { OrderType } from '../../../Contexts/Shared/Domain/Criteria/Order/OrderTypes.d'
@@ -8,6 +8,7 @@ import { Pagination } from '../../../Contexts/Shared/Domain/Criteria/Pagination'
 import { Filters } from '../../../Contexts/Shared/Domain/Criteria/Filters/Filters'
 import { Criteria } from '../../../Contexts/Shared/Domain/Criteria/Criteria'
 import { MoviesSearchByCriteria } from '../../../Contexts/movies-info/movies/application/MoviesSearchByCriteria'
+import { DotNetBackRepository } from '../../../Contexts/movies-info/movies/infraestruture/dotNetBack/DotNetBackRepository'
 
 
 export function moviesState(): {
@@ -47,7 +48,8 @@ export function moviesState(): {
       console.log("Current page: ", pagination.page)
       const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
   
-      const movieSearcherRepository = new TheMovieDBRepository()
+      // const movieSearcherRepository = new TheMovieDBRepository()
+      const movieSearcherRepository = new DotNetBackRepository("http://localhost:5021/api/")
       console.log("Next page: ", criteria.pagination.page)
       const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
       movieSearcher.search().then (moviesFound => {

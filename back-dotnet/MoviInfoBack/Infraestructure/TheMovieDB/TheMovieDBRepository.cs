@@ -49,7 +49,7 @@ namespace Infraestructure.TheMovieDb
         MovieAPIResult apiResults = await response.Content.ReadAsAsync<MovieAPIResult>();
 
         ImmutableList<MovieDomain> movies = (from movie in apiResults.results
-          select movie.toMovieDomain(_config.images.base_url)).ToImmutableList();
+          select movie.toMovieDomain(_config.images.base_url + _config.images.backdrop_sizes[2])).ToImmutableList();
         
         return new MovieSearchResults(movies, new Pagination(apiResults.page, apiResults.total_pages));
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Movie } from "../../../Contexts/movies-info/movies/domain/Movie";
 import { TheMovieDBRepository } from "../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository";
 import { MovieFindById } from "../../../Contexts/movies-info/movies/application/MovieFindById";
+// import { DotNetBackRepository } from "../../../Contexts/movies-info/movies/infraestruture/dotNetBack/DotNetBackRepository";
 
 export function movieDetails(movieId:String): {
   movie: Movie,
@@ -27,6 +28,7 @@ export function movieDetails(movieId:String): {
     setIsLoading(true);
 
     const repository : TheMovieDBRepository = new TheMovieDBRepository()
+    // const repository : DotNetBackRepository = new DotNetBackRepository("http://localhost:5021/api/")
     const movieFinder : MovieFindById = new MovieFindById(repository, movieId)
 
     movieFinder.find().then(wantedMovie => {
