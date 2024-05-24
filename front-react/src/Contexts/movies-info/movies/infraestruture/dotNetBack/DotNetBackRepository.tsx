@@ -2,9 +2,10 @@ import { Movie, MovieSearchResults } from "../../domain/Movie"
 import { MovieRepository } from "../../domain/MovieRepository"
 import { DotNetBackCriteriaTransformation } from "./DotNetBackCriteriaTransformation"
 import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria"
+import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
 
 const SEARCH_END_POINT: string = "Search?"
-const FIND_END_POINT: string = "Find"
+const FIND_END_POINT: string = "Find/"
 
 export class DotNetBackRepository implements MovieRepository{
   
@@ -31,13 +32,18 @@ export class DotNetBackRepository implements MovieRepository{
 
     const newMovieList = await res.json()
 
+    const movieListResult : MovieSearchResults = {
+      movies: newMovieList.movies,
+      pagination: new Pagination(newMovieList.pagination.page, newMovieList.pagination.totalPage)
+    }
+
     //console.log("movies", newMovieList);
-    return newMovieList
+    return movieListResult
   }
 
   async findById (movieID: string): Promise<Movie|undefined> {
     
-   
+    console.log("url: ", this.#endPointURLAccess + FIND_END_POINT + movieID)
     const res = await fetch(this.#endPointURLAccess + FIND_END_POINT + movieID)
 
     if (!res.ok) {
