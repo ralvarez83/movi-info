@@ -49,7 +49,7 @@ export function moviesState(): {
       const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
   
       // const movieSearcherRepository = new TheMovieDBRepository()
-      const movieSearcherRepository = new DotNetBackRepository("http://localhost:5021/api/")
+      const movieSearcherRepository = new DotNetBackRepository("https://localhost:7069/api/")
       console.log("Next page: ", criteria.pagination.page)
       const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
       movieSearcher.search().then (moviesFound => {

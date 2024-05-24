@@ -5,8 +5,8 @@ import {
 } from 'react-router-dom'
 import './App.css'
 import { MovieDetails } from './apps/frontend/components/MovieDetails'
-import { Navbar } from './components/Navbar'
 import { MovieListInfinite } from './apps/frontend/components/MovieListInfinite'
+import { Navbar } from './apps/frontend/components/shared/Navbar'
 
 export const App: React.FC = () => {
   return (
