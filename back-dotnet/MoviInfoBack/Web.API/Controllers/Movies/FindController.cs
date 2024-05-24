@@ -20,7 +20,7 @@ namespace WebAPI.Controllers.Movies
       _theMovieDBConfiguration = options.Value;
     }
     
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<ActionResult<MovieDTO>> Get(string id){
 
       string authorization = _theMovieDBConfiguration.Authorization;

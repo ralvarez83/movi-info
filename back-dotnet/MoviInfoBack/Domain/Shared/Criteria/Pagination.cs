@@ -4,19 +4,19 @@ namespace Domain.Shared.Criteria
   {    
     public int? pageSize {get; set;}
     public int page {get; private set;}
-    public int _totalPage;
+    public int totalPage {get; init;}
 
     public Pagination(int page, int totalPage){
       this.page = page;
-      _totalPage = totalPage;
+      this.totalPage = totalPage;
     }
 
     public bool isLastPage(){
-      return _totalPage == page;
+      return totalPage == page;
     }
 
     public Pagination getNextPage(){
-      return isLastPage()? this: new Pagination(page +1, _totalPage);
+      return isLastPage()? this: new Pagination(page +1, totalPage);
     }
   }
 }

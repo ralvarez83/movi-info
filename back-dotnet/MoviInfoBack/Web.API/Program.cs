@@ -8,6 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 string[] allowSpecificOrigins = builder.Configuration.GetSection(MyAllowSpecificOrigins).Get<string[]>();
 
+string? frontEndHostName = Environment.GetEnvironmentVariable("FrontEndHostName");
+
+if (!String.IsNullOrEmpty(frontEndHostName)){
+    string [] newAllowSpecificOrigins = [frontEndHostName];
+    if (null != allowSpecificOrigins){
+        allowSpecificOrigins = allowSpecificOrigins.Concat<string>(newAllowSpecificOrigins).ToArray<string>();
+    }
+    else{
+        allowSpecificOrigins = newAllowSpecificOrigins;   
+    }
+}
+
 builder.Services.Configure<TheMovieDBOptions>(
     builder.Configuration.GetSection(TheMovieDBOptions.Name));
 
