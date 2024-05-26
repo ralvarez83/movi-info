@@ -6,6 +6,12 @@ En esta aplicación se van incorporando poco a poco todo el aprendizaje que voy 
 - Patrones de diseño
 - Back
 
+Info:
+  - Web: http://194.164.174.221:8181
+  - Imágenes Docker:
+    - Front: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-frontend
+    - Back: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-backend
+
 ## Front
 Las tecnologías utilizadas para la capa de Front son:
 - JavaScript
