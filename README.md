@@ -4,12 +4,23 @@ En esta aplicación se van incorporando poco a poco todo el aprendizaje que voy 
 - Front
 - Arquitecturas
 - Patrones de diseño
+- Back
 
 ## Front
 Las tecnologías utilizadas para la capa de Front son:
 - JavaScript
 - TypeScript
 - React
+- Vite
+- Docker (docker-compose, network, build)
+- NGINX
+
+## Back
+Las tecnologías utilizadas para la capa de Back son:
+- DotNet Core 8
+- LinQ
+- Docker (docker-compose, network, build)
+- API Rest
 
 La arquitectura que se está implementando es la Hexagonal, una arquitectura limpia que permite reducir el esfuerzo en caso de actualización del framework, entre otras ventajas.
 
@@ -32,3 +43,15 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Footer fijo con la última página cargada y el número total de páginas.
 - [x] Poner bonito el mensaje de "Cargando..."
 - [x] Dar estilos y poblar de información la página de 1 película.
+- [x] Construir un Back de acceso a la información de TheMovieDB
+- [x] Crear el repositorio en el Front y conectarlo con el Back (poner a prueba DDD y la arquitectura hexagonal) :bowtie:
+- [x] Dockerizar Front y Back
+- [x] Conectarlos de manera que pudieran pasar por diferentes entornos sin volver a construir la imagen :bowtie:
+- [x] Publicar la aplicación
+- [ ] Crear una gestión de usuarios
+- [ ] El usuario pueda marcar películas favoritas
+- [ ] En detalles se va un icono de película favorita
+- [ ] En el listado general aparezca un icono cuando es una película favorita
+- [ ] Listado / Filtro de películas favoritas
+- [ ] Poder sacar una película de favorita
+- 

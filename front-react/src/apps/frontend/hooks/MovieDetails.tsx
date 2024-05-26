@@ -27,8 +27,7 @@ export function movieDetails(movieId:String): {
   useEffect(() => {
     setIsLoading(true);
 
-    // const repository : TheMovieDBRepository = new TheMovieDBRepository()
-    const repository : DotNetBackRepository = new DotNetBackRepository("http://localhost:5001/api/")
+    const repository : DotNetBackRepository = new DotNetBackRepository(import.meta.env.VITE_DOT_NET_BACK)
     const movieFinder : MovieFindById = new MovieFindById(repository, movieId)
 
     movieFinder.find().then(wantedMovie => {

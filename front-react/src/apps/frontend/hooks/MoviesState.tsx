@@ -10,7 +10,6 @@ import { Criteria } from '../../../Contexts/Shared/Domain/Criteria/Criteria'
 import { MoviesSearchByCriteria } from '../../../Contexts/movies-info/movies/application/MoviesSearchByCriteria'
 import { DotNetBackRepository } from '../../../Contexts/movies-info/movies/infraestruture/dotNetBack/DotNetBackRepository'
 
-
 export function moviesState(): {
   movieList: MovieList
   textFilter: Filter,
@@ -45,11 +44,11 @@ export function moviesState(): {
       const order: Order = new Order("", OrderType.NONE)
       const filters: Filters = new Filters()
       filters.add(textFilter)
-      console.log("Current page: ", pagination.page)
+      //console.log("Current page: ", pagination.page)
       const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
-  
-      // const movieSearcherRepository = new TheMovieDBRepository()
-      const movieSearcherRepository = new DotNetBackRepository("https://localhost:7069/api/")
+
+      console.log("Server Repository: ", import.meta.env.VITE_DOT_NET_BACK)
+      const movieSearcherRepository = new DotNetBackRepository(import.meta.env.VITE_DOT_NET_BACK)
       console.log("Next page: ", criteria.pagination.page)
       const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
       movieSearcher.search().then (moviesFound => {

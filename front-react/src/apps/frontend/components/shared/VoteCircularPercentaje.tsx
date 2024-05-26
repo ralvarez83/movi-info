@@ -9,7 +9,7 @@ interface Props {
 export const VoteCircularPercentaje : React.FC<Props> = ({percentaje}) => {
   
   const isMediaLight = useMediaQuery('(prefers-color-scheme: light)')
-  const percentajeVote = Math.trunc(percentaje * 100) 
+  const percentajeVote = Math.trunc(percentaje * 10) 
 
   console.log('Porcentaje', percentajeVote)
 
