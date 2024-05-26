@@ -60,4 +60,3 @@ Aquí expondré qué cosas he incorporado en el código:
 - [ ] En el listado general aparezca un icono cuando es una película favorita
 - [ ] Listado / Filtro de películas favoritas
 - [ ] Poder sacar una película de favorita
-- 
