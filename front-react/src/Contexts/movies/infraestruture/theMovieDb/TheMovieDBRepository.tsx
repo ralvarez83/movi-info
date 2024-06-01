@@ -5,8 +5,8 @@ import { BASE_URL, DISCOVER, FILTER_STARTED, FIXED_FILTER_LANGUAJE, MOVIE_API_CO
 import { ConfigMovie } from "./types.d"
 import { TheMovieDBCriteriaTransformation } from "./TheMovieDBCriteriaTransformation"
 import { getTheMovieDBConfig } from "./TheMovieDBMoviesConfig"
-import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria"
-import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
+import { Criteria } from "../../../Shared/Domain/Criteria/Criteria"
+import { Pagination } from "../../../Shared/Domain/Criteria/Pagination"
 import { MovieTransformation } from "./Entities/MovieTransformation"
 
 export class TheMovieDBRepository implements MovieRepository{

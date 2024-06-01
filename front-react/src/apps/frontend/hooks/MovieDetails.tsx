@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Movie } from "../../../Contexts/movies-info/movies/domain/Movie";
-// import { TheMovieDBRepository } from "../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository";
-import { MovieFindById } from "../../../Contexts/movies-info/movies/application/MovieFindById";
-import { DotNetBackRepository } from "../../../Contexts/movies-info/movies/infraestruture/dotNetBack/DotNetBackRepository";
+import { Movie } from "../../../Contexts/movies/domain/Movie";
+import { MovieFindById } from "../../../Contexts/movies/application/MovieFindById";
+import { DotNetBackRepository } from "../../../Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository";
 
 export function movieDetails(movieId:String): {
   movie: Movie,

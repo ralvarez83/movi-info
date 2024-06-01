@@ -1,4 +1,4 @@
-import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
+import { Criteria } from "../../Shared/Domain/Criteria/Criteria";
 import { MovieSearchResults } from "../domain/Movie";
 import { MovieRepository } from "../domain/MovieRepository";
 import { MoviesSearch } from "./types";

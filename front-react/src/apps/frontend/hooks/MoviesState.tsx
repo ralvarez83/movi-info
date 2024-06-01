@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type MovieList} from '../../../Contexts/movies-info/movies/domain/Movie'
+import { type MovieList} from '../../../Contexts/movies/domain/Movie'
 // import { TheMovieDBRepository } from '../../../Contexts/movies-info/movies/infraestruture/theMovieDb/TheMovieDBRepository'
 import { Filter, FilterOperator } from '../../../Contexts/Shared/Domain/Criteria/Filters/FilterTypes.d'
 import { Order } from '../../../Contexts/Shared/Domain/Criteria/Order/Order'
@@ -7,8 +7,8 @@ import { OrderType } from '../../../Contexts/Shared/Domain/Criteria/Order/OrderT
 import { Pagination } from '../../../Contexts/Shared/Domain/Criteria/Pagination'
 import { Filters } from '../../../Contexts/Shared/Domain/Criteria/Filters/Filters'
 import { Criteria } from '../../../Contexts/Shared/Domain/Criteria/Criteria'
-import { MoviesSearchByCriteria } from '../../../Contexts/movies-info/movies/application/MoviesSearchByCriteria'
-import { DotNetBackRepository } from '../../../Contexts/movies-info/movies/infraestruture/dotNetBack/DotNetBackRepository'
+import { MoviesSearchByCriteria } from '../../../Contexts/movies/application/MoviesSearchByCriteria'
+import { DotNetBackRepository } from '../../../Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository'
 
 export function moviesState(): {
   movieList: MovieList

@@ -1,5 +1,5 @@
-import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria";
-import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination";
+import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
+import { Pagination } from "../../../Shared/Domain/Criteria/Pagination";
 
 const FILTER_DOMAIN_FILTER_TEXT = 'byText'
 export const FILTER_CONCATENATION = '&'

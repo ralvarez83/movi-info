@@ -1,4 +1,4 @@
-import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
+import { Criteria } from "../../Shared/Domain/Criteria/Criteria";
 import { Movie, MovieSearchResults } from "./Movie";
 
 export interface MovieRepository {

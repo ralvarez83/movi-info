@@ -1,8 +1,8 @@
 import { Movie, MovieSearchResults } from "../../domain/Movie"
 import { MovieRepository } from "../../domain/MovieRepository"
 import { DotNetBackCriteriaTransformation } from "./DotNetBackCriteriaTransformation"
-import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria"
-import { Pagination } from "../../../../Shared/Domain/Criteria/Pagination"
+import { Criteria } from "../../../Shared/Domain/Criteria/Criteria"
+import { Pagination } from "../../../Shared/Domain/Criteria/Pagination"
 
 const SEARCH_END_POINT: string = "Search?"
 const FIND_END_POINT: string = "Find/"
