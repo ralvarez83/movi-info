@@ -252,6 +252,21 @@ header{
   border-radius: 10px;
 }
 
+.textFilter{
+  label{
+    display: none;
+  }
+  input{
+    font-size: 1rem;
+    border-radius: 5rem;
+    padding: 1rem;
+    border-color: #757575;
+    &:focus{
+      border-color: #757575;
+    }
+  }
+}
+
 
 @media (prefers-color-scheme: light) {
   .movie-list{
