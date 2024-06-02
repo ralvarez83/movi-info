@@ -18,10 +18,9 @@ export const MovieDetails: React.FC<Props> = ({repository}) => {
     error
   } = movieDetails(new String(id), repository)
 
-
   return(
     <main className="movie-details">
-      {!isLoading && 
+      {!isLoading && error === '' &&
         <section>
           <figure>
             <img src={movie.horizontalImagePath} alt={movie.title} />
