@@ -11,9 +11,9 @@ export const VoteCircularPercentaje : React.FC<Props> = ({percentaje}) => {
   const isMediaLight = useMediaQuery('(prefers-color-scheme: light)')
   const percentajeVote = Math.trunc(percentaje * 10) 
 
-  console.log('Porcentaje', percentajeVote)
+  // console.log('Porcentaje', percentajeVote)
 
-  console.log('Light: ', isMediaLight)
+  // console.log('Light: ', isMediaLight)
 
   const percentajeVotesLight = {
     backgroundImage: 'conic-gradient(#757575 ' + (100 - percentajeVote) + '%, black 0)'
@@ -24,7 +24,7 @@ export const VoteCircularPercentaje : React.FC<Props> = ({percentaje}) => {
   return(
     <div className="percentajeCircular">
       <div className="circle" style={isMediaLight ? percentajeVotesLight: percentajeVotesDark}>
-        <div className="inner">{percentajeVote}%</div>
+        <div className="inner" aria-label="Porcentaje de aceptación de la película">{percentajeVote}%</div>
       </div>
     </div>
   )

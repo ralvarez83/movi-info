@@ -101,7 +101,7 @@
       font-weight: bold;
       padding-left: 3rem;
     }
-    &> aside {
+    &> article {
       display: flex;
       p{
         text-align: justify;
@@ -137,6 +137,10 @@
               opacity: 1;
             }
           }
+          img {
+            width: 65px;
+            height: 33px;
+          }
         }
       }
 
@@ -146,14 +150,19 @@
 
 .cargando{
   display: inline-block;
-  text-align: center;
-  font-size: 2rem;  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #1a1a1ab5;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+  aside {
+    text-align: center;
+    font-size: 2rem;  border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #1a1a1ab5;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  label{
+    
+  }
 }
 
 .errorMessage{
