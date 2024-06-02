@@ -4,8 +4,12 @@ import { Movie } from './Movie';
 import { TextFilter } from './shared/TextFilter';
 import { DevFooter } from './shared/DevFooter';
 import { InfinitePagination } from './shared/InfinitePagination';
+import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository';
+interface Props {
+  repository: MovieRepository
+}
 
-export const MovieListInfinite = (): JSX.Element => {
+export const MovieListInfinite: React.FC<Props> = ({repository}) => {
   const {
     movieList,
     textFilter,
@@ -13,7 +17,7 @@ export const MovieListInfinite = (): JSX.Element => {
 		pagination,
     setTextFilter,
 		getMovies
-  } = moviesState()
+  } = moviesState(repository)
 	
 	return (
 		<main className='movie-list'>

@@ -1,13 +1,17 @@
 import { Movie } from './Movie'
 import { moviesState } from '../hooks/MoviesState'
 import { TextFilter } from './shared/TextFilter'
+import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository'
+interface Props {
+  repository: MovieRepository
+}
 
-export const MoviesList = (): JSX.Element => {
+export const MoviesList: React.FC<Props> = ({repository}) => {
   const {
     movieList,
     textFilter,
     setTextFilter
-  } = moviesState()
+  } = moviesState(repository)
 
   return (
     <main className='movie-list'>

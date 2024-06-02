@@ -1,8 +1,13 @@
 import { useParams } from "react-router-dom";
 import { movieDetails } from "../hooks/MovieDetails";
 import { VoteCircularPercentaje } from "./shared/VoteCircularPercentaje";
+import { MovieRepository } from "../../../Contexts/movies/domain/MovieRepository";
 
-export const MovieDetails = (): JSX.Element => {
+interface Props {
+  repository: MovieRepository
+}
+
+export const MovieDetails: React.FC<Props> = ({repository}) => {
 
   const {id} = useParams();
 
@@ -10,7 +15,7 @@ export const MovieDetails = (): JSX.Element => {
     movie,
     isLoading,
     error
-  } = movieDetails(new String(id))
+  } = movieDetails(new String(id), repository)
 
   return(
     <main className="movie-details">

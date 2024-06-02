@@ -8,9 +8,9 @@ import { Pagination } from '../../../Contexts/Shared/Domain/Criteria/Pagination'
 import { Filters } from '../../../Contexts/Shared/Domain/Criteria/Filters/Filters'
 import { Criteria } from '../../../Contexts/Shared/Domain/Criteria/Criteria'
 import { MoviesSearchByCriteria } from '../../../Contexts/movies/application/MoviesSearchByCriteria'
-import { DotNetBackRepository } from '../../../Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository'
+import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository'
 
-export function moviesState(): {
+export function moviesState(repository: MovieRepository): {
   movieList: MovieList
   textFilter: Filter,
   pagination: Pagination,
@@ -47,10 +47,8 @@ export function moviesState(): {
       //console.log("Current page: ", pagination.page)
       const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
 
-      console.log("Server Repository: ", import.meta.env.VITE_DOT_NET_BACK)
-      const movieSearcherRepository = new DotNetBackRepository(import.meta.env.VITE_DOT_NET_BACK)
       console.log("Next page: ", criteria.pagination.page)
-      const movieSearcher = new MoviesSearchByCriteria(movieSearcherRepository, criteria)
+      const movieSearcher = new MoviesSearchByCriteria(repository, criteria)
       movieSearcher.search().then (moviesFound => {
         setMoviesList([
           ... movieList,

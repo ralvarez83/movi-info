@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { Movie } from "../../../Contexts/movies/domain/Movie";
 import { MovieFindById } from "../../../Contexts/movies/application/MovieFindById";
 import { DotNetBackRepository } from "../../../Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository";
+import { MovieRepository } from "../../../Contexts/movies/domain/MovieRepository";
 
-export function movieDetails(movieId:String): {
+export type movieDetailsReturn = {
   movie: Movie,
   isLoading: boolean,
   error: string
-} {
+}
+
+export function movieDetails(movieId:String, repository: MovieRepository): movieDetailsReturn {
 
   const emptyMovie : Movie = {
     adult: false,
@@ -25,8 +28,7 @@ export function movieDetails(movieId:String): {
   
   useEffect(() => {
     setIsLoading(true);
-
-    const repository : DotNetBackRepository = new DotNetBackRepository(import.meta.env.VITE_DOT_NET_BACK)
+    
     const movieFinder : MovieFindById = new MovieFindById(repository, movieId)
 
     movieFinder.find().then(wantedMovie => {
