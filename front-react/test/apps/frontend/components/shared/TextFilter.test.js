@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { fireEvent, render, screen } from "@testing-library/react";
-import {expect, test, jest} from '@jest/globals';
+import {expect, jest} from '@jest/globals';
 import { TextFilter } from '../../../../../src/apps/frontend/components/shared/TextFilter'
 import { FilterOperator } from '../../../../../src/Contexts/Shared/Domain/Criteria/Filters/FilterTypes.d'
 
@@ -24,7 +23,7 @@ describe("Input text to filter", () => {
 
     render (<TextFilter setFilter={setFilter} placeholder={placeholder} filter={emptyFilter} />)
 
-    const filter = screen.getByLabelText(placeholder);
+    const filter = screen.getByLabelText(/busca/i);
     fireEvent.change(filter, {
       target: { value: expectedFilter.value },
     });
@@ -49,7 +48,7 @@ describe("Input text to filter", () => {
 
     render (<TextFilter setFilter={setFilter} placeholder={placeholder} filter={emptyFilter} />)
 
-    const filter = screen.getByLabelText(placeholder);
+    const filter = screen.getByLabelText(/busca/i);
     fireEvent.change(filter, {
       target: { value: expectedFilter.value },
     });
