@@ -20,8 +20,9 @@ export const TextFilter: React.FC<Props> = ({ filter, placeholder, setFilter, mi
   }
 
   return (
-    <>
-      <input name={filter.field.toString()} placeholder={placeholder} onChange={(e) => setFilterValue(e.target.value)} />
-    </>
+    <aside className="textFilter">
+      <label htmlFor={filter.field.toString()}>{placeholder}</label>
+      <input name={filter.field.toString()} id={filter.field.toString()} placeholder={placeholder} onChange={(e) => setFilterValue(e.target.value)} />
+    </aside>
   )
 }
