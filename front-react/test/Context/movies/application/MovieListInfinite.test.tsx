@@ -1,15 +1,14 @@
 import {expect, test, jest} from '@jest/globals';
-import { act, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import React from 'react';
-import * as react_router from "react-router";
 import { DotNetBackRepository } from '../../../../src/Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository';
-import { Movie, MovieList, MovieSearchResults } from '../../../../src/Contexts/movies/domain/Movie';
+import { MovieSearchResults } from '../../../../src/Contexts/movies/domain/Movie';
 import { generateMovieSearchResultRandom } from '../domain/MovieSearchResultFactory';
 import {MovieListInfinite} from '../../../../src/apps/frontend/components/MovieListInfinite'
 import { mockIntersectionObserver } from '../infraestructure/mockIntersectionObserver';
-import { Pagination } from '../../../../src/Contexts/Shared/Domain/Criteria/Pagination';
+import { truncate } from './utils/text';
 
 jest.mock("../../../../src/Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository");
 
@@ -29,6 +28,7 @@ describe('MovieListInfinite', () => {
         await waitForElementToBeRemoved(() => screen.getByText(/cargando/i))
         expect(await axe(container)).toHaveNoViolations();
       })
+
       test("should show the first page movies", async () => {
         let moviRepo = new DotNetBackRepository("");
         const movieResult = generateMovieSearchResultRandom({}) as MovieSearchResults
@@ -40,9 +40,13 @@ describe('MovieListInfinite', () => {
         await waitForElementToBeRemoved(() => screen.getByText(/cargando/i))
         screen.debug
         
-        const title = screen.getByText(movieResult.movies[0].title)
+        movieResult.movies.forEach(movie => {
+          const titleTruncate = truncate(movie.title, 25)
+          const overviewTruncate = truncate(movie.overview, 100)
+          expect(screen.getByText(titleTruncate)).toBeInTheDocument();
+          expect(screen.getByText(overviewTruncate)).toBeInTheDocument();
+        });
 
-        expect(title).toBeInTheDocument();
         (moviRepo.searchByCriteria as jest.Mock).mockRestore();
         (moviRepo.searchByCriteria as jest.Mock).mockReset();
         (moviRepo.searchByCriteria as jest.Mock).mockClear();
