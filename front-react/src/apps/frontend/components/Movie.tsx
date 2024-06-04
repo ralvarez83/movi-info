@@ -13,9 +13,9 @@ export const Movie: React.FC<Props> = ({ id, title, image_path, overview }) => {
 
   return (
     <article>
-      <a href={"/movie/" + id}>
+      <a href={"/movie/" + id} aria-label={title} >
         <figure>
-          <img src={image_path} />
+          <img src={image_path} alt={title} />
           <figcaption>{truncate(title, 25)}</figcaption>
         </figure>
         <p>

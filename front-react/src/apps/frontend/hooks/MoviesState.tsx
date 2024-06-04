@@ -44,12 +44,13 @@ export function moviesState(repository: MovieRepository): {
       const order: Order = new Order("", OrderType.NONE)
       const filters: Filters = new Filters()
       filters.add(textFilter)
-      //console.log("Current page: ", pagination.page)
+      //console.log("Current page: ", pagination.page, " of ", pagination.totalPage)
       const criteria: Criteria = new Criteria(filters, order, pagination.getNextPage())
 
-      console.log("Next page: ", criteria.pagination.page)
+      //console.log("Next page: ", criteria.pagination.page)
       const movieSearcher = new MoviesSearchByCriteria(repository, criteria)
       movieSearcher.search().then (moviesFound => {
+        //console.log("movieFound: ", moviesFound)
         setMoviesList([
           ... movieList,
           ... moviesFound.movies

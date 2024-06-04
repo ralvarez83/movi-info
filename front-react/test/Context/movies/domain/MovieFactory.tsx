@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import crypto from 'crypto';
 import {Factory} from "fishery"
 
-const videoFactory = Factory.define<Movie>(({ sequence }) => ({
+const movieFactory = Factory.define<Movie>(({ sequence }) => ({
   id: sequence.toString(),
   title: faker.lorem.word({ length: { min: 5, max: 7 }, strategy: 'fail' }) ,
   usersVote: faker.number.float({ multipleOf: 0.25, min: 0, max:10 }),
@@ -14,11 +14,11 @@ const videoFactory = Factory.define<Movie>(({ sequence }) => ({
   horizontalImagePath: faker.image.urlLoremFlickr()
 }));
 
-export function generateVideoRandom(params){
-  return videoFactory.build(params);
+export function generateMovieRandom(params){
+  return movieFactory.build(params);
 }
 
-export function generateVideoRandonList(min = 0, max = 10) {
+export function generateMovieRandonList(min = 0, max = 10) {
   const length = Math.random() * (max - min) + min;
-  return videoFactory.buildList(length);
+  return movieFactory.buildList(length);
 }

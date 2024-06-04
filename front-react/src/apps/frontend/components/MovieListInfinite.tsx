@@ -5,6 +5,7 @@ import { TextFilter } from './shared/TextFilter';
 import { DevFooter } from './shared/DevFooter';
 import { InfinitePagination } from './shared/InfinitePagination';
 import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository';
+import { Cargando } from './shared/Cargando';
 interface Props {
   repository: MovieRepository
 }
@@ -22,17 +23,18 @@ export const MovieListInfinite: React.FC<Props> = ({repository}) => {
 	return (
 		<main className='movie-list'>
 		<h2>Todas las películas</h2>
-		<aside>
+		<div>
 			<TextFilter filter={textFilter} placeholder='Busca por texto...' setFilter={setTextFilter} />
-		</aside>
+		</div>
 		<InfinitePagination dataList={movieList} getMoreData={getMovies}>
-			<section>
-				{movieList.map((movie) => (
-						<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontalImagePath} {... movie} />
-					))}
-			</section>
-				{isLoading && 
-				<aside className='cargando'></aside>}
+			{(!isLoading || (isLoading && movieList.length > 0)) && 
+				<section>
+					{movieList.map((movie) => (
+							<Movie key={pagination.page + "-" + movie.id} image_path={movie.horizontalImagePath} {... movie} />
+						))}
+				</section>
+			}
+			{isLoading && <Cargando />}
 		</InfinitePagination>
 		<DevFooter pagination={pagination} />
 	</main>
