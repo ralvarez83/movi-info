@@ -7,7 +7,7 @@ import * as react_router from "react-router";
 import {MovieDetails} from '../../../../src/apps/frontend/components/MovieDetails'
 import { DotNetBackRepository } from '../../../../src/Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository';
 import { Movie } from '../../../../src/Contexts/movies/domain/Movie';
-import { generateVideoRandom } from '../domain/VideoFactory';
+import { generateMovieRandom } from '../domain/MovieFactory';
 
 jest.mock("../../../../src/Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository");
 
@@ -18,7 +18,7 @@ describe('MovieDetails', () => {
     test('should show it info', async () => {
   
       let moviRepo = new DotNetBackRepository("");
-      const movie: Movie | undefined = generateVideoRandom({}) as Movie;
+      const movie: Movie | undefined = generateMovieRandom({}) as Movie;
   
       (moviRepo.findById as jest.Mock).mockResolvedValue(movie as never)
   
