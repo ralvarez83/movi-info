@@ -13,7 +13,7 @@ string? frontEndHostName = Environment.GetEnvironmentVariable("FrontEndHostName"
 if (!String.IsNullOrEmpty(frontEndHostName)){
     string [] newAllowSpecificOrigins = [frontEndHostName];
     if (null != allowSpecificOrigins){
-        allowSpecificOrigins = allowSpecificOrigins.Concat<string>(newAllowSpecificOrigins).ToArray<string>();
+        allowSpecificOrigins = [ ..allowSpecificOrigins, ..newAllowSpecificOrigins];
     }
     else{
         allowSpecificOrigins = newAllowSpecificOrigins;   
