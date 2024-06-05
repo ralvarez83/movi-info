@@ -17,9 +17,9 @@ namespace WebAPI.dto
       title = movieDomine.title;
       overview = movieDomine.overview;
       adult = movieDomine.adult;
-      verticalImagePath = (null != movieDomine.verticalImagePath)? movieDomine.verticalImagePath.value:string.Empty;
-      horizontalImagePath = (null != movieDomine.horizontalImagePath)? movieDomine.horizontalImagePath.value:string.Empty;
-      imdbLink = (null != movieDomine.imdbLink)? movieDomine.imdbLink.value:string.Empty;
+      verticalImagePath = (null != movieDomine.verticalImagePath)? movieDomine.verticalImagePath.AbsoluteUri:string.Empty;
+      horizontalImagePath = (null != movieDomine.horizontalImagePath)? movieDomine.horizontalImagePath.AbsoluteUri:string.Empty;
+      imdbLink = (null != movieDomine.imdbLink)? movieDomine.imdbLink.AbsoluteUri:string.Empty;
       usersVote = movieDomine.usersVote;
 
     }

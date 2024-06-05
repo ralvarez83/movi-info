@@ -1,7 +1,6 @@
 using MovieDomain =  Domain.Movies;
 using Infraestructure.TheMovieDb.Entities.Attributes;
 using Domain.Movies.ValueObjects;
-using Domain.Shared.ValueObjects.Links;
 
 namespace Infraestructure.TheMovieDb.Entities
 {
@@ -35,7 +34,7 @@ namespace Infraestructure.TheMovieDb.Entities
 
     public MovieDomain.Movie toMovieDomain(string base_url){
       
-      return new MovieDomain.Movie (new MovieId(id.ToString()), title, overview, adult, ImageLink.Create(base_url + poster_path), ImageLink.Create(base_url + backdrop_path), Link.Create(MovieDomain.Movie.IMDB_BASE_LINK + imdb_id), vote_average);
+      return new MovieDomain.Movie (new MovieId(id.ToString()), title, overview, adult, new Uri(base_url + poster_path), new Uri(base_url + backdrop_path), new Uri(MovieDomain.Movie.IMDB_BASE_LINK + imdb_id), vote_average);
 
     }
     

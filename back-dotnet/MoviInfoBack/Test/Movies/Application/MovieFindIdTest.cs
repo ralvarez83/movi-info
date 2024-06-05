@@ -3,6 +3,7 @@ using Domain.Movies;
 using Domain.Movies.ValueObjects;
 using Infraestructure.TheMovieDb;
 using Moq;
+using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;
 
 namespace Test.Movies.Application
@@ -20,6 +21,18 @@ namespace Test.Movies.Application
       Movie movieNotFound = await finder.find();
 
       Assert.IsNull(movieNotFound);
+    }
+
+    [TestMethod]
+    public async Task FindAMoviWithGoodId(){
+      Movie movie = MovieFactory.BuildRandom();
+      MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(movie.id) == Task.FromResult<Movie?>(movie));
+
+      MoviFindById finder = new MoviFindById(moviRepoMok, movie.id);
+
+      Movie movieMustFound = await finder.find();
+
+      Assert.AreSame(movie, movieMustFound);
     }
   }
 }

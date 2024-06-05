@@ -1,5 +1,4 @@
 using Domain.Movies.ValueObjects;
-using Domain.Shared.ValueObjects.Links;
 
 namespace Domain.Movies
 {
@@ -10,12 +9,12 @@ namespace Domain.Movies
     public string title {get; init;}
     public string overview {get; init;}
     public bool adult {get; init;}
-    public LinkRegex? verticalImagePath {get; init;}
-    public LinkRegex? horizontalImagePath {get; init;}
-    public LinkRegex? imdbLink {get; init;}
+    public Uri? verticalImagePath {get; init;}
+    public Uri? horizontalImagePath {get; init;}
+    public Uri? imdbLink {get; init;}
     public float usersVote {get; init;}
 
-    public Movie (MovieId id, string title, string overview, bool adult, LinkRegex verticalImagePath, LinkRegex horizontalImagePath, LinkRegex imdbLink, float usersVote){
+    public Movie (MovieId id, string title, string overview, bool adult, Uri verticalImagePath, Uri horizontalImagePath, Uri imdbLink, float usersVote){
       this.id = id;
       this.title = title;
       this.overview = overview;
