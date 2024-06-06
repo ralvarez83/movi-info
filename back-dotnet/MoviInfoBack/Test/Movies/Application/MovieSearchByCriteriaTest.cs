@@ -11,12 +11,12 @@ namespace Test.Movies.Application
   {
 
     [TestMethod]
-    public async Task FindEmptyList(){
+    public async Task SearchEmptyList(){
       MovieSearchResults movieResult = MovieSearchResultsFactory.BuildEmptyListMovies();
 
-      MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(It.IsAny<Criteria>()) == Task<MovieSearchResults>.FromResult(movieResult));
-
       Criteria criteria = CriteriaFactory.BuildRandom();
+
+      MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
 
@@ -27,19 +27,17 @@ namespace Test.Movies.Application
 
 
     [TestMethod]
-    public async Task FindList(){
-      MovieSearchResults movieResult = MovieSearchResultsFactory.BuildEmptyListMovies();
-
-      MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(It.IsAny<Criteria>()) == Task<MovieSearchResults>.FromResult(movieResult));
-
+    public async Task SearchAListWithData(){
+      MovieSearchResults movieResult = MovieSearchResultsFactory.BuildRandomListMovies();
       Criteria criteria = CriteriaFactory.BuildRandom();
+
+      MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
 
       MovieSearchResults movieResultsResponse = await movieSearcher.search();
       
       Assert.AreSame(movieResult, movieResultsResponse);
-    }
-    
+    }    
   }
 }

@@ -17,8 +17,9 @@ namespace Test.Movies.Domain
     }
 
     public static MovieSearchResults BuildRandomListMovies(){
-      Fixture fixture = new Fixture();
-      return fixture.Create<MovieSearchResults>();
+      ImmutableList<Movie> movies = MovieFactory.BuildRandomList();
+      Pagination pagination = PaginationFactory.BuildInitial();
+      return new MovieSearchResults(movies, pagination);
     }
   }
 }
