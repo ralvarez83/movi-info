@@ -12,7 +12,7 @@ namespace WebAPI.Controllers.Movies
 {
   
   [ApiController]
-  [Route("api/[controller]")]
+  [Route("api/movie/")]
   public class FindController:ControllerBase
   {
     private readonly TheMovieDBOptions _theMovieDBConfiguration;
