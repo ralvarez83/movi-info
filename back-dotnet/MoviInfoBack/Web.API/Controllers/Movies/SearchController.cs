@@ -23,9 +23,9 @@ public class SearchController : ControllerBase
 
   [HttpGet]
   public async Task<ActionResult<MovieSearchResultDTO>> Get(string? byText, int page, int totalPages){
-    string authorization = _theMovieDBConfiguration.Authorization;
+    string authorization = _theMovieDBConfiguration.Authorisation;
     Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
-    string authorizationType = _theMovieDBConfiguration.AuthorizationType;
+    string authorizationType = _theMovieDBConfiguration.AuthorisationType;
 
     ConfigMovie? repositoryConfig = await ConfigMovie.GetConfig(authorization,baseURL, authorizationType);
 

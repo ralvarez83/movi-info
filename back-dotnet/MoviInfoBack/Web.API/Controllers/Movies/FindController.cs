@@ -23,9 +23,9 @@ namespace WebAPI.Controllers.Movies
     [HttpGet("{id}")]
     public async Task<ActionResult<MovieDTO>> Get(string id){
 
-      string authorization = _theMovieDBConfiguration.Authorization;
+      string authorization = _theMovieDBConfiguration.Authorisation;
       Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
-      string authorizationType = _theMovieDBConfiguration.AuthorizationType;
+      string authorizationType = _theMovieDBConfiguration.AuthorisationType;
 
       ConfigMovie? repositoryConfig = await ConfigMovie.GetConfig(authorization,baseURL, authorizationType);
 
