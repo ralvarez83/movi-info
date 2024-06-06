@@ -7,7 +7,7 @@ namespace Infraestructure.TheMovieDb.Entities
   public sealed record ConfigMovie{
     public const string BASE_URL = "https://api.themoviedb.org/3/";
     public const string DISCOVER = "discover/movie";
-    public const string SEARCH = "/search/movie";
+    public const string SEARCH = "search/movie";
     private const string CONFIG = "configuration";
     public const string MOVIE_FIND = "movie/";
 

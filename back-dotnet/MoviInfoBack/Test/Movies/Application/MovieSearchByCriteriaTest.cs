@@ -14,7 +14,7 @@ namespace Test.Movies.Application
     public async Task SearchEmptyList(){
       MovieSearchResults movieResult = MovieSearchResultsFactory.BuildEmptyListMovies();
 
-      Criteria criteria = CriteriaFactory.BuildRandom();
+      Criteria criteria = CriteriaFactory.BuildWithRandomPaginationEmptyFilters();
 
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 
@@ -29,7 +29,7 @@ namespace Test.Movies.Application
     [TestMethod]
     public async Task SearchAListWithData(){
       MovieSearchResults movieResult = MovieSearchResultsFactory.BuildRandomListMovies();
-      Criteria criteria = CriteriaFactory.BuildRandom();
+      Criteria criteria = CriteriaFactory.BuildWithRandomPaginationEmptyFilters();
 
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 

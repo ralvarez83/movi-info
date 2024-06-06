@@ -21,7 +21,7 @@ namespace Infraestructure.TheMovieDb.Entities
     public string poster_path {get; set;} = string.Empty;
     public ProductionCompany[] production_companies {get; set;}  = [];
     public ProductionCountry[] production_contries {get; set;}  = [];
-    public DateTime release_date {get; set;}
+    public DateTime? release_date {get; set;}
     public float revenue {get; set;}
     public long runtime {get; set;}
     public SpokenLanguage[] spoken_languages {get; set;}  = [];

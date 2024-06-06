@@ -11,6 +11,11 @@ namespace Test.Movies.Domain
       return new Pagination(1, fixture.Create<int>());
     }
 
+    public static Pagination BuildRandom(){
+      Fixture fixture = new();
+      return fixture.Create<Pagination>();
+    }
+
     
   }
 }

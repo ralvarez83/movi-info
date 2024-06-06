@@ -20,6 +20,8 @@ namespace Infraestructure.TheMovieDb
 
       public async Task<MovieDomain?> findById(MovieId movieId)
       {
+        if (null == _config)
+          return null;
         
         TheMovieDBCriteriaTransformation criteriaTransformation = new TheMovieDBCriteriaTransformation();
         string apiURL = ConfigMovie.MOVIE_FIND + movieId.value + criteriaTransformation.getEmptyCriteria() ; 
@@ -35,6 +37,9 @@ namespace Infraestructure.TheMovieDb
 
       public async Task<MovieSearchResults> searchByCriteria(Criteria criteria)
       {
+        if (null == _config)
+          return new MovieSearchResults([], criteria.pagination);
+
         TheMovieDBCriteriaTransformation criteriaTransformation = new TheMovieDBCriteriaTransformation(criteria);
 
         string queryType = criteriaTransformation.isSearch() ? ConfigMovie.SEARCH : ConfigMovie.DISCOVER;
