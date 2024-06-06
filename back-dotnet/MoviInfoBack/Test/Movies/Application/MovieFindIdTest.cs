@@ -12,7 +12,7 @@ namespace Test.Movies.Application
   {
     [TestMethod]
     public async Task FindAMoviWithWrongId(){
-      MovieId wrongId = MovieIdFactory.MovieIDRandomBuild();
+      MovieId wrongId = MovieIdFactory.BuildRandomMovieID();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(It.IsAny<MovieId>()) == Task.FromResult<Movie?>(null));
 
       MoviFindById finder = new MoviFindById(moviRepoMok, wrongId);

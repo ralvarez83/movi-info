@@ -5,6 +5,7 @@ using Domain.Shared.Criteria.Filters;
 using Infraestructure.TheMovieDb;
 using Infraestructure.TheMovieDb.Entities;
 using Test.Movies.Domain;
+using Test.Movies.Domain.ValueObjects;
 using Test.Movies.Infraestructure.TheMovieDB.Factories;
 using WebAPI.Configurations;
 using Movie = Domain.Movies.Movie;
@@ -32,6 +33,7 @@ namespace Test.Movies.Infraestructure.TheMovieDB
       Assert.AreSame(movieResultExpected.movies, moviResults.movies);
       Assert.AreSame(movieResultExpected.pagination, moviResults.pagination);
     }
+
     [TestMethod]
     public async Task SearchMoviesWithoutFiltersShouldReturn20Movies (){
       // Given
@@ -66,7 +68,7 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       string spanishTextFilter = "casa";
       string englishTextFilter = "home";
-      
+
       Filters filters = FiltersFactory.BuildSpecificTextFilter(spanishTextFilter);
 
       Criteria criteria = CriteriaFactory.BuildWithInitialPagination(filters);
@@ -83,6 +85,52 @@ namespace Test.Movies.Infraestructure.TheMovieDB
           movie.overview.ToLower().Contains(englishTextFilter.ToLower()) 
         );
       });      
+    }
+
+
+    [TestMethod]
+    public async Task FindMoviesWithBadConfigShouldReturnEmptyMovie (){
+      TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
+      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
+      
+      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+
+
+      Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildRandomMovieID());
+
+      Assert.IsNull(movieReturn);
+    }
+
+    [TestMethod]
+    public async Task FindMovieByBadId (){
+      // Given
+      TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
+      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
+      
+      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+
+      Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildNoExistsMovieID());
+
+      Assert.IsNull(movieReturn);
+    }
+
+    [TestMethod]
+    public async Task FindMovieByRightId (){
+      // Given
+      TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
+      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
+      
+      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+
+      Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildExistsMovieID());
+
+      Assert.IsNotNull(movieReturn);
     }
   }
 }
