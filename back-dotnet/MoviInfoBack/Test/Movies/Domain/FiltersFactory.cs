@@ -1,7 +1,4 @@
 using Domain.Shared.Criteria.Filters;
-{
-  
-}
 
 namespace Test.Movies.Domain
 {

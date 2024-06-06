@@ -6,11 +6,10 @@ using Test.Movies.Domain;
 
 namespace Test.Movies.Application
 {
-  [TestClass]
   public class MovieSearchByCriteriaTest
   {
 
-    [TestMethod]
+    [Fact]
     public async Task SearchEmptyList(){
       MovieSearchResults movieResult = MovieSearchResultsFactory.BuildEmptyListMovies();
 
@@ -22,11 +21,11 @@ namespace Test.Movies.Application
 
       MovieSearchResults movieResultsResponse = await movieSearcher.search();
       
-      Assert.AreSame(movieResult, movieResultsResponse);
+      Assert.Same(movieResult, movieResultsResponse);
     }
 
 
-    [TestMethod]
+    [Fact]
     public async Task SearchAListWithData(){
       MovieSearchResults movieResult = MovieSearchResultsFactory.BuildRandomListMovies();
       Criteria criteria = CriteriaFactory.BuildWithRandomPaginationEmptyFilters();
@@ -37,7 +36,7 @@ namespace Test.Movies.Application
 
       MovieSearchResults movieResultsResponse = await movieSearcher.search();
       
-      Assert.AreSame(movieResult, movieResultsResponse);
+      Assert.Same(movieResult, movieResultsResponse);
     }    
   }
 }

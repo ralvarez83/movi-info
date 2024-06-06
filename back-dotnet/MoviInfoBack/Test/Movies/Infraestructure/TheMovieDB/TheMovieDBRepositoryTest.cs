@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using Domain.Movies;
 using Domain.Shared.Criteria;
 using Domain.Shared.Criteria.Filters;
@@ -12,10 +11,9 @@ using Movie = Domain.Movies.Movie;
 
 namespace Test.Movies.Infraestructure.TheMovieDB
 {
-  [TestClass]
   public class TheMovieDBRepositoryTest
  {
-    [TestMethod]
+    [Fact]
     public async Task SearchMoviesWithBadConfigShouldReturnEmptyMovieListAndSamePagination (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
       Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
@@ -30,11 +28,11 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       MovieSearchResults movieResultExpected = new MovieSearchResults([], criteria.pagination);
 
-      Assert.AreSame(movieResultExpected.movies, moviResults.movies);
-      Assert.AreSame(movieResultExpected.pagination, moviResults.pagination);
+      Assert.Same(movieResultExpected.movies, moviResults.movies);
+      Assert.Same(movieResultExpected.pagination, moviResults.pagination);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task SearchMoviesWithoutFiltersShouldReturn20Movies (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
@@ -51,12 +49,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       // Then
 
-      Assert.AreEqual(20, movieResults.movies.Count);
-      Assert.AreEqual(criteria.pagination.page, movieResults.pagination.page);
+      Assert.Equal(20, movieResults.movies.Count);
+      Assert.Equal(criteria.pagination.page, movieResults.pagination.page);
     }
 
 
-    [TestMethod]
+    [Fact]
     public async Task SearchMoviesWithTextFilterShouldReturnMoviesWithThisTextInTitleOrOverview (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
@@ -78,7 +76,7 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       // Then
       movieResults.movies.ForEach(movie => {
-        Assert.IsTrue(
+        Assert.True(
           movie.title.ToLower().Contains(spanishTextFilter.ToLower()) || 
           movie.overview.ToLower().Contains(spanishTextFilter.ToLower()) || 
           movie.title.ToLower().Contains(englishTextFilter.ToLower()) || 
@@ -88,7 +86,7 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     }
 
 
-    [TestMethod]
+    [Fact]
     public async Task FindMoviesWithBadConfigShouldReturnEmptyMovie (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
       Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
@@ -100,10 +98,10 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildRandomMovieID());
 
-      Assert.IsNull(movieReturn);
+      Assert.Null(movieReturn);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task FindMovieByBadId (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
@@ -115,10 +113,10 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildNoExistsMovieID());
 
-      Assert.IsNull(movieReturn);
+      Assert.Null(movieReturn);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task FindMovieByRightId (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
@@ -130,7 +128,7 @@ namespace Test.Movies.Infraestructure.TheMovieDB
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildExistsMovieID());
 
-      Assert.IsNotNull(movieReturn);
+      Assert.NotNull(movieReturn);
     }
   }
 }

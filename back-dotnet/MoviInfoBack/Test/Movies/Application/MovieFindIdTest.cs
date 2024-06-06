@@ -7,10 +7,9 @@ using Test.Movies.Domain.ValueObjects;
 
 namespace Test.Movies.Application
 {
-  [TestClass]
   public class MovieFindByIdTest
   {
-    [TestMethod]
+    [Fact]
     public async Task FindAMoviWithWrongId(){
       MovieId wrongId = MovieIdFactory.BuildRandomMovieID();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(It.IsAny<MovieId>()) == Task.FromResult<Movie?>(null));
@@ -19,10 +18,10 @@ namespace Test.Movies.Application
 
       Movie movieNotFound = await finder.find();
 
-      Assert.IsNull(movieNotFound);
+      Assert.Null(movieNotFound);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task FindAMoviWithGoodId(){
       Movie movie = MovieFactory.BuildRandom();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(movie.id) == Task.FromResult<Movie?>(movie));
@@ -31,7 +30,7 @@ namespace Test.Movies.Application
 
       Movie movieMustFound = await finder.find();
 
-      Assert.AreSame(movie, movieMustFound);
+      Assert.Same(movie, movieMustFound);
     }
   }
 }

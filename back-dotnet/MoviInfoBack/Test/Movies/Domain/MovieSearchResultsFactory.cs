@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using AutoFixture;
 using Domain.Movies;
 using Domain.Shared.Criteria;
 
