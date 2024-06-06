@@ -19,7 +19,7 @@ namespace Infraestructure.TheMovieDb.Entities
     public async static Task<ConfigMovie?> GetConfig (string authorization, Uri baseURL, string authorizationType){
        HttpClient client = new HttpClient
         {
-            BaseAddress = new Uri(ConfigMovie.BASE_URL)
+            BaseAddress = baseURL
         };
 
         client.DefaultRequestHeaders.Accept.Clear();
