@@ -3,7 +3,7 @@ using Xunit.Gherkin.Quick;
 
 namespace Test.WebAPI.Movies
 {
-  [FeatureFile("./WebAPI/GetAMovie.feature")]
+  [FeatureFile("./WebAPI/Movies/GetAMovie.feature")]
   public sealed class GetAMovie : Feature
   {
     private HttpResponseMessage response {get; set;}
