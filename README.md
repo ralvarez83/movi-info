@@ -30,7 +30,7 @@ Las tecnologías utilizadas para la capa de Back son:
 - Docker (docker-compose, network, build)
 - API Rest
 - xUnit con AutoFixture para pruebas Unitarias y de Infraestructura
-- Xunit.Gherkin.Quick para pruebas de Aceptación
+- xUnit.Gherkin.Quick para pruebas de Aceptación
 
 La arquitectura que se está implementando es la Hexagonal, una arquitectura limpia que permite reducir el esfuerzo en caso de actualización del framework, entre otras ventajas.
 
