@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="Xunit.Gherkin.Quick" Version="4.5.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
@@ -32,5 +33,13 @@
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
     <ProjectReference Include="..\Web.API\Web.API.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update=".\**\*.feature">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
