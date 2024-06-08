@@ -4,8 +4,7 @@ import { DotNetBackCriteriaTransformation } from "./DotNetBackCriteriaTransforma
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria"
 import { Pagination } from "../../../Shared/Domain/Criteria/Pagination"
 
-const SEARCH_END_POINT: string = "Search?"
-const FIND_END_POINT: string = "Find/"
+const MOVIE_END_POINT: string = "movie/"
 
 export class DotNetBackRepository implements MovieRepository{
   
@@ -20,7 +19,7 @@ export class DotNetBackRepository implements MovieRepository{
     const criteriaTransformation = new DotNetBackCriteriaTransformation(criteria)
     
     //console.log("Llamada a: ",this.#endPointURLAccess + SEARCH_END_POINT + criteriaTransformation.getCriterias())
-    const res = await fetch(this.#endPointURLAccess + SEARCH_END_POINT + criteriaTransformation.getCriterias())
+    const res = await fetch(this.#endPointURLAccess + MOVIE_END_POINT + criteriaTransformation.getCriterias())
     console.log('res', res);
     if (!res.ok) {
       console.log("Error llamada: ", res.statusText)
@@ -43,8 +42,8 @@ export class DotNetBackRepository implements MovieRepository{
 
   async findById (movieID: string): Promise<Movie|undefined> {
     
-    console.log("url: ", this.#endPointURLAccess + FIND_END_POINT + movieID)
-    const res = await fetch(this.#endPointURLAccess + FIND_END_POINT + movieID)
+    console.log("url: ", this.#endPointURLAccess + MOVIE_END_POINT + movieID)
+    const res = await fetch(this.#endPointURLAccess + MOVIE_END_POINT + movieID)
 
     if (!res.ok) {
       return undefined

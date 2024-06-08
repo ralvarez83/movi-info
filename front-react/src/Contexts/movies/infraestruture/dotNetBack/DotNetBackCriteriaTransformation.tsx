@@ -3,6 +3,7 @@ import { Pagination } from "../../../Shared/Domain/Criteria/Pagination";
 
 const FILTER_DOMAIN_FILTER_TEXT = 'byText'
 export const FILTER_CONCATENATION = '&'
+export const FILTER_STAR = '?'
 
 export class DotNetBackCriteriaTransformation {
 
@@ -21,7 +22,7 @@ export class DotNetBackCriteriaTransformation {
       filters += filterField + '=' + filter.value + FILTER_CONCATENATION
     })
 
-    return filters + paginationFilter + this.criteria.pagination.page + FILTER_CONCATENATION + totalpagesFilter + (this.criteria.pagination.totalPage ? this.criteria.pagination.totalPage : 0)
+    return FILTER_STAR + filters + paginationFilter + this.criteria.pagination.page + FILTER_CONCATENATION + totalpagesFilter + (this.criteria.pagination.totalPage ? this.criteria.pagination.totalPage : 0)
   }
 
   /**

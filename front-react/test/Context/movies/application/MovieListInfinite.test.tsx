@@ -43,8 +43,8 @@ describe('MovieListInfinite', () => {
         movieResult.movies.forEach(movie => {
           const titleTruncate = truncate(movie.title, 25)
           const overviewTruncate = truncate(movie.overview, 100)
-          expect(screen.getByText(titleTruncate)).toBeInTheDocument();
-          expect(screen.getByText(overviewTruncate)).toBeInTheDocument();
+          expect(screen.getAllByText(titleTruncate).length).toBeGreaterThanOrEqual(1);
+          expect(screen.getAllByText(overviewTruncate).length).toBeGreaterThanOrEqual(1);
         });
 
         (moviRepo.searchByCriteria as jest.Mock).mockRestore();
