@@ -5,6 +5,7 @@ En esta aplicación se van incorporando poco a poco todo el aprendizaje que voy 
 - Arquitecturas
 - Patrones de diseño
 - Back
+- Pruebas automáticas: Unitarias, Infraestructura y Aceptación
 
 Info:
   - Web: http://194.164.174.221:8181
@@ -20,6 +21,7 @@ Las tecnologías utilizadas para la capa de Front son:
 - Vite
 - Docker (docker-compose, network, build)
 - NGINX
+- Jest (pruebas de componente)
 
 ## Back
 Las tecnologías utilizadas para la capa de Back son:
@@ -27,6 +29,8 @@ Las tecnologías utilizadas para la capa de Back son:
 - LinQ
 - Docker (docker-compose, network, build)
 - API Rest
+- xUnit con AutoFixture para pruebas Unitarias y de Infraestructura
+- Xunit.Gherkin.Quick para pruebas de Aceptación
 
 La arquitectura que se está implementando es la Hexagonal, una arquitectura limpia que permite reducir el esfuerzo en caso de actualización del framework, entre otras ventajas.
 
@@ -54,6 +58,10 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Dockerizar Front y Back
 - [x] Conectarlos de manera que pudieran pasar por diferentes entornos sin volver a construir la imagen :bowtie:
 - [x] Publicar la aplicación
+- [x] Pruebas de componente en Front
+- [x] Pruebas unitarias en Back
+- [x] Pruebas de infraestructura en Back
+- [x] Pruebas de aceptación en Back
 - [ ] Crear una gestión de usuarios
 - [ ] El usuario pueda marcar películas favoritas
 - [ ] En detalles se va un icono de película favorita
