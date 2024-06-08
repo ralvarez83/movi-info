@@ -1,7 +1,7 @@
 using WebAPI.dto;
 using Xunit.Gherkin.Quick;
 
-namespace Test.WebAPI
+namespace Test.WebAPI.Movies
 {
   [FeatureFile("./WebAPI/GetAMovie.feature")]
   public sealed class GetAMovie : Feature
@@ -21,7 +21,7 @@ namespace Test.WebAPI
     }
     
     [Then(@"the response status code should be (\d+)")]
-    public void Then_Respons_Should_Be_200(int statusCode)
+    public void Then_Respons_Should_Be(int statusCode)
     {
        
       Assert.Equal<int>(statusCode, (int) this.response.StatusCode);
