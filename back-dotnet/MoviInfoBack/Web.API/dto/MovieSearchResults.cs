@@ -12,7 +12,7 @@ namespace WebAPI.dto
     public MovieSearchResults(MovieSearchResultsDomain movieSearchResultsDomain){
 
       this.movies = movieSearchResultsDomain.movies.Select(movie => {
-        return new Movie(movie);
+        return Movie.TransformToMovieDTO(movie);
       }).ToImmutableList<Movie>();
       this.pagination = movieSearchResultsDomain.pagination;
     }

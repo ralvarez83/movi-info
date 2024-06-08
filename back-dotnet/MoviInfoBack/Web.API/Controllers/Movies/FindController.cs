@@ -41,7 +41,7 @@ namespace WebAPI.Controllers.Movies
       if (null == movie)
         return NotFound();
 
-      return new MovieDTO(movie);
+      return MovieDTO.TransformToMovieDTO(movie);
     }
   }
 }

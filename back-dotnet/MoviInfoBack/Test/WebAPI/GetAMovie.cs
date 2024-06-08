@@ -1,3 +1,4 @@
+using WebAPI.dto;
 using Xunit.Gherkin.Quick;
 
 namespace Test.WebAPI
@@ -5,25 +6,32 @@ namespace Test.WebAPI
   [FeatureFile("./WebAPI/GetAMovie.feature")]
   public sealed class GetAMovie : Feature
   {
+    private HttpResponseMessage response {get; set;}
     
     [Given(@"I send a GET request to '(.*)'")]
-    public void Given_I_Send_A_Get_Request(string url)
+    public async Task Given_I_Send_A_Get_Request(string url)
     {
-      Uri uri = new Uri(url);
+      HttpClient client = new HttpClient
+      {
+          BaseAddress = new Uri("http://localhost:5021")
+      };
+      client.DefaultRequestHeaders.Accept.Clear();
+      
+      this.response = await client.GetAsync(url);
     }
     
     [Then(@"the response status code should be (\d+)")]
     public void Then_Respons_Should_Be_200(int statusCode)
     {
        
-      Assert.True(true);
+      Assert.Equal<int>(statusCode, (int) this.response.StatusCode);
     }
     
     [And(@"the result should '(.*)'")]
-    public void Then_The_Title_Should_Be_Equal(string movieTitle)
+    public async Task Then_The_Title_Should_Be_Equal(string movieTitle)
     {
-       
-      Assert.True(true);
+      Movie movie = await this.response.Content.ReadAsAsync<Movie>();
+      Assert.Equal(movieTitle, movie.title);
     }
   }
 }
