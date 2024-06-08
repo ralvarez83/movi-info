@@ -48,7 +48,7 @@ public class SearchController : ControllerBase
 
     MovieSearchResults movieSearchResults = await movieSearcher.search();
 
-    MovieSearchResultDTO movieSearchResultsDTO = new MovieSearchResultDTO(movieSearchResults);
+    MovieSearchResultDTO movieSearchResultsDTO = MovieSearchResultDTO.TranformToMovieSearchResults(movieSearchResults);
     return movieSearchResultsDTO;
   }
 

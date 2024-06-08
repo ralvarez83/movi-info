@@ -6,15 +6,16 @@ namespace WebAPI.dto
 {
   public record MovieSearchResults
   {
-    public ImmutableList<Movie> movies {get; init;}
-    public Pagination pagination {get; init;}
+    public ImmutableList<Movie> movies {get; set;}
+    public Pagination pagination {get; set;}
 
-    public MovieSearchResults(MovieSearchResultsDomain movieSearchResultsDomain){
-
-      this.movies = movieSearchResultsDomain.movies.Select(movie => {
-        return Movie.TransformToMovieDTO(movie);
-      }).ToImmutableList<Movie>();
-      this.pagination = movieSearchResultsDomain.pagination;
+    public static MovieSearchResults TranformToMovieSearchResults(MovieSearchResultsDomain movieSearchResultsDomain){
+      return new MovieSearchResults{
+        movies = movieSearchResultsDomain.movies.Select(movie => {
+          return Movie.TransformToMovieDTO(movie);
+        }).ToImmutableList<Movie>(),
+        pagination = movieSearchResultsDomain.pagination
+      };
     }
   }
 }
