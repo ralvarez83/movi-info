@@ -3,10 +3,9 @@
 version: '3.4'
 
 services:
-  webapi:
-    image: webapi
+  backend:
+    image: rubenag83/movi-info-react-dotnet-backend:amd64
     build:
       context: .
-      dockerfile: Web.API/Dockerfile
-    ports:
-      - 5021:5021
+      platforms:
+        - "linux/amd64"

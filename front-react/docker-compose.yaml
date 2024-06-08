@@ -1,7 +1,8 @@
 version: '1.0'
 services:
-  app:
-    image: "selft-assesment-charts:nginx-slim"
-    ports:
-      - 8080:8080
-    restart: unless-stopped
+  frontend:
+    image: rubenag83/movi-info-react-dotnet-frontend:amd64
+    build:
+      context: .
+      platforms:
+        - "linux/amd64"
