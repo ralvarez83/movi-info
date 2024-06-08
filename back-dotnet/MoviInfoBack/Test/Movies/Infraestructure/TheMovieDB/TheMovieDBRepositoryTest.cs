@@ -1,13 +1,13 @@
-using Domain.Movies;
-using Domain.Shared.Criteria;
-using Domain.Shared.Criteria.Filters;
-using Infraestructure.TheMovieDb;
-using Infraestructure.TheMovieDb.Entities;
+using Movies.Domain;
+using Shared.Domain.Criteria;
+using Shared.Domain.Criteria.Filters;
+using Movies.Infraestructure.TheMovieDb;
+using Movies.Infraestructure.TheMovieDb.Entities;
 using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;
 using Test.Movies.Infraestructure.TheMovieDB.Factories;
 using WebAPI.Configurations;
-using Movie = Domain.Movies.Movie;
+using Movie = Movies.Domain.Movie;
 
 namespace Test.Movies.Infraestructure.TheMovieDB
 {

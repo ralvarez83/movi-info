@@ -1,9 +1,9 @@
-using Application.Movies;
-using Domain.Movies;
-using Domain.Shared.Criteria;
-using Domain.Shared.Criteria.Filters;
-using Infraestructure.TheMovieDb;
-using Infraestructure.TheMovieDb.Entities;
+using Movies.Application;
+using Movies.Domain;
+using Shared.Domain.Criteria;
+using Shared.Domain.Criteria.Filters;
+using Movies.Infraestructure.TheMovieDb;
+using Movies.Infraestructure.TheMovieDb.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Configurations;

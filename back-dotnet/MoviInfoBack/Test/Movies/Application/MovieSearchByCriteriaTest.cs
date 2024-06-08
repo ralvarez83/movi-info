@@ -1,6 +1,6 @@
-using Application.Movies;
-using Domain.Movies;
-using Domain.Shared.Criteria;
+using Movies.Application;
+using Movies.Domain;
+using Shared.Domain.Criteria;
 using Moq;
 using Test.Movies.Domain;
 

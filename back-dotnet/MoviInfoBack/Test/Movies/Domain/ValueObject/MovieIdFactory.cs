@@ -1,4 +1,4 @@
-using Domain.Movies.ValueObjects;
+using Movies.Domain.ValueObjects;
 
 namespace Test.Movies.Domain.ValueObjects
 {

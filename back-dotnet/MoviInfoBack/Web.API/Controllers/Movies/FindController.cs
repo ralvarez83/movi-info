@@ -1,11 +1,11 @@
-using Application.Movies;
-using Domain.Movies.ValueObjects;
-using Infraestructure.TheMovieDb;
-using Infraestructure.TheMovieDb.Entities;
+using Movies.Application;
+using Movies.Domain.ValueObjects;
+using Movies.Infraestructure.TheMovieDb;
+using Movies.Infraestructure.TheMovieDb.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Configurations;
-using Movie = Domain.Movies.Movie;
+using Movie = Movies.Domain.Movie;
 using MovieDTO = WebAPI.dto.Movie;
 
 namespace WebAPI.Controllers.Movies

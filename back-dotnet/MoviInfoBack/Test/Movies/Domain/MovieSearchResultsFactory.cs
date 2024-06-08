@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
-using Domain.Movies;
-using Domain.Shared.Criteria;
+using Movies.Domain;
+using Shared.Domain.Criteria;
 
 namespace Test.Movies.Domain
 {

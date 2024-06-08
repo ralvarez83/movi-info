@@ -1,4 +1,4 @@
-using Infraestructure.TheMovieDb.Entities;
+using Movies.Infraestructure.TheMovieDb.Entities;
 using Test.Movies.Infraestructure.TheMovieDB.Factories;
 using WebAPI.Configurations;
 

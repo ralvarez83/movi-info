@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using AutoFixture;
-using Domain.Movies;
+using Movies.Domain;
 
 namespace Test.Movies.Domain
 {

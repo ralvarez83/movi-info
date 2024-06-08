@@ -1,6 +1,6 @@
-using Application.Movies;
-using Domain.Movies;
-using Domain.Movies.ValueObjects;
+using Movies.Application;
+using Movies.Domain;
+using Movies.Domain.ValueObjects;
 using Moq;
 using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;

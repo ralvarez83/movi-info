@@ -1,4 +1,4 @@
-using MovieDomine = Domain.Movies.Movie;
+using MovieDomine = Movies.Domain.Movie;
 
 namespace WebAPI.dto
 {

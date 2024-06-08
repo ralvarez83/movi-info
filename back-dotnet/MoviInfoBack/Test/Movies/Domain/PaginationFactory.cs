@@ -1,5 +1,5 @@
 using AutoFixture;
-using Domain.Shared.Criteria;
+using Shared.Domain.Criteria;
 
 namespace Test.Movies.Domain
 {

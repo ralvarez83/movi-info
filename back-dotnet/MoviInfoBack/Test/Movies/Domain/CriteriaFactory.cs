@@ -1,6 +1,6 @@
 using AutoFixture;
-using Domain.Shared.Criteria;
-using Domain.Shared.Criteria.Filters;
+using Shared.Domain.Criteria;
+using Shared.Domain.Criteria.Filters;
 
 namespace Test.Movies.Domain
 {

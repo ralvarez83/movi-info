@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
-using Domain.Shared.Criteria;
-using MovieSearchResultsDomain = Domain.Movies.MovieSearchResults;
+using Shared.Domain.Criteria;
+using MovieSearchResultsDomain = Movies.Domain.MovieSearchResults;
 
 namespace WebAPI.dto
 {
