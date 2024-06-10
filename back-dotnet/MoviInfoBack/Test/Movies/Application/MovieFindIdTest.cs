@@ -4,6 +4,9 @@ using Movies.Domain.ValueObjects;
 using Moq;
 using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;
+using Movies.Application.MovieFind;
+using MovieDTO = Movies.Application.DTO.Movie;
+using Movies.Application.DTO.Transforms;
 
 namespace Test.Movies.Application
 {
@@ -14,9 +17,9 @@ namespace Test.Movies.Application
       MovieId wrongId = MovieIdFactory.BuildRandomMovieID();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(It.IsAny<MovieId>()) == Task.FromResult<Movie?>(null));
 
-      MoviFindById finder = new MoviFindById(moviRepoMok, wrongId);
+      MoviFindById finder = new MoviFindById(moviRepoMok, wrongId.value);
 
-      Movie movieNotFound = await finder.find();
+      MovieDTO? movieNotFound = await finder.find();
 
       Assert.Null(movieNotFound);
     }
@@ -26,11 +29,11 @@ namespace Test.Movies.Application
       Movie movie = MovieFactory.BuildRandom();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(movie.id) == Task.FromResult<Movie?>(movie));
 
-      MoviFindById finder = new MoviFindById(moviRepoMok, movie.id);
+      MoviFindById finder = new MoviFindById(moviRepoMok, movie.id.value);
 
-      Movie movieMustFound = await finder.find();
+      MovieDTO? movieMustFound = await finder.find();
 
-      Assert.Same(movie, movieMustFound);
+      Assert.Equal(TransformsToMovieDTO.Run(movie), movieMustFound);
     }
   }
 }

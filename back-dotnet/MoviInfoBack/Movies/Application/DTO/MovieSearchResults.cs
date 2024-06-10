@@ -4,10 +4,5 @@ using MovieSearchResultsDomain = Movies.Domain.MovieSearchResults;
 
 namespace Movies.Application.DTO
 {
-  public record MovieSearchResults
-  {
-    public ImmutableList<Movie?> movies {get; set;}
-    public Pagination pagination {get; set;}
-
-  }
+  public readonly record struct MovieSearchResults (ImmutableList<Movie?> movies, Pagination pagination);
 }

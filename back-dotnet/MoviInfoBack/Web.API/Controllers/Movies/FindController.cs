@@ -32,8 +32,7 @@ namespace WebAPI.Controllers.Movies
         return StatusCode(StatusCodes.Status500InternalServerError, repositoryConfig);
 
       TheMovieDBRepository repository = new TheMovieDBRepository(repositoryConfig);
-      MovieId movieIdentificator = new MovieId(id);
-      MoviFindById movieFinder = new MoviFindById(repository, movieIdentificator);
+      MoviFindById movieFinder = new MoviFindById(repository, id);
 
       Movie? movie = await movieFinder.find();
 

@@ -7,10 +7,10 @@ namespace Movies.Application.MovieFind
     {
       private MovieRepository _repository;
       private MovieId _movieId;
-      public MoviFindById(MovieRepository repository, MovieId movieId)
+      public MoviFindById(MovieRepository repository, string movieId)
       {
         _repository = repository;
-        _movieId = movieId;
+        _movieId = new MovieId(movieId);
       }
 
       public async Task<DTO.Movie?> find()
@@ -23,16 +23,16 @@ namespace Movies.Application.MovieFind
         if (null == movieDomine)
           return null;
 
-        return new DTO.Movie {
-          id = movieDomine.id.value,
-          title = movieDomine.title,
-          overview = movieDomine.overview,
-          adult = movieDomine.adult,
-          verticalImagePath = (null != movieDomine.verticalImagePath)? movieDomine.verticalImagePath.AbsoluteUri:string.Empty,
-          horizontalImagePath = (null != movieDomine.horizontalImagePath)? movieDomine.horizontalImagePath.AbsoluteUri:string.Empty,
-          imdbLink = (null != movieDomine.imdbLink)? movieDomine.imdbLink.AbsoluteUri:string.Empty,
-          usersVote = movieDomine.usersVote
-        };
+        return new DTO.Movie (
+          movieDomine.id.value, 
+          movieDomine.title, 
+          movieDomine.overview, 
+          movieDomine.adult, 
+          (null != movieDomine.verticalImagePath)? movieDomine.verticalImagePath.AbsoluteUri:string.Empty,
+          (null != movieDomine.horizontalImagePath)? movieDomine.horizontalImagePath.AbsoluteUri:string.Empty,
+          (null != movieDomine.imdbLink)? movieDomine.imdbLink.AbsoluteUri:string.Empty,
+          movieDomine.usersVote
+        );
       }
     }
 }

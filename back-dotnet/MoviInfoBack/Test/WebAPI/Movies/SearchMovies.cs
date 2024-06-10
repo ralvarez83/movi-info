@@ -1,4 +1,4 @@
-using WebAPI.dto;
+using Movies.Application.DTO;
 using Xunit.Gherkin.Quick;
 
 namespace Test.WebAPI.Movies
@@ -40,11 +40,12 @@ namespace Test.WebAPI.Movies
       MovieSearchResults movieResult = await this.response.Content.ReadAsAsync<MovieSearchResults>();
       
       movieResult.movies.ForEach(movie => {
+        Assert.True(movie.HasValue);
         Assert.True(
-          movie.title.ToLower().Contains(spanishWord.ToLower()) ||
-          movie.title.ToLower().Contains(englishWord.ToLower()) ||
-          movie.overview.ToLower().Contains(spanishWord.ToLower()) ||
-          movie.overview.ToLower().Contains(englishWord.ToLower())
+          movie.Value.title.ToLower().Contains(spanishWord.ToLower()) ||
+          movie.Value.title.ToLower().Contains(englishWord.ToLower()) ||
+          movie.Value.overview.ToLower().Contains(spanishWord.ToLower()) ||
+          movie.Value.overview.ToLower().Contains(englishWord.ToLower())
         );
       });
     }
