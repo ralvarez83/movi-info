@@ -1,12 +1,11 @@
-using Movies.Application;
+using Movies.Application.MovieFind;
 using Movies.Domain.ValueObjects;
 using Movies.Infraestructure.TheMovieDb;
-using Movies.Infraestructure.TheMovieDb.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Configurations;
-using Movie = Movies.Domain.Movie;
-using MovieDTO = WebAPI.dto.Movie;
+using Movies.Infraestructure.TheMovieDb.Entities;
+using Movie = Movies.Application.DTO.Movie;
 
 namespace WebAPI.Controllers.Movies
 {
@@ -21,7 +20,7 @@ namespace WebAPI.Controllers.Movies
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<MovieDTO>> Get(string id){
+    public async Task<ActionResult<Movie>> Get(string id){
 
       string authorization = _theMovieDBConfiguration.Authorisation;
       Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
@@ -36,12 +35,12 @@ namespace WebAPI.Controllers.Movies
       MovieId movieIdentificator = new MovieId(id);
       MoviFindById movieFinder = new MoviFindById(repository, movieIdentificator);
 
-      Movie movie = await movieFinder.find();
+      Movie? movie = await movieFinder.find();
 
       if (null == movie)
         return NotFound();
 
-      return MovieDTO.TransformToMovieDTO(movie);
+      return movie;
     }
   }
 }

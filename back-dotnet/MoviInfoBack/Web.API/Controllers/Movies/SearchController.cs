@@ -1,5 +1,4 @@
-using Movies.Application;
-using Movies.Domain;
+using Movies.Application.MovieSearch;
 using Shared.Domain.Criteria;
 using Shared.Domain.Criteria.Filters;
 using Movies.Infraestructure.TheMovieDb;
@@ -7,7 +6,7 @@ using Movies.Infraestructure.TheMovieDb.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Configurations;
-using MovieSearchResultDTO = WebAPI.dto.MovieSearchResults;
+using Movies.Application.DTO;
 
 namespace WebAPI.Controllers.Movies
 {
@@ -22,7 +21,7 @@ public class SearchController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<ActionResult<MovieSearchResultDTO>> Get(string? byText, int page, int totalPages){
+  public async Task<ActionResult<MovieSearchResults>> Get(string? byText, int page, int totalPages){
     string authorization = _theMovieDBConfiguration.Authorisation;
     Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
     string authorizationType = _theMovieDBConfiguration.AuthorisationType;
@@ -48,8 +47,7 @@ public class SearchController : ControllerBase
 
     MovieSearchResults movieSearchResults = await movieSearcher.search();
 
-    MovieSearchResultDTO movieSearchResultsDTO = MovieSearchResultDTO.TranformToMovieSearchResults(movieSearchResults);
-    return movieSearchResultsDTO;
+    return movieSearchResults;
   }
 
 

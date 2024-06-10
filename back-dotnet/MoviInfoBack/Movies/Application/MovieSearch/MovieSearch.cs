@@ -1,6 +1,6 @@
-using Movies.Domain;
+using Movies.Application.DTO;
 
-namespace Movies.Application
+namespace Movies.Application.MovieSearch
 {
   public interface MovieSearch
   {
