@@ -35,7 +35,10 @@ namespace WebAPI.Controllers.Movies
       TheMovieDBRepository repository = new TheMovieDBRepository(repositoryConfig);
       MoviFindById movieFinder = new MoviFindById(repository);
 
-      Movie? movie = TransformsToMovieDTO.Run(await movieFinder.find(new MovieId(id)));
+      FindByIdMovieQuery query = new FindByIdMovieQuery(id);
+      FindByIdMovieQueryHandler handler = new FindByIdMovieQueryHandler(movieFinder);
+
+      Movie? movie = await handler.Run(query);
 
       if (null == movie)
         return NotFound();
