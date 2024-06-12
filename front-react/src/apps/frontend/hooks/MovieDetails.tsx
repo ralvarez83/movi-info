@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Movie } from "../../../Contexts/movies/domain/Movie";
 import { MovieFindById } from "../../../Contexts/movies/application/MovieFindById";
-import { DotNetBackRepository } from "../../../Contexts/movies/infraestruture/dotNetBack/DotNetBackRepository";
 import { MovieRepository } from "../../../Contexts/movies/domain/MovieRepository";
 
 export type movieDetailsReturn = {
