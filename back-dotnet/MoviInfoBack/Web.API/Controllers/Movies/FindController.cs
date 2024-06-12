@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using WebAPI.Configurations;
 using Movies.Infraestructure.TheMovieDb.Entities;
 using Movie = Movies.Application.DTO.Movie;
+using Movies.Application.DTO.Transforms;
 
 namespace WebAPI.Controllers.Movies
 {
@@ -32,9 +33,9 @@ namespace WebAPI.Controllers.Movies
         return StatusCode(StatusCodes.Status500InternalServerError, repositoryConfig);
 
       TheMovieDBRepository repository = new TheMovieDBRepository(repositoryConfig);
-      MoviFindById movieFinder = new MoviFindById(repository, id);
+      MoviFindById movieFinder = new MoviFindById(repository);
 
-      Movie? movie = await movieFinder.find();
+      Movie? movie = TransformsToMovieDTO.Run(await movieFinder.find(new MovieId(id)));
 
       if (null == movie)
         return NotFound();
