@@ -4,7 +4,7 @@ import { DotNetBackCriteriaTransformation } from "./DotNetBackCriteriaTransforma
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria"
 import { Pagination } from "../../../Shared/Domain/Criteria/Pagination"
 
-const MOVIE_END_POINT: string = "movie/"
+const MOVIE_END_POINT: string = "movies/"
 
 export class DotNetBackRepository implements MovieRepository{
   
