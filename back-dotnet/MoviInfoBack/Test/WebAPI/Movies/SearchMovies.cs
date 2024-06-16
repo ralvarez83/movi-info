@@ -1,4 +1,4 @@
-using Movies.Application.DTO;
+using Movies.Application.Dtos;
 using Xunit.Gherkin.Quick;
 
 namespace Test.WebAPI.Movies

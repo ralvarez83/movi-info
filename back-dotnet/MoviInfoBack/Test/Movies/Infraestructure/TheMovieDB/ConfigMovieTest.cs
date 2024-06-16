@@ -1,6 +1,6 @@
-using Movies.Infraestructure.TheMovieDb.Entities;
+using Microsoft.Extensions.Options;
+using Movies.Infraestructure.TheMovieDb.Configuration;
 using Test.Movies.Infraestructure.TheMovieDB.Factories;
-using WebAPI.Configurations;
 
 namespace Test.Movies.Infraestructure.TheMovieDB
 {
@@ -9,41 +9,53 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     [Fact]
     public async Task RecoveringConfig (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
+      
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
 
-      Assert.NotNull(config);
+      ConfigMovie? configMovie = await configRepository.GetConfigMovies();
+
+      Assert.NotNull(configMovie);
     }
     
     [Fact]
-    public async Task RecoveringConfigWithoutAuthorisationShouldBeNull (){
+    public async Task RecoveringConfigWithoutAuthorisationShouldBeNull (){      
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      Assert.Null(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      ConfigMovie? configMovie = await configRepository.GetConfigMovies();
+
+      Assert.Null(configMovie);
     }
     
     [Fact]
     public async Task RecoveringConfigWithBadURLShouldBeNull (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadBaseURLOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      Assert.Null(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      ConfigMovie? configMovie = await configRepository.GetConfigMovies();
+      
+      Assert.Null(configMovie);
     }
     
     [Fact]
     public async Task RecoveringConfigWithBadAuthorisationTypeShouldBeNull (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationTypeOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      Assert.Null(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      ConfigMovie? configMovie = await configRepository.GetConfigMovies();
+      
+      Assert.Null(configMovie);
     }
   }
 }

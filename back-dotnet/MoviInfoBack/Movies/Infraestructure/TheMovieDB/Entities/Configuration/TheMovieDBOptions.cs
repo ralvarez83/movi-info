@@ -1,4 +1,4 @@
-namespace WebAPI.Configurations
+namespace Movies.Infraestructure.TheMovieDb.Configuration
 {
   public class TheMovieDBOptions
   {

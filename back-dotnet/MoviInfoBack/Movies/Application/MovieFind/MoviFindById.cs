@@ -11,7 +11,7 @@ namespace Movies.Application.MovieFind
         _repository = repository;
       }
 
-      public async Task<Movie?> find(MovieId movieId)
+      public async Task<Movie?> Find(MovieId movieId)
       {
           return await _repository.findById(movieId);
       }

@@ -4,8 +4,8 @@ using Shared.Domain.Criteria;
 using Moq;
 using Test.Movies.Domain;
 using Movies.Application.MovieSearch;
-using MovieSearchResultsDTO = Movies.Application.DTO.MovieSearchResults;
-using Movies.Application.DTO.Transforms;
+using MovieSearchResultsDTO = Movies.Application.Dtos.MovieSearchResults;
+using Movies.Application.Dtos.Transforms;
 
 namespace Test.Movies.Application
 {
@@ -22,7 +22,7 @@ namespace Test.Movies.Application
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.search();
+      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search();
       
       Assert.Equal(TransformsToMovieSearchResultsDTO.Run(movieResult), movieResultsResponse);
     }
@@ -37,7 +37,7 @@ namespace Test.Movies.Application
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.search();
+      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search();
       MovieSearchResultsDTO movieSearchExpected = TransformsToMovieSearchResultsDTO.Run(movieResult);
       
       Assert.Same(movieSearchExpected.pagination, movieResultsResponse.pagination);

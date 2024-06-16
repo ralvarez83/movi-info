@@ -1,4 +1,6 @@
-using WebAPI.Configurations;
+using Movies.Domain;
+using Movies.Infraestructure.TheMovieDb;
+using Movies.Infraestructure.TheMovieDb.Configuration;
 
 string  MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +25,8 @@ if (!String.IsNullOrEmpty(frontEndHostName)){
 builder.Services.Configure<TheMovieDBOptions>(
     builder.Configuration.GetSection(TheMovieDBOptions.Name));
 
-
+builder.Services.AddTransient<MovieRespositoryConfiguration, ConfigTheMovieDBRespository> ();
+builder.Services.AddTransient<MovieRepository, TheMovieDBRepository> ();
 
 // Add services to the container.
 builder.Services.AddControllers();

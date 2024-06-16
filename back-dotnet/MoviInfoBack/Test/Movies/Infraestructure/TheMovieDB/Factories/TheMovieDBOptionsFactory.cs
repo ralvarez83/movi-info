@@ -1,4 +1,4 @@
-using WebAPI.Configurations;
+using Movies.Infraestructure.TheMovieDb.Configuration;
 
 namespace Test.Movies.Infraestructure.TheMovieDB.Factories
 {

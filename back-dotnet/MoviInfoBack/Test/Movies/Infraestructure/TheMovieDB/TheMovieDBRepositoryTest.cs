@@ -6,8 +6,9 @@ using Movies.Infraestructure.TheMovieDb.Entities;
 using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;
 using Test.Movies.Infraestructure.TheMovieDB.Factories;
-using WebAPI.Configurations;
 using Movie = Movies.Domain.Movie;
+using Movies.Infraestructure.TheMovieDb.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Test.Movies.Infraestructure.TheMovieDB
 {
@@ -16,11 +17,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     [Fact]
     public async Task SearchMoviesWithBadConfigShouldReturnEmptyMovieListAndSamePagination (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
       Criteria criteria = CriteriaFactory.BuildWithRandomPaginationEmptyFilters();
 
@@ -36,11 +38,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     public async Task SearchMoviesWithoutFiltersShouldReturn20Movies (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
       Criteria criteria = CriteriaFactory.BuildWithRandomPaginationEmptyFilters();
 
@@ -58,11 +61,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     public async Task SearchMoviesWithTextFilterShouldReturnMoviesWithThisTextInTitleOrOverview (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
       string spanishTextFilter = "casa";
       string englishTextFilter = "home";
@@ -89,11 +93,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     [Fact]
     public async Task FindMoviesWithBadConfigShouldReturnEmptyMovie (){
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildBadAuthorisationOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildRandomMovieID());
@@ -105,11 +110,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     public async Task FindMovieByBadId (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildNoExistsMovieID());
 
@@ -120,11 +126,12 @@ namespace Test.Movies.Infraestructure.TheMovieDB
     public async Task FindMovieByRightId (){
       // Given
       TheMovieDBOptions theMovieDBOptions = TheMovieDBOptionsFactory.BuildRigthOptions();
-      Uri baseURL = new Uri(theMovieDBOptions.BaseURL);
       
-      ConfigMovie? config = await ConfigMovie.GetConfig(theMovieDBOptions.Authorisation,baseURL,theMovieDBOptions.AuthorisationType);
+      IOptions<TheMovieDBOptions> options = Options.Create<TheMovieDBOptions>(theMovieDBOptions);
 
-      TheMovieDBRepository moviRepo = new TheMovieDBRepository(config);
+      ConfigTheMovieDBRespository configRepository = new ConfigTheMovieDBRespository(options);
+
+      TheMovieDBRepository moviRepo = new TheMovieDBRepository(configRepository);
 
       Movie? movieReturn = await moviRepo.findById(MovieIdFactory.BuildExistsMovieID());
 

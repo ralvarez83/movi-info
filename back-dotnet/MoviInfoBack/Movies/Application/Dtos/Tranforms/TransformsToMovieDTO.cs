@@ -1,6 +1,6 @@
 using MovieDomain = Movies.Domain.Movie;
 
-namespace Movies.Application.DTO.Transforms
+namespace Movies.Application.Dtos.Transforms
 {
   public class TransformsToMovieDTO
   {

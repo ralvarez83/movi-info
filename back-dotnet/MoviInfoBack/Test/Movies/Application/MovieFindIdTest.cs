@@ -5,8 +5,8 @@ using Moq;
 using Test.Movies.Domain;
 using Test.Movies.Domain.ValueObjects;
 using Movies.Application.MovieFind;
-using MovieDTO = Movies.Application.DTO.Movie;
-using Movies.Application.DTO.Transforms;
+using MovieDTO = Movies.Application.Dtos.Movie;
+using Movies.Application.Dtos.Transforms;
 
 namespace Test.Movies.Application
 {
@@ -19,7 +19,7 @@ namespace Test.Movies.Application
 
       MoviFindById finder = new MoviFindById(moviRepoMok);
 
-      Movie? movieNotFound = await finder.find(wrongId);
+      Movie? movieNotFound = await finder.Find(wrongId);
 
       Assert.Null(movieNotFound);
     }
@@ -31,7 +31,7 @@ namespace Test.Movies.Application
 
       MoviFindById finder = new MoviFindById(moviRepoMok);
 
-      Movie? movieMustFound = await finder.find(movie.id);
+      Movie? movieMustFound = await finder.Find(movie.id);
 
       Assert.Equal(movie, movieMustFound);
     }

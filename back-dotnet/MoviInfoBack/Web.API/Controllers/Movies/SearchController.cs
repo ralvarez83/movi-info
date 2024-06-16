@@ -2,36 +2,22 @@ using Movies.Application.MovieSearch;
 using Shared.Domain.Criteria;
 using Shared.Domain.Criteria.Filters;
 using Movies.Infraestructure.TheMovieDb;
-using Movies.Infraestructure.TheMovieDb.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using WebAPI.Configurations;
-using Movies.Application.DTO;
+using Movies.Application.Dtos;
+using Movies.Domain;
+using MovieSearchResults = Movies.Application.Dtos.MovieSearchResults;
 
 namespace WebAPI.Controllers.Movies
 {
  
 [ApiController]
 [Route("api/movies/")]
-public class SearchController : ControllerBase
-{
-  private readonly TheMovieDBOptions _theMovieDBConfiguration;
-  public SearchController(IOptions<TheMovieDBOptions> options){
-    _theMovieDBConfiguration = options.Value;
-  }
-
+public class SearchController (MovieRepository repository) :ControllerBase
+  {
+    private readonly TheMovieDBRepository _repository = (TheMovieDBRepository) repository;
+    
   [HttpGet]
   public async Task<ActionResult<MovieSearchResults>> Get(string? byText, int page, int totalPages){
-    string authorization = _theMovieDBConfiguration.Authorisation;
-    Uri baseURL = new Uri(_theMovieDBConfiguration.BaseURL);
-    string authorizationType = _theMovieDBConfiguration.AuthorisationType;
-
-    ConfigMovie? repositoryConfig = await ConfigMovie.GetConfig(authorization,baseURL, authorizationType);
-
-    if (null == repositoryConfig)
-      return StatusCode(StatusCodes.Status500InternalServerError, repositoryConfig);
-
-    TheMovieDBRepository repository = new TheMovieDBRepository(repositoryConfig);
 
     Filters filters = new Filters();
     if (!String.IsNullOrEmpty(byText)){
@@ -43,9 +29,9 @@ public class SearchController : ControllerBase
 
     Criteria criteria = new Criteria(filters,pagination);
 
-    MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria (repository,criteria);
+    MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria (_repository,criteria);
 
-    MovieSearchResults movieSearchResults = await movieSearcher.search();
+    MovieSearchResults movieSearchResults = await movieSearcher.Search();
 
     return movieSearchResults;
   }

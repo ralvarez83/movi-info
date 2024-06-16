@@ -1,9 +1,9 @@
-using Movies.Application.DTO;
+using Movies.Application.Dtos;
 
 namespace Movies.Application.MovieSearch
 {
   public interface MovieSearch
   {
-    public Task<MovieSearchResults> search();
+    public Task<MovieSearchResults> Search();
   }
 }
