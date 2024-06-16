@@ -62,6 +62,7 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Pruebas unitarias en Back
 - [x] Pruebas de infraestructura en Back
 - [x] Pruebas de aceptación en Back
+- [x] Llamada al repositorio por Inyección de Dependencias
 - [ ] Crear una gestión de usuarios
 - [ ] El usuario pueda marcar películas favoritas
 - [ ] En detalles se va un icono de película favorita
