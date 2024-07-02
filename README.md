@@ -31,6 +31,7 @@ Las tecnologías utilizadas para la capa de Back son:
 - API Rest
 - xUnit con AutoFixture para pruebas Unitarias y de Infraestructura
 - xUnit.Gherkin.Quick para pruebas de Aceptación
+- CRQS con MediatR
 
 La arquitectura que se está implementando es la Hexagonal, una arquitectura limpia que permite reducir el esfuerzo en caso de actualización del framework, entre otras ventajas.
 
@@ -63,6 +64,7 @@ Aquí expondré qué cosas he incorporado en el código:
 - [x] Pruebas de infraestructura en Back
 - [x] Pruebas de aceptación en Back
 - [x] Llamada al repositorio por Inyección de Dependencias
+- [x] Llamada a los casos de uso desde los controladores por Querys con el patrón CQRS
 - [ ] Crear una gestión de usuarios
 - [ ] El usuario pueda marcar películas favoritas
 - [ ] En detalles se va un icono de película favorita
