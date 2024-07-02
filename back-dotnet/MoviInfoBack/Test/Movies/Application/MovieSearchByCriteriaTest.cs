@@ -22,9 +22,9 @@ namespace Test.Movies.Application
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search(criteria);
+      MovieSearchResults movieResultsResponse = await movieSearcher.Search(criteria);
       
-      Assert.Equal(TransformsToMovieSearchResultsDTO.Run(movieResult), movieResultsResponse);
+      Assert.Equal(movieResult, movieResultsResponse);
     }
 
 
@@ -37,11 +37,10 @@ namespace Test.Movies.Application
 
       MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search(criteria);
-      MovieSearchResultsDTO movieSearchExpected = TransformsToMovieSearchResultsDTO.Run(movieResult);
+      MovieSearchResults movieResultsResponse = await movieSearcher.Search(criteria);
       
-      Assert.Same(movieSearchExpected.pagination, movieResultsResponse.pagination);
-      Assert.Equal(movieSearchExpected.movies, movieResultsResponse.movies);
+      Assert.Same(movieResult.pagination, movieResultsResponse.pagination);
+      Assert.Equal(movieResult.movies, movieResultsResponse.movies);
     }    
   }
 }
