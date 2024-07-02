@@ -17,7 +17,7 @@ namespace Test.Movies.Application
       MovieId wrongId = MovieIdFactory.BuildRandomMovieID();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(It.IsAny<MovieId>()) == Task.FromResult<Movie?>(null));
 
-      MoviFindById finder = new MoviFindById(moviRepoMok);
+      MovieFindById finder = new MovieFindById(moviRepoMok);
 
       Movie? movieNotFound = await finder.Find(wrongId);
 
@@ -29,7 +29,7 @@ namespace Test.Movies.Application
       Movie movie = MovieFactory.BuildRandom();
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.findById(movie.id) == Task.FromResult<Movie?>(movie));
 
-      MoviFindById finder = new MoviFindById(moviRepoMok);
+      MovieFindById finder = new MovieFindById(moviRepoMok);
 
       Movie? movieMustFound = await finder.Find(movie.id);
 

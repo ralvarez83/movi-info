@@ -3,23 +3,24 @@ using Movies.Infraestructure.TheMovieDb;
 using Microsoft.AspNetCore.Mvc;
 using Movie = Movies.Application.Dtos.Movie;
 using Movies.Domain;
+using MediatR;
+using Movies.Infraestructure.MediatR.MovieFind;
 
 namespace WebAPI.Controllers.Movies
 {
   
   [ApiController]
   [Route("api/movies/")]
-  public class FindController (MoviFindById movieFinder) :ControllerBase
+  public class FindController (Mediator mediator) :ControllerBase
   {
-    private readonly MoviFindById _movieFinder = movieFinder;
+    private readonly Mediator _mediator = mediator;
     
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> Get(string id){
 
-      FindByIdMovieQuery query = new FindByIdMovieQuery(id);
-      FindByIdMovieQueryHandler handler = new FindByIdMovieQueryHandler(_movieFinder);
+      MediatRFindbyIdMovieQuery query = new MediatRFindbyIdMovieQuery(id);
 
-      Movie? movie = await handler.Run(query);
+      Movie? movie = await _mediator.Send(query);
 
       if (null == movie)
         return NotFound();

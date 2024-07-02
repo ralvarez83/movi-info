@@ -1,18 +1,23 @@
+using Movies.Application.Dtos;
 using Movies.Application.Dtos.Transforms;
-using Movies.Domain;
+using MoviesDomain = Movies.Domain.Movie;
 using Movies.Domain.ValueObjects;
 using Shared.Domain.Bus.Query;
 
 namespace Movies.Application.MovieFind 
 {
-  public sealed class FindByIdMovieQueryHandler (MoviFindById movieFinder) : QueryHandler
+  public class FindByIdMovieQueryHandler (MovieFindById movieFindById) : QueryHandler <FindByIdMovieQuery, Movie?>
   {
-    public async Task<Dtos.Movie?> Run(FindByIdMovieQuery query)
-    {
-        MovieId movieId = new MovieId(query.movieId);
+    private MovieFindById _movieFindById = movieFindById;
 
-        Movie? movie = await movieFinder.Find(movieId);
+    public async Task<Movie?> Handle(FindByIdMovieQuery query, CancellationToken cancellationToken)
+    {
+        MovieId movieId = new MovieId(query.MovieId);
+
+        MoviesDomain? movie = await _movieFindById.Find(movieId);
+
         return TransformsToMovieDTO.Run(movie);
     }
- }
+
+  }
 }

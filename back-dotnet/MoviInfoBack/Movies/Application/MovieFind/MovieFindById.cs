@@ -3,10 +3,10 @@ using Movies.Domain.ValueObjects;
 
 namespace Movies.Application.MovieFind
 {
-    public class MoviFindById
+    public class MovieFindById
     {
       private MovieRepository _repository;
-      public MoviFindById(MovieRepository repository)
+      public MovieFindById(MovieRepository repository)
       {
         _repository = repository;
       }

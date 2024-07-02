@@ -1,6 +1,8 @@
+using MediatR;
 using Movies.Application.MovieFind;
 using Movies.Application.MovieSearch;
 using Movies.Domain;
+using Movies.Infraestructure.MediatR.MovieFind;
 using Movies.Infraestructure.TheMovieDb;
 using Movies.Infraestructure.TheMovieDb.Configuration;
 
@@ -29,8 +31,10 @@ builder.Services.Configure<TheMovieDBOptions>(
 
 builder.Services.AddTransient<MovieRespositoryConfiguration, ConfigTheMovieDBRespository> ();
 builder.Services.AddTransient<MovieRepository, TheMovieDBRepository> ();
-builder.Services.AddTransient<MoviFindById, MoviFindById> ();
+builder.Services.AddTransient<MovieFindById, MovieFindById> ();
 builder.Services.AddTransient<MovieSearchByCriteria, MovieSearchByCriteria> ();
+builder.Services.AddSingleton<Mediator,Mediator>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<MediatRFindByIdMovieQueryHandler>());
 
 // Add services to the container.
 builder.Services.AddControllers();
