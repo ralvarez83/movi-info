@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Movies\Movies.csproj" />
-    <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Web.API\Web.API.csproj" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-using Movies.Application.Dtos;
+using Movies.Domain;
 using Shared.Domain.Criteria;
 
 namespace Movies.Application.MovieSearch

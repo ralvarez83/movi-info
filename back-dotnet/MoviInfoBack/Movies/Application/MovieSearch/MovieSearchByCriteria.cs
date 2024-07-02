@@ -1,4 +1,3 @@
-using Movies.Application.Dtos.Transforms;
 using Movies.Domain;
 using Shared.Domain.Criteria;
 
@@ -8,9 +7,9 @@ namespace Movies.Application.MovieSearch
   {
     private MovieRepository _repository = repository;
 
-    public async Task<Dtos.MovieSearchResults> Search(Criteria criteria)
+    public async Task<MovieSearchResults> Search(Criteria criteria)
     {
-        return TransformsToMovieSearchResultsDTO.Run(await _repository.searchByCriteria(criteria));
+        return await _repository.searchByCriteria(criteria);
     }
   }
 }

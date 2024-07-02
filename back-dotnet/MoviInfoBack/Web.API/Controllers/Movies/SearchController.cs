@@ -6,15 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.Application.Dtos;
 using Movies.Domain;
 using MovieSearchResults = Movies.Application.Dtos.MovieSearchResults;
+using MediatR;
+using Movies.Infraestructure.MediatR.MovieSearch;
 
 namespace WebAPI.Controllers.Movies
 {
  
 [ApiController]
 [Route("api/movies/")]
-public class SearchController (MovieSearchByCriteria movieSearcher) :ControllerBase
-  {
-    private readonly MovieSearchByCriteria _movieSearcher = movieSearcher;
+public class SearchController (Mediator mediator) :ControllerBase
+{
+  private readonly Mediator _mediator = mediator;
     
   [HttpGet]
   public async Task<ActionResult<MovieSearchResults>> Get(string? byText, int page, int totalPages){
@@ -29,7 +31,9 @@ public class SearchController (MovieSearchByCriteria movieSearcher) :ControllerB
 
     Criteria criteria = new Criteria(filters,pagination);
 
-    MovieSearchResults movieSearchResults = await _movieSearcher.Search(criteria);
+    MediatRMovieSearchByCriteriaQuery query = new MediatRMovieSearchByCriteriaQuery(criteria);
+
+    MovieSearchResults movieSearchResults = await _mediator.Send(query);
 
     return movieSearchResults;
   }
