@@ -20,9 +20,9 @@ namespace Test.Movies.Application
 
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 
-      MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
+      MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search();
+      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search(criteria);
       
       Assert.Equal(TransformsToMovieSearchResultsDTO.Run(movieResult), movieResultsResponse);
     }
@@ -35,9 +35,9 @@ namespace Test.Movies.Application
 
       MovieRepository moviRepoMok = Mock.Of<MovieRepository>(_ => _.searchByCriteria(criteria) == Task<MovieSearchResults>.FromResult(movieResult));
 
-      MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok, criteria);
+      MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria(moviRepoMok);
 
-      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search();
+      MovieSearchResultsDTO movieResultsResponse = await movieSearcher.Search(criteria);
       MovieSearchResultsDTO movieSearchExpected = TransformsToMovieSearchResultsDTO.Run(movieResult);
       
       Assert.Same(movieSearchExpected.pagination, movieResultsResponse.pagination);

@@ -9,17 +9,15 @@ namespace WebAPI.Controllers.Movies
   
   [ApiController]
   [Route("api/movies/")]
-  public class FindController (MovieRepository repository) :ControllerBase
+  public class FindController (MoviFindById movieFinder) :ControllerBase
   {
-    private readonly TheMovieDBRepository _repository = (TheMovieDBRepository) repository;
+    private readonly MoviFindById _movieFinder = movieFinder;
     
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> Get(string id){
 
-      MoviFindById movieFinder = new MoviFindById(_repository);
-
       FindByIdMovieQuery query = new FindByIdMovieQuery(id);
-      FindByIdMovieQueryHandler handler = new FindByIdMovieQueryHandler(movieFinder);
+      FindByIdMovieQueryHandler handler = new FindByIdMovieQueryHandler(_movieFinder);
 
       Movie? movie = await handler.Run(query);
 

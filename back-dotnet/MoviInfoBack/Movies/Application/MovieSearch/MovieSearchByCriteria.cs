@@ -4,19 +4,13 @@ using Shared.Domain.Criteria;
 
 namespace Movies.Application.MovieSearch
 {
-  public class MovieSearchByCriteria : MovieSearch
+  public class MovieSearchByCriteria (MovieRepository repository): MovieSearch
   {
-    private MovieRepository _repository;
-    private Criteria _criteria;
+    private MovieRepository _repository = repository;
 
-    public MovieSearchByCriteria(MovieRepository repository, Criteria criteria){
-      _criteria = criteria;
-      _repository = repository;
-    }
-
-    public async Task<Dtos.MovieSearchResults> Search()
+    public async Task<Dtos.MovieSearchResults> Search(Criteria criteria)
     {
-        return TransformsToMovieSearchResultsDTO.Run(await _repository.searchByCriteria(_criteria));
+        return TransformsToMovieSearchResultsDTO.Run(await _repository.searchByCriteria(criteria));
     }
   }
 }

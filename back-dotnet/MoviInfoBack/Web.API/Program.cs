@@ -1,3 +1,5 @@
+using Movies.Application.MovieFind;
+using Movies.Application.MovieSearch;
 using Movies.Domain;
 using Movies.Infraestructure.TheMovieDb;
 using Movies.Infraestructure.TheMovieDb.Configuration;
@@ -27,6 +29,8 @@ builder.Services.Configure<TheMovieDBOptions>(
 
 builder.Services.AddTransient<MovieRespositoryConfiguration, ConfigTheMovieDBRespository> ();
 builder.Services.AddTransient<MovieRepository, TheMovieDBRepository> ();
+builder.Services.AddTransient<MoviFindById, MoviFindById> ();
+builder.Services.AddTransient<MovieSearchByCriteria, MovieSearchByCriteria> ();
 
 // Add services to the container.
 builder.Services.AddControllers();

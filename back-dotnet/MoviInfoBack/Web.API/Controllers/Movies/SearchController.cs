@@ -12,15 +12,15 @@ namespace WebAPI.Controllers.Movies
  
 [ApiController]
 [Route("api/movies/")]
-public class SearchController (MovieRepository repository) :ControllerBase
+public class SearchController (MovieSearchByCriteria movieSearcher) :ControllerBase
   {
-    private readonly TheMovieDBRepository _repository = (TheMovieDBRepository) repository;
+    private readonly MovieSearchByCriteria _movieSearcher = movieSearcher;
     
   [HttpGet]
   public async Task<ActionResult<MovieSearchResults>> Get(string? byText, int page, int totalPages){
 
     Filters filters = new Filters();
-    if (!String.IsNullOrEmpty(byText)){
+    if (!string.IsNullOrEmpty(byText)){
       Filter textFilter = new Filter(Filter.FILTER_BY_TEXT, byText, FilterOperator.CONTAINS);
       filters.add(textFilter);
     }
@@ -29,9 +29,7 @@ public class SearchController (MovieRepository repository) :ControllerBase
 
     Criteria criteria = new Criteria(filters,pagination);
 
-    MovieSearchByCriteria movieSearcher = new MovieSearchByCriteria (_repository,criteria);
-
-    MovieSearchResults movieSearchResults = await movieSearcher.Search();
+    MovieSearchResults movieSearchResults = await _movieSearcher.Search(criteria);
 
     return movieSearchResults;
   }
