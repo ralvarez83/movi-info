@@ -1,10 +1,10 @@
-version: '3.8'
-
 services:
   frontend:
     image: rubenag83/movi-info-react-dotnet-frontend
     build: 
       context: ./front-react
+      platforms:
+        - "linux/amd64"
       args:
         - VITE_DOT_NET_BACK=/api/
       no_cache: true
@@ -19,6 +19,8 @@ services:
     image: rubenag83/movi-info-react-dotnet-backend
     build:
       context: ./back-dotnet/MoviInfoBack
+      platforms:
+        - "linux/amd64"
     networks: 
       - backend
     restart: unless-stopped

@@ -1,4 +1,4 @@
-FROM node:22.2.0-alpine as build
+FROM node:current-alpine AS build
 
 LABEL maintainer="rubenag83@gmail.com"
 LABEL aaplication="movi-info"

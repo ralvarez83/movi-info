@@ -1,4 +1,3 @@
-version: '1.0'
 services:
   frontend:
     image: rubenag83/movi-info-react-dotnet-frontend:amd64
