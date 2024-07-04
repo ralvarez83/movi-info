@@ -8,15 +8,16 @@ using Movies.Domain;
 using MovieSearchResults = Movies.Application.Dtos.MovieSearchResults;
 using MediatR;
 using Movies.Infraestructure.MediatR.MovieSearch;
+using Shared.Domain.Bus.Query;
 
 namespace WebAPI.Controllers.Movies
 {
  
 [ApiController]
 [Route("api/movies/")]
-public class SearchController (Mediator mediator) :ControllerBase
+public class SearchController (QueryBus bus) :ControllerBase
 {
-  private readonly Mediator _mediator = mediator;
+    private readonly QueryBus _bus = bus;
     
   [HttpGet]
   public async Task<ActionResult<MovieSearchResults>> Get(string? byText, int page, int totalPages){
@@ -33,7 +34,7 @@ public class SearchController (Mediator mediator) :ControllerBase
 
     MediatRMovieSearchByCriteriaQuery query = new MediatRMovieSearchByCriteriaQuery(criteria);
 
-    MovieSearchResults movieSearchResults = await _mediator.Send(query);
+    MovieSearchResults movieSearchResults = await _bus.Ask<MovieSearchResults>(query);
 
     return movieSearchResults;
   }

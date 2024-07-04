@@ -5,6 +5,8 @@ using Movies.Domain;
 using Movies.Infraestructure.MediatR.MovieFind;
 using Movies.Infraestructure.TheMovieDb;
 using Movies.Infraestructure.TheMovieDb.Configuration;
+using Shared.Domain.Bus.Query;
+using Shared.Infraestructure.Bus;
 
 string  MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +37,7 @@ builder.Services.AddTransient<MovieFindById, MovieFindById> ();
 builder.Services.AddTransient<MovieSearchByCriteria, MovieSearchByCriteria> ();
 builder.Services.AddSingleton<Mediator,Mediator>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<MediatRFindByIdMovieQueryHandler>());
+builder.Services.AddSingleton<QueryBus, MediatRQueryBus>();
 
 // Add services to the container.
 builder.Services.AddControllers();
