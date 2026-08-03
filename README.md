@@ -8,7 +8,7 @@ En esta aplicación se van incorporando poco a poco todo el aprendizaje que voy 
 - Pruebas automáticas: Unitarias, Infraestructura y Aceptación
 
 Info:
-  - Web: pendiente de apuntar el subdominio (ver "Despliegue")
+  - Web: https://movie-info.rubenalvarezgonzalez.eu
   - Imágenes Docker:
     - Front: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-frontend
     - Back: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-backend
@@ -19,7 +19,7 @@ La aplicación se despliega en dos capas gratuitas, ambas conectadas a este repo
 push a `main` vuelve a desplegar de forma automática.
 
 ```
-subdominio (DNS en IONOS)
+movie-info.rubenalvarezgonzalez.eu   (DNS en IONOS)
       |
       v
    Netlify  ---- sirve el resultado estático de "vite build"
@@ -33,6 +33,38 @@ subdominio (DNS en IONOS)
 El back **no necesita subdominio propio**: vive detrás del proxy de Netlify (`netlify.toml`).
 Al resolverse todo bajo el mismo origen desde el punto de vista del navegador, no entra en
 juego el CORS y la URL de Render nunca se expone.
+
+### Puesta en marcha
+
+El orden importa: Netlify hace de proxy hacia Render, así que el back tiene que existir antes.
+
+1. **Render (back).** En https://dashboard.render.com/blueprints, "New Blueprint Instance" y
+   elegir este repositorio. Render lee `render.yaml` y pide el valor de
+   `TheMovieDB__Authorisation`: ahí va el token regenerado. Al terminar, anotar la URL que
+   asigna (`https://<nombre>.onrender.com`) y comprobar que responde en `/health`.
+
+   Si esa URL **no** es exactamente `https://movi-info-api.onrender.com`, hay que corregir el
+   destino del proxy en `netlify.toml`, porque Render añade un sufijo cuando el nombre ya está
+   cogido por otra cuenta.
+
+2. **Netlify (front).** "Add new site" → "Import an existing project" → GitHub → este
+   repositorio. No hay que rellenar nada del formulario de build: Netlify lee `netlify.toml` y
+   toma de ahí el directorio base, el comando y la carpeta a publicar.
+
+3. **Dominio.** En Netlify, "Domain management" → "Add a domain" →
+   `movie-info.rubenalvarezgonzalez.eu`. Después, en el panel DNS de IONOS, crear:
+
+   | Tipo | Nombre | Valor |
+   |---|---|---|
+   | CNAME | `movie-info` | `<nombre-del-sitio>.netlify.app` |
+
+   El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
+   completo: IONOS ya añade la zona. El certificado HTTPS lo emite Netlify por Let's Encrypt en
+   cuanto el DNS propaga, sin intervención.
+
+El plan gratuito de Render duerme el servicio tras 15 minutos sin tráfico, así que la primera
+petición después de un rato de inactividad puede tardar cerca de un minuto en responder
+mientras el contenedor arranca. Las siguientes van a velocidad normal.
 
 ### Configuración
 
