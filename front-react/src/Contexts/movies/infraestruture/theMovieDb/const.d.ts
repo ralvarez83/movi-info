@@ -1,7 +1,14 @@
+// ATENCIÓN: este adaptador ataca la API de TheMovieDB directamente desde el navegador y hoy no
+// se usa (App.tsx trabaja contra DotNetBackRepository). Se conserva como referencia del patrón
+// Repository con dos implementaciones.
+//
+// Cualquier token que se use aquí acaba dentro del bundle JavaScript y, por tanto, es público:
+// las variables VITE_* se sustituyen en tiempo de build, NO son un secreto. Precisamente por eso
+// existe el back en .NET, que es quien guarda el token de verdad. No pongas aquí un token bueno.
 export const BASE_URL = 'https://api.themoviedb.org/3/'
 export const DISCOVER = 'discover/movie?'
 export const SEARCH = '/search/movie?'
-export const AUTHORIZATION = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjhiZDdjYjc4NDRkZWZkYzNjZTJhYjRhNzI4NTM0MSIsInN1YiI6IjY2MGQ1YmM1ZTAzOWYxMDE3Y2U3OTczOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.U04pBIxx2V6BBbL0ZaoJzWYSrv0PAIJWQHdNB48vuLs'
+export const AUTHORIZATION = `Bearer ${import.meta.env.VITE_THE_MOVIE_DB_TOKEN ?? ''}`
 export const CONFIG = 'configuration'
 export const MOVIE_FIND = 'movie/'
 export const IMDB_BASE_LINK = 'https://www.imdb.com/title/'

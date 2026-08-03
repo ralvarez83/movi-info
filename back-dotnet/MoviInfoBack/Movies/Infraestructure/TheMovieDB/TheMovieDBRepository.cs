@@ -14,6 +14,17 @@ namespace Movies.Infraestructure.TheMovieDb
     {
       private readonly ConfigTheMovieDBRespository _config = (ConfigTheMovieDBRespository) config;
 
+      // TheMovieDB publica la CDN de imágenes por HTTP y por HTTPS. Se usa siempre la segura,
+      // porque con el front servido por HTTPS el navegador bloquearía las imágenes en claro.
+      private static string buildImagesBaseUrl(ConfigMovie confMoviesImages)
+      {
+        string baseUrl = !string.IsNullOrEmpty(confMoviesImages.images.secure_base_url)
+          ? confMoviesImages.images.secure_base_url
+          : confMoviesImages.images.base_url;
+
+        return baseUrl + confMoviesImages.images.backdrop_sizes[2];
+      }
+
       public async Task<MovieDomain?> findById(MovieId movieId)
       {        
         TheMovieDBCriteriaTransformation criteriaTransformation = new TheMovieDBCriteriaTransformation();
@@ -34,7 +45,7 @@ namespace Movies.Infraestructure.TheMovieDb
         if (null == confMoviesImages)
           return null;
 
-        return movie.toMovieDomain(confMoviesImages.images.base_url + confMoviesImages.images.backdrop_sizes[2]);
+        return movie.toMovieDomain(buildImagesBaseUrl(confMoviesImages));
       }
 
       public async Task<MovieSearchResults> searchByCriteria(Criteria criteria)
@@ -61,7 +72,7 @@ namespace Movies.Infraestructure.TheMovieDb
           return new MovieSearchResults([], criteria.pagination);
 
         ImmutableList<MovieDomain> movies = (from movie in apiResults.results
-          select movie.toMovieDomain(confMoviesImages.images.base_url + confMoviesImages.images.backdrop_sizes[2])).ToImmutableList();
+          select movie.toMovieDomain(buildImagesBaseUrl(confMoviesImages))).ToImmutableList();
         
         return new MovieSearchResults(movies, new Pagination(apiResults.page, apiResults.total_pages));
 

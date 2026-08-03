@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+# Si se empuja varias veces seguidas a la misma rama, se cancela la ejecución anterior.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  front:
+    name: Front (build + tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front-react
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: front-react/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Pruebas de componente
+        run: npm test
+
+      - name: Compilar
+        run: npm run build
+
+  back:
+    name: Back (build + pruebas unitarias)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: back-dotnet/MoviInfoBack
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restaurar
+        run: dotnet restore
+
+      - name: Compilar
+        run: dotnet build --configuration Release --no-restore
+
+      # Solo las pruebas unitarias: las de infraestructura atacan la API real de TheMovieDB y
+      # las de aceptación necesitan una instancia levantada en localhost:5021, así que no
+      # pueden correr en un runner limpio sin credenciales ni servidor.
+      - name: Pruebas unitarias
+        run: >
+          dotnet test --configuration Release --no-build
+          --filter "FullyQualifiedName!~Test.Movies.Infraestructure&FullyQualifiedName!~Test.WebAPI"
+
+  docker:
+    name: Back (imagen Docker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Construye exactamente la misma imagen que Render desplegará, de forma que un fallo del
+      # Dockerfile se detecta aquí y no en mitad del despliegue.
+      - name: Construir la imagen del back
+        uses: docker/build-push-action@v6
+        with:
+          context: ./back-dotnet/MoviInfoBack
+          file: ./back-dotnet/MoviInfoBack/Dockerfile
+          push: false

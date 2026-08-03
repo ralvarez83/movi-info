@@ -4,9 +4,19 @@ namespace Test.Movies.Infraestructure.TheMovieDB.Factories
 {
   public class TheMovieDBOptionsFactory
   {
+    // Las pruebas de infraestructura atacan la API real de TheMovieDB, así que necesitan un token
+    // válido. Se lee del entorno para no versionarlo: TheMovieDB__Authorisation.
     public static TheMovieDBOptions BuildRigthOptions (){
+      string? authorisation = Environment.GetEnvironmentVariable("TheMovieDB__Authorisation");
+
+      if (String.IsNullOrWhiteSpace(authorisation)){
+        throw new InvalidOperationException(
+          "Las pruebas de infraestructura necesitan un token real de TheMovieDB. " +
+          "Defina la variable de entorno 'TheMovieDB__Authorisation' antes de ejecutarlas.");
+      }
+
       return new TheMovieDBOptions(){
-        Authorisation = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjhiZDdjYjc4NDRkZWZkYzNjZTJhYjRhNzI4NTM0MSIsInN1YiI6IjY2MGQ1YmM1ZTAzOWYxMDE3Y2U3OTczOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.U04pBIxx2V6BBbL0ZaoJzWYSrv0PAIJWQHdNB48vuLs",
+        Authorisation = authorisation,
         AuthorisationType = "Bearer",
         BaseURL = "https://api.themoviedb.org/3/"
       };

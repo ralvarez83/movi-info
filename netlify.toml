@@ -1,0 +1,48 @@
+# Configuración de Netlify para el front de movi-info.
+#
+# Netlify sirve únicamente el resultado estático de "vite build". No ejecuta nada del proyecto
+# en su lado (no hay SSR ni funciones), que es la diferencia de fondo con un despliegue de Next.js.
+
+[build]
+  base = "front-react"
+  command = "npm run build"
+  # Relativo al directorio "base", es decir: front-react/dist
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # El front llama a una ruta relativa; el proxy de abajo la reenvía al back. Así el navegador
+  # ve siempre el mismo origen y no entra en juego el CORS.
+  VITE_DOT_NET_BACK = "/api/"
+
+# --- Proxy hacia el back de .NET alojado en Render -----------------------------------------
+# status 200 (en vez de 301/302) hace que Netlify actúe de proxy inverso: la URL de Render nunca
+# se expone al navegador. Debe ir ANTES del fallback de SPA: las reglas se evalúan en orden.
+[[redirects]]
+  from = "/api/*"
+  to = "https://movi-info-api.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# --- Fallback de SPA -----------------------------------------------------------------------
+# Equivalente al "try_files $uri /index.html" que hacía NGINX: sin esto, recargar la página en
+# /movie/123 devolvería un 404 porque ese fichero no existe; el enrutado lo resuelve React Router.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# --- Cabeceras de seguridad ----------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Los assets con hash en el nombre que genera Vite son inmutables: se pueden cachear para siempre.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

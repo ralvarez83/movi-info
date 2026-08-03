@@ -22,11 +22,13 @@ dist-ssr
 *.njsproj
 *.sw?
 
-./back-dotnet/MoviInfoBack/Application/bin
-./back-dotnet/MoviInfoBack/Application/obj
-./back-dotnet/MoviInfoBack/Domain/bin
-./back-dotnet/MoviInfoBack/Domain/obj
-./back-dotnet/MoviInfoBack/Infraestructure/bin
-./back-dotnet/MoviInfoBack/Infraestructure/obj
-./back-dotnet/MoviInfoBack/Web.API/bin
-./back-dotnet/MoviInfoBack/Web.API/obj
+# Artefactos de compilación de .NET. Un patrón sin barra inicial se aplica a cualquier nivel,
+# así que cubre todos los proyectos de la solución sin tener que listarlos uno a uno.
+bin/
+obj/
+
+# Secretos locales: el token de TheMovieDB se inyecta por variable de entorno o por
+# "dotnet user-secrets", nunca en un fichero versionado.
+appsettings.*.local.json
+.env.local
+.env.*.local

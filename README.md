@@ -8,10 +8,67 @@ En esta aplicación se van incorporando poco a poco todo el aprendizaje que voy 
 - Pruebas automáticas: Unitarias, Infraestructura y Aceptación
 
 Info:
-  - Web: http://194.164.174.221:8181
+  - Web: pendiente de apuntar el subdominio (ver "Despliegue")
   - Imágenes Docker:
     - Front: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-frontend
     - Back: https://hub.docker.com/repository/docker/rubenag83/movi-info-react-dotnet-backend
+
+## Despliegue
+
+La aplicación se despliega en dos capas gratuitas, ambas conectadas a este repositorio: cada
+push a `main` vuelve a desplegar de forma automática.
+
+```
+subdominio (DNS en IONOS)
+      |
+      v
+   Netlify  ---- sirve el resultado estático de "vite build"
+      |
+      +-- /api/*  --proxy-->  Render  (contenedor .NET 8)
+                                 |
+                                 v
+                        api.themoviedb.org
+```
+
+El back **no necesita subdominio propio**: vive detrás del proxy de Netlify (`netlify.toml`).
+Al resolverse todo bajo el mismo origen desde el punto de vista del navegador, no entra en
+juego el CORS y la URL de Render nunca se expone.
+
+### Configuración
+
+| Dónde | Fichero | Qué hace |
+|---|---|---|
+| Netlify | `netlify.toml` | Build del front, proxy `/api/*`, fallback de SPA y cabeceras |
+| Render | `render.yaml` | Servicio Docker del back, plan gratuito y healthcheck en `/health` |
+| GitHub | `.github/workflows/ci.yml` | Compila y prueba front y back, y construye la imagen Docker |
+
+### Variables de entorno
+
+| Variable | Dónde se define | Para qué |
+|---|---|---|
+| `TheMovieDB__Authorisation` | Panel de Render (secreto) | Token de TheMovieDB. .NET traduce `__` a `:`, así que sobreescribe `TheMovieDB:Authorisation` de `appsettings.json` |
+| `FrontEndHostName` | Panel de Render (opcional) | Orígenes extra permitidos por CORS, separados por comas |
+| `VITE_DOT_NET_BACK` | `netlify.toml` / `.env.production` | Ruta del back. En producción es `/api/`, relativa, para que la resuelva el proxy |
+
+El token **nunca se versiona**. Para ejecutar el back en local:
+
+```bash
+cd back-dotnet/MoviInfoBack
+dotnet user-secrets set "TheMovieDB:Authorisation" "<token>" --project Web.API
+```
+
+Si el token falta, el back aborta el arranque con un mensaje explícito en lugar de responder
+errores en cada petición.
+
+### Notas de seguridad
+
+- El token de TheMovieDB estuvo versionado en este repositorio público, así que **hay que
+  regenerarlo** en TheMovieDB (Settings → API → *API Read Access Token*). Quitarlo del código
+  no basta: sigue existiendo en el historial de git.
+- `npm audit` reporta dos avisos abiertos en `react-router-dom`. Se mantiene la última versión
+  publicada (7.18.2) a propósito: el aviso restante afecta únicamente al modo RSC, que esta SPA
+  no usa, mientras que la versión que propone `npm audit` reintroduce un *open redirect* en
+  `<Link>` y `useNavigate`, que sí se usan.
 
 ## Front
 Las tecnologías utilizadas para la capa de Front son:

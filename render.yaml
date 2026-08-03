@@ -1,0 +1,30 @@
+# Blueprint de Render para el back de movi-info.
+#
+# Alta: https://dashboard.render.com/blueprints -> "New Blueprint Instance" -> elegir este repo.
+# Render lee este fichero, crea el servicio y vuelve a desplegar en cada push a main.
+#
+# El único valor que hay que introducir a mano en el panel es TheMovieDB__Authorisation
+# (marcado con sync:false, es decir, Render lo pide y nunca se versiona aquí).
+services:
+  - type: web
+    name: movi-info-api
+    runtime: docker
+    plan: free
+    # Frankfurt es la región más cercana a España de las disponibles en el plan gratuito.
+    region: frankfurt
+    dockerfilePath: ./back-dotnet/MoviInfoBack/Dockerfile
+    dockerContext: ./back-dotnet/MoviInfoBack
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      # Token de TheMovieDB. .NET traduce el doble guion bajo a la sección de configuración,
+      # de modo que esto sobreescribe "TheMovieDB:Authorisation" de appsettings.json.
+      - key: TheMovieDB__Authorisation
+        sync: false
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # Orígenes extra permitidos por CORS, separados por comas. Con el proxy de Netlify el
+      # navegador ve todo como mismo origen y no hace falta, pero queda disponible para
+      # atacar la API directamente desde un front local o un deploy preview.
+      - key: FrontEndHostName
+        sync: false
