@@ -52,15 +52,26 @@ El orden importa: Netlify hace de proxy hacia Render, así que el back tiene que
    toma de ahí el directorio base, el comando y la carpeta a publicar.
 
 3. **Dominio.** En Netlify, "Domain management" → "Add a domain" →
-   `movie-info.rubenalvarezgonzalez.eu`. Después, en el panel DNS de IONOS, crear:
+   `movie-info.rubenalvarezgonzalez.eu`.
 
-   | Tipo | Nombre | Valor |
-   |---|---|---|
-   | CNAME | `movie-info` | `<nombre-del-sitio>.netlify.app` |
+   El dominio `rubenalvarezgonzalez.eu` ya sirve otro proyecto de Netlify (el CV), así que lo
+   que haya que tocar depende de quién gestione la zona. Netlify lo indica en la propia pantalla
+   de dominios, marcando la zona como "Netlify DNS" o como externa:
 
-   El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
-   completo: IONOS ya añade la zona. El certificado HTTPS lo emite Netlify por Let's Encrypt en
-   cuanto el DNS propaga, sin intervención.
+   - **Si la zona está delegada a Netlify DNS**, no hay nada que hacer en IONOS: Netlify crea
+     el registro del subdominio automáticamente al añadirlo.
+   - **Si la zona sigue en IONOS**, hay que crear allí este registro:
+
+     | Tipo | Nombre | Valor |
+     |---|---|---|
+     | CNAME | `movie-info` | `movi-info.netlify.app` |
+
+     El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
+     completo: IONOS ya añade la zona por su cuenta.
+
+   En ambos casos el certificado HTTPS lo emite Netlify por Let's Encrypt en cuanto el DNS
+   propaga, sin intervención. Un subdominio puede apuntar a un proyecto de Netlify distinto al
+   del dominio raíz sin ningún conflicto.
 
 El plan gratuito de Render duerme el servicio tras 15 minutos sin tráfico, así que la primera
 petición después de un rato de inactividad puede tardar cerca de un minuto en responder
