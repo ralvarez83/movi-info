@@ -98,8 +98,9 @@ El orden importa: Netlify hace de proxy hacia Render, así que el back tiene que
    | Después | `CNAME` | `movie-info` | `movi-info.netlify.app` |
 
    El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
-   completo: IONOS ya añade la zona por su cuenta. El TTL del registro es de 60 segundos, de
-   modo que el corte se propaga en cuestión de minutos y revertirlo es igual de rápido.
+   completo: IONOS ya añade la zona por su cuenta. El registro que apuntaba al VPS tenía un TTL
+   de 60 segundos, así que el corte se propagó en minutos; el CNAME que lo sustituye usa el TTL
+   por defecto de IONOS, de una hora, que es lo que tardaría en verse un cambio posterior.
 
    El certificado HTTPS lo emite Netlify por Let's Encrypt en cuanto el DNS propaga, sin
    intervención. Un subdominio puede apuntar a un proyecto de Netlify distinto al del dominio
