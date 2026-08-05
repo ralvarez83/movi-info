@@ -10,7 +10,7 @@ import { Criteria } from '../../../Contexts/Shared/Domain/Criteria/Criteria'
 import { MoviesSearchByCriteria } from '../../../Contexts/movies/application/MoviesSearchByCriteria'
 import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository'
 
-export function moviesState(repository: MovieRepository): {
+export function useMoviesState(repository: MovieRepository): {
   movieList: MovieList
   textFilter: Filter,
   pagination: Pagination,

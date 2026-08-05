@@ -14,10 +14,10 @@ export class DotNetBackCriteriaTransformation {
     const paginationFilter = 'page='
     const totalpagesFilter = 'totalpages='
 
-    let filters : String = ""
+    let filters : string = ""
 
     this.criteria.filters.filtersFiled.map(filter => {
-      let filterField = (filter.field === FILTER_DOMAIN_FILTER_TEXT) ? FILTER_DOMAIN_FILTER_TEXT: filter.field
+      const filterField = (filter.field === FILTER_DOMAIN_FILTER_TEXT) ? FILTER_DOMAIN_FILTER_TEXT: filter.field
       
       filters += filterField + '=' + filter.value + FILTER_CONCATENATION
     })

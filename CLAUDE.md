@@ -22,6 +22,7 @@ tomarlo como referencia y, si estorba, borrarlo.
 # Front
 cd front-react
 npm ci
+npm run lint                  # eslint, y falla con cualquier aviso (--max-warnings 0)
 npm test                      # jest
 npm run build                 # tsc && vite build
 npm run dev                   # vite, modo development
@@ -114,9 +115,16 @@ Docker tiene CLI pero **no hay demonio**, de modo que las imágenes solo se cons
 
 ## Pendientes conocidos, que no bloquean
 
-- **El lint está roto de antes.** `.eslintrc.cjs` extiende `standard-with-typescript`, que no
-  está instalado, así que `npm run lint` falla. Se dejó fuera del CI a propósito.
-- **Dos warnings CS8618** de nulabilidad en `Test/WebAPI/Movies/`. Preexistentes.
+Dos avisos de `react-hooks/exhaustive-deps` están silenciados con un comentario que explica el
+porqué en cada sitio. No son ruido, son deuda real:
+
+- `hooks/MovieDetails.tsx`: el efecto tiene `[]`, así que **navegar de una película a otra sin
+  desmontar no vuelve a pedir la ficha**. Hoy no se nota porque a `/movie/:id` solo se llega
+  desde el listado, que sí desmonta. Para arreglarlo hay que estabilizar antes el `repository`,
+  que `App.tsx` crea nuevo en cada render, o el efecto entra en bucle.
+- `components/shared/InfinitePagination.tsx`: falta `getMoreData`, que `useMoviesState` recrea
+  en cada render capturando `movieList` y `pagination`. Incluirla recrearía el
+  `IntersectionObserver` continuamente. El arreglo pasa por memorizar `getMovies` en el hook.
 
 ## Vulnerabilidades
 

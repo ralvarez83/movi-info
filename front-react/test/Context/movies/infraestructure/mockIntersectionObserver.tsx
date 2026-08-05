@@ -2,8 +2,11 @@ import {jest} from '@jest/globals';
 
 
 export function mockIntersectionObserver(isIntersectingItems?: Array<boolean>):
-[jest.MockedObject<IntersectionObserver>, jest.Mocked<any>] {
-    const intersectionObserverInstanceMock: any = {
+[jest.MockedObject<IntersectionObserver>, jest.Mocked<typeof window.IntersectionObserver>] {
+    // El doble reúne las propiedades de IntersectionObserver, pero jest.fn() no lleva las
+    // firmas de cada método, así que se convierte de forma explícita en vez de tiparlo como
+    // any: la intención es que aquí hay un doble de pruebas, no un tipo desconocido.
+    const intersectionObserverInstanceMock = {
         root: null,
         rootMargin: '',
         thresholds: [0],
@@ -11,7 +14,7 @@ export function mockIntersectionObserver(isIntersectingItems?: Array<boolean>):
         unobserve: jest.fn(),
         disconnect: jest.fn(),
         takeRecords: jest.fn(),
-    };
+    } as unknown as jest.MockedObject<IntersectionObserver>;
 
     window.IntersectionObserver = jest.fn()
         .mockImplementation(
@@ -38,5 +41,8 @@ export function mockIntersectionObserver(isIntersectingItems?: Array<boolean>):
             },
         );
 
-    return [intersectionObserverInstanceMock, window.IntersectionObserver as jest.Mocked<any>];
+    return [
+        intersectionObserverInstanceMock,
+        window.IntersectionObserver as jest.Mocked<typeof window.IntersectionObserver>
+    ];
 }

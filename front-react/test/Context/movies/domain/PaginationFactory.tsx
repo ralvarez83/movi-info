@@ -1,6 +1,5 @@
 import {Pagination} from "../../../../src/Contexts/Shared/Domain/Criteria/Pagination"
 import { faker } from "@faker-js/faker";
-import crypto from 'crypto';
 import {Factory} from "fishery"
 
 const paginationFactory = Factory.define<Pagination>(({ sequence }) => ({

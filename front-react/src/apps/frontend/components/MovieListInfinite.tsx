@@ -1,5 +1,5 @@
 "use client";
-import { moviesState } from '../hooks/MoviesState'
+import { useMoviesState } from '../hooks/MoviesState'
 import { Movie } from './Movie';
 import { TextFilter } from './shared/TextFilter';
 import { DevFooter } from './shared/DevFooter';
@@ -18,7 +18,7 @@ export const MovieListInfinite: React.FC<Props> = ({repository}) => {
 		pagination,
     setTextFilter,
 		getMovies
-  } = moviesState(repository)
+  } = useMoviesState(repository)
 	
 	return (
 		<main className='movie-list'>

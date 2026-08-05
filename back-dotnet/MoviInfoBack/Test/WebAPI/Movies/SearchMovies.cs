@@ -6,7 +6,10 @@ namespace Test.WebAPI.Movies
   [FeatureFile("./WebAPI/Movies/SearchMovies.feature")]
   public sealed class SearchMovies : Feature
   {
-    private HttpResponseMessage response {get; set;}
+    // La asigna el paso Given antes de que corra ningún Then, pero eso el compilador no puede
+    // deducirlo de la ejecución que orquesta Gherkin, así que se marca con null! en vez de
+    // declararla anulable y tener que comprobarla en cada paso.
+    private HttpResponseMessage response {get; set;} = null!;
     
     [Given(@"I send a GET request to '(.*)'")]
     public async Task Given_I_Send_A_Get_Request(string url)

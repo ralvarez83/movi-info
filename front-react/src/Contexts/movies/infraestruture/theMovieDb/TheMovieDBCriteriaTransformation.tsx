@@ -14,7 +14,7 @@ export class TheMovieDBCriteriaTransformation {
     let filters = FIXED_FILTER_ADULT + FILTER_CONCATENATION + FIXED_FILTER_LANGUAJE
 
     this.criteria.filters.filtersFiled.map(filter => {
-      let filterField = (filter.field === FILTER_DOMAIN_QUERY) ? 'query': filter.field
+      const filterField = (filter.field === FILTER_DOMAIN_QUERY) ? 'query': filter.field
       
       filters = filters + FILTER_CONCATENATION  + filterField + '=' + filter.value
     })

@@ -3,7 +3,7 @@ import { MovieRepository } from "../domain/MovieRepository";
 import { MovieFind } from "./types";
 
 export class MovieFindById implements MovieFind {
-  constructor(private readonly repository: MovieRepository, private readonly movieId: String) {}
+  constructor(private readonly repository: MovieRepository, private readonly movieId: string) {}
 
   /**
    * find

@@ -5,7 +5,7 @@ import {generatePaginationRandom} from "../domain/PaginationFactory"
 import { Pagination } from "../../../../src/Contexts/Shared/Domain/Criteria/Pagination";
 
 
-const movieSearchResultFactory = Factory.define<MovieSearchResults>(({}) => ({
+const movieSearchResultFactory = Factory.define<MovieSearchResults>(() => ({
   movies: generateMovieRandonList(20,20) as MovieList,
   pagination: generatePaginationRandom({}) as Pagination
 }));

@@ -4,6 +4,6 @@ import { Movie, MovieSearchResults } from "./Movie";
 export interface MovieRepository {
 
   searchByCriteria(criteria: Criteria): Promise<MovieSearchResults>
-  findById(movieId: String): Promise<Movie|undefined>
+  findById(movieId: string): Promise<Movie|undefined>
   
 }

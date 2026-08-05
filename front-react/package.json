@@ -37,6 +37,7 @@
     "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
     "eslint-plugin-jest": "^28.5.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "fishery": "^2.2.2",

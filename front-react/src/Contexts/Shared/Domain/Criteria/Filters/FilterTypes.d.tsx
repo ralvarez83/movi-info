@@ -1,5 +1,5 @@
-export type FilterField = String
-export type FilterValue = String
+export type FilterField = string
+export type FilterValue = string
 
 export const enum FilterOperator {
   EQUAL = '=',

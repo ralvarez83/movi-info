@@ -18,27 +18,28 @@ describe('MovieListInfinite', () => {
   describe('When access', () => {
     describe ('at first time', () => {
       test("should be accesible", async () => {
-        let moviRepo = new DotNetBackRepository("");
+        const moviRepo = new DotNetBackRepository("");
         const movieResult = generateMovieSearchResultRandom({}) as MovieSearchResults
 
         (moviRepo.searchByCriteria as jest.Mock).mockResolvedValue(movieResult as never)
       
-        const [intersectionObserver] = mockIntersectionObserver([true]);
+        // Se llama por su efecto: instala el doble en window.IntersectionObserver.
+        mockIntersectionObserver([true]);
         const { container } = render (<MovieListInfinite repository={moviRepo} />)
         await waitForElementToBeRemoved(() => screen.getByText(/cargando/i))
         expect(await axe(container)).toHaveNoViolations();
       })
 
       test("should show the first page movies", async () => {
-        let moviRepo = new DotNetBackRepository("");
+        const moviRepo = new DotNetBackRepository("");
         const movieResult = generateMovieSearchResultRandom({}) as MovieSearchResults
 
         (moviRepo.searchByCriteria as jest.Mock).mockResolvedValue(movieResult as never)
       
-        const [intersectionObserver] = mockIntersectionObserver([true]);
-        const { container } = render (<MovieListInfinite repository={moviRepo} />)
+        // Se llama por su efecto: instala el doble en window.IntersectionObserver.
+        mockIntersectionObserver([true]);
+        render (<MovieListInfinite repository={moviRepo} />)
         await waitForElementToBeRemoved(() => screen.getByText(/cargando/i))
-        screen.debug
         
         movieResult.movies.forEach(movie => {
           const titleTruncate = truncate(movie.title, 25)

@@ -29,7 +29,7 @@ describe('MovieDetails', () => {
   describe('Find a existing Movie', () => {
     test('should show it info', async () => {
   
-      let moviRepo = new DotNetBackRepository("");
+      const moviRepo = new DotNetBackRepository("");
       const movie: Movie | undefined = generateMovieRandom({}) as Movie;
   
       (moviRepo.findById as jest.Mock).mockResolvedValue(movie as never);
@@ -70,7 +70,7 @@ describe('MovieDetails', () => {
 
   describe('Find a non existing Movie', () => {
     test('should show an error message', async () => {
-      let moviRepo = new DotNetBackRepository("");
+      const moviRepo = new DotNetBackRepository("");
       const movie: Movie | undefined = undefined;
   
       (moviRepo.findById as jest.Mock).mockResolvedValue(movie as never);

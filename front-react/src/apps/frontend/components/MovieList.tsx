@@ -1,5 +1,5 @@
 import { Movie } from './Movie'
-import { moviesState } from '../hooks/MoviesState'
+import { useMoviesState } from '../hooks/MoviesState'
 import { TextFilter } from './shared/TextFilter'
 import { MovieRepository } from '../../../Contexts/movies/domain/MovieRepository'
 interface Props {
@@ -11,7 +11,7 @@ export const MoviesList: React.FC<Props> = ({repository}) => {
     movieList,
     textFilter,
     setTextFilter
-  } = moviesState(repository)
+  } = useMoviesState(repository)
 
   return (
     <main className='movie-list'>

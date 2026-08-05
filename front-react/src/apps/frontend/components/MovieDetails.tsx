@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { movieDetails } from "../hooks/MovieDetails";
+import { useMovieDetails } from "../hooks/MovieDetails";
 import { VoteCircularPercentaje } from "./shared/VoteCircularPercentaje";
 import { MovieRepository } from "../../../Contexts/movies/domain/MovieRepository";
 import { Cargando } from "./shared/Cargando";
@@ -16,7 +16,7 @@ export const MovieDetails: React.FC<Props> = ({repository}) => {
     movie,
     isLoading,
     error
-  } = movieDetails(new String(id), repository)
+  } = useMovieDetails(id ?? '', repository)
 
   return(
     <main className="movie-details">
@@ -33,7 +33,7 @@ export const MovieDetails: React.FC<Props> = ({repository}) => {
             <div className="more-info">
               <div>
                 <label>Acceso a la Web de IMDB</label>
-                <a href={movie.imdbLink} target="_blank" aria-label="Link de acceso a la página de IMDB de la película">
+                <a href={movie.imdbLink} target="_blank" aria-label="Link de acceso a la página de IMDB de la película" rel="noreferrer">
                   <img src="/IMDB_Logo_2016.png" alt="logotipo de la página web IMDB" />
                 </a>
               </div>
