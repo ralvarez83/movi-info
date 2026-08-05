@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { movieDetails } from "../hooks/MovieDetails";
 import { VoteCircularPercentaje } from "./shared/VoteCircularPercentaje";
 import { MovieRepository } from "../../../Contexts/movies/domain/MovieRepository";

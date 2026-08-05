@@ -18,7 +18,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
 
 # La URL del back no se define aquí: la fija front-react/.env.production, que Vite carga solo al
 # construir en modo producción. Así el valor es el mismo se construya donde se construya.

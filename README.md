@@ -143,10 +143,18 @@ errores en cada petición.
 - El token de TheMovieDB estuvo versionado en este repositorio público, así que **hay que
   regenerarlo** en TheMovieDB (Settings → API → *API Read Access Token*). Quitarlo del código
   no basta: sigue existiendo en el historial de git.
-- `npm audit` reporta dos avisos abiertos en `react-router-dom`. Se mantiene la última versión
-  publicada (7.18.2) a propósito: el aviso restante afecta únicamente al modo RSC, que esta SPA
-  no usa, mientras que la versión que propone `npm audit` reintroduce un *open redirect* en
-  `<Link>` y `useNavigate`, que sí se usan.
+- No quedan avisos abiertos. `npm audit` en `front-react` y
+  `dotnet list package --vulnerable --include-transitive` en `back-dotnet/MoviInfoBack` salen
+  ambos limpios, y el CI compila y prueba las dos capas en cada push.
+
+  Los dos avisos que había en el front venían de `react-router` y afectaban solo al modo RSC,
+  que esta SPA no usa. Se resolvieron migrando a React 19 y a `react-router` 8, que es la vía
+  de arreglo real: `react-router-dom` se quedó en la 7.18.2 y la alternativa que proponía
+  `npm audit` era retroceder a la 7.11.0.
+
+  En el back, las dos vulnerables eran transitivas y solo del proyecto de pruebas; `Web.API`
+  nunca estuvo afectado. El detalle de por qué hizo falta fijarlas a mano está comentado en
+  `Test/Test.csproj`.
 
 ## Front
 Las tecnologías utilizadas para la capa de Front son:

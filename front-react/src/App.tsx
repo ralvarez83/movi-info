@@ -2,7 +2,7 @@ import {
   Route,
   BrowserRouter as Router,
   Routes
-} from 'react-router-dom'
+} from 'react-router'
 import './App.css'
 import { MovieDetails } from './apps/frontend/components/MovieDetails'
 import { MovieListInfinite } from './apps/frontend/components/MovieListInfinite'

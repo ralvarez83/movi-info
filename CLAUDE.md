@@ -116,6 +116,24 @@ Docker tiene CLI pero **no hay demonio**, de modo que las imágenes solo se cons
 
 - **El lint está roto de antes.** `.eslintrc.cjs` extiende `standard-with-typescript`, que no
   está instalado, así que `npm run lint` falla. Se dejó fuera del CI a propósito.
-- **Dos vulnerabilidades de npm** en `react-router-dom`, documentadas en el README como no
-  explotables en una SPA sin RSC.
 - **Dos warnings CS8618** de nulabilidad en `Test/WebAPI/Movies/`. Preexistentes.
+
+## Vulnerabilidades
+
+Ahora mismo no hay ninguna abierta, y conviene que siga así:
+
+```bash
+cd front-react && npm audit
+cd back-dotnet/MoviInfoBack && dotnet list package --vulnerable --include-transitive
+```
+
+Dos cosas del arreglo que hay que tener presentes para no deshacerlas sin querer:
+
+- El front va con **React 19 y `react-router` 8** (no `react-router-dom`, que se quedó en la 7
+  y no tiene versión sin el aviso). `react-router` 8 exige **Node >=22.22.0**, que es la
+  versión que fijan el CI y `netlify.toml`; bajarla rompería el despliegue.
+- `react-router` 8 se publica **solo como ESM** y su punto de entrada arrastra código de SSR
+  con `import.meta`, que jest no sabe cargar. Por eso la prueba de `MovieDetails` sustituye el
+  módulo entero con `jest.mock` en vez de importarlo. Si aparece
+  `Cannot use 'import.meta' outside a module` en otra prueba, la salida es la misma: mockear el
+  módulo, no intentar que jest digiera la librería.

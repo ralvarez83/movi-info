@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
           cache-dependency-path: front-react/package-lock.json
 
@@ -96,7 +96,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
           cache-dependency-path: front-react/package-lock.json
 
@@ -107,14 +107,6 @@ jobs:
       # producción, y de ahí sale VITE_DOT_NET_BACK=/api/.
       - name: Compilar
         run: npm run build
-
-      # netlify-cli exige Node >=22.12, pero el front se construye con la 20 (la misma que usa
-      # el job de pruebas y la que declara netlify.toml). Se cambia de versión solo para la
-      # herramienta, ya con dist/ generado, para no publicar un artefacto construido con una
-      # versión de Node distinta de la que se ha probado.
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
 
       # netlify-cli lee el sitio y las credenciales de NETLIFY_SITE_ID y NETLIFY_AUTH_TOKEN.
       # --prod publica en el dominio principal en vez de crear un deploy preview.
