@@ -39,39 +39,61 @@ juego el CORS y la URL de Render nunca se expone.
 El orden importa: Netlify hace de proxy hacia Render, así que el back tiene que existir antes.
 
 1. **Render (back).** En https://dashboard.render.com/blueprints, "New Blueprint Instance" y
-   elegir este repositorio. Render lee `render.yaml` y pide el valor de
-   `TheMovieDB__Authorisation`: ahí va el token regenerado. Al terminar, anotar la URL que
-   asigna (`https://<nombre>.onrender.com`) y comprobar que responde en `/health`.
+   elegir este repositorio. "Blueprint Path" se deja vacío: `render.yaml` está en la raíz.
 
-   Si esa URL **no** es exactamente `https://movi-info-api.onrender.com`, hay que corregir el
-   destino del proxy en `netlify.toml`, porque Render añade un sufijo cuando el nombre ya está
-   cogido por otra cuenta.
+   Render pide los dos valores marcados `sync: false` en `render.yaml`:
 
-2. **Netlify (front).** "Add new site" → "Import an existing project" → GitHub → este
-   repositorio. No hay que rellenar nada del formulario de build: Netlify lee `netlify.toml` y
-   toma de ahí el directorio base, el comando y la carpeta a publicar.
+   - `TheMovieDB__Authorisation`: el **API Read Access Token (v4)** de TMDB, el largo que
+     empieza por `eyJ`. Va **sin** el prefijo `Bearer`, porque el código ya lo antepone por su
+     cuenta (`AuthorisationType` vale `"Bearer"` en `appsettings.json`). Si se pega con el
+     prefijo, la cabecera sale duplicada y TMDB responde 401 a todo. No sirve la API Key v3,
+     que viaja como parámetro `api_key` en la URL y no como cabecera.
+   - `FrontEndHostName`: se puede dejar vacío. Con el proxy de Netlify el navegador ve todo
+     como mismo origen y no hace falta CORS.
+
+   El servicio quedó desplegado en `https://movi-info-api.onrender.com`, que es el destino que
+   ya tiene configurado el proxy de `netlify.toml`. Si al recrearlo Render asignara otra URL
+   (añade un sufijo cuando el nombre está cogido por otra cuenta), hay que corregir allí el
+   destino.
+
+   Para comprobarlo no basta con `/health`: ese endpoint no llama a TMDB y responde `200`
+   aunque el token sea incorrecto. Hay que pedir además una película real:
+
+   | Petición | Respuesta esperada |
+   |---|---|
+   | `/health` | `{"status":"ok"}` — el contenedor arrancó |
+   | `/api/movies/550` | el JSON de *Fight Club* — el token es válido |
+
+2. **Netlify (front).** El proyecto `movi-info` ya está creado. Hay que **enlazarle el
+   repositorio**, no crear uno nuevo: en https://app.netlify.com/projects/movi-info →
+   "Build & deploy" → "Link repository" → este repositorio. Usar "Add new site" dejaría dos
+   proyectos y el dominio acabaría en el que no es.
+
+   No hay que rellenar nada del formulario de build: Netlify lee `netlify.toml` y toma de ahí
+   el directorio base, el comando y la carpeta a publicar.
 
 3. **Dominio.** En Netlify, "Domain management" → "Add a domain" →
    `movie-info.rubenalvarezgonzalez.eu`.
 
-   El dominio `rubenalvarezgonzalez.eu` ya sirve otro proyecto de Netlify (el CV), así que lo
-   que haya que tocar depende de quién gestione la zona. Netlify lo indica en la propia pantalla
-   de dominios, marcando la zona como "Netlify DNS" o como externa:
+   La zona `rubenalvarezgonzalez.eu` **no está delegada a Netlify DNS**: sus servidores de
+   nombres son los de IONOS (`ns1096.ui-dns.com` y compañía). El dominio raíz sirve otro
+   proyecto de Netlify (el CV) mediante un registro `A` hacia el balanceador de Netlify
+   (`75.2.60.5`), pero la zona se sigue gestionando en IONOS y es ahí donde se toca.
 
-   - **Si la zona está delegada a Netlify DNS**, no hay nada que hacer en IONOS: Netlify crea
-     el registro del subdominio automáticamente al añadirlo.
-   - **Si la zona sigue en IONOS**, hay que crear allí este registro:
+   El subdominio **ya existe** y apunta al VPS antiguo, así que no se crea: se sustituye.
 
-     | Tipo | Nombre | Valor |
-     |---|---|---|
-     | CNAME | `movie-info` | `movi-info.netlify.app` |
+   | | Tipo | Nombre | Valor |
+   |---|---|---|---|
+   | Antes | `A` | `movie-info` | `194.164.174.221` (VPS de IONOS) |
+   | Después | `CNAME` | `movie-info` | `movi-info.netlify.app` |
 
-     El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
-     completo: IONOS ya añade la zona por su cuenta.
+   El nombre del registro es solo la etiqueta del subdominio (`movie-info`), no el dominio
+   completo: IONOS ya añade la zona por su cuenta. El TTL del registro es de 60 segundos, de
+   modo que el corte se propaga en cuestión de minutos y revertirlo es igual de rápido.
 
-   En ambos casos el certificado HTTPS lo emite Netlify por Let's Encrypt en cuanto el DNS
-   propaga, sin intervención. Un subdominio puede apuntar a un proyecto de Netlify distinto al
-   del dominio raíz sin ningún conflicto.
+   El certificado HTTPS lo emite Netlify por Let's Encrypt en cuanto el DNS propaga, sin
+   intervención. Un subdominio puede apuntar a un proyecto de Netlify distinto al del dominio
+   raíz sin ningún conflicto.
 
 El plan gratuito de Render duerme el servicio tras 15 minutos sin tráfico, así que la primera
 petición después de un rato de inactividad puede tardar cerca de un minuto en responder
