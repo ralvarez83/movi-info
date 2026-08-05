@@ -1,0 +1,14 @@
+# Cabeceras que Netlify añade a las respuestas. Mismo motivo que en "_redirects" para que estén
+# aquí y no en netlify.toml: el despliegue viene de GitHub Actions y Netlify solo ve los
+# ficheros publicados.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+# Los assets que genera Vite llevan un hash en el nombre, así que un cambio de contenido cambia
+# la URL: se pueden cachear indefinidamente sin riesgo de servir una versión vieja.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

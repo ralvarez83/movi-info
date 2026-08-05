@@ -1,0 +1,19 @@
+# Reglas de enrutado de Netlify.
+#
+# Viven aquí y no en netlify.toml porque el despliegue lo hace GitHub Actions con netlify-cli:
+# Netlify no construye nada por su cuenta, así que lo único que ve son los ficheros publicados.
+# Vite copia todo lo de "public/" a "dist/" tal cual, de modo que este fichero acaba en la raíz
+# del sitio, que es donde Netlify lo busca.
+#
+# El orden importa: las reglas se evalúan de arriba abajo y gana la primera que encaja.
+
+# Proxy hacia el back de .NET alojado en Render. El código 200 (en vez de 301/302) es lo que
+# convierte la regla en un proxy inverso: la URL de Render nunca llega al navegador y todo se
+# resuelve bajo el mismo origen, así que no entra en juego el CORS.
+# La admiración fuerza la regla, para que se aplique aunque existiera un fichero en esa ruta.
+/api/*  https://movi-info-api.onrender.com/api/:splat  200!
+
+# Fallback de SPA, equivalente al "try_files $uri /index.html" que hacía NGINX: sin esto,
+# recargar la página en /movie/123 daría un 404 porque ese fichero no existe. El enrutado lo
+# resuelve React Router ya en el cliente.
+/*  /index.html  200

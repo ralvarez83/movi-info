@@ -77,3 +77,45 @@ jobs:
           context: ./back-dotnet/MoviInfoBack
           file: ./back-dotnet/MoviInfoBack/Dockerfile
           push: false
+
+  # El front se publica desde aquí en vez de con la integración con Git de Netlify, igual que el
+  # otro proyecto que hay en la misma cuenta. Solo depende del job "front": si el back no
+  # compilara, el despliegue del front sigue siendo válido y Render es quien no se actualizaría.
+  deploy:
+    name: Front (desplegar en Netlify)
+    needs: front
+    # Solo la rama principal publica. En el resto de ramas el workflow se queda en compilar y
+    # probar, que es lo que ya hacía.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front-react
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: front-react/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Sin variables de entorno: Vite carga front-react/.env.production al construir en modo
+      # producción, y de ahí sale VITE_DOT_NET_BACK=/api/.
+      - name: Compilar
+        run: npm run build
+
+      # netlify-cli lee el sitio y las credenciales de NETLIFY_SITE_ID y NETLIFY_AUTH_TOKEN.
+      # --prod publica en el dominio principal en vez de crear un deploy preview.
+      - name: Desplegar en Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: >
+          npx --yes netlify-cli@27 deploy
+          --dir=dist
+          --prod
+          --message "${{ github.sha }}"

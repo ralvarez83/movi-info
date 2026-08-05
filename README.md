@@ -64,13 +64,23 @@ El orden importa: Netlify hace de proxy hacia Render, así que el back tiene que
    | `/health` | `{"status":"ok"}` — el contenedor arrancó |
    | `/api/movies/550` | el JSON de *Fight Club* — el token es válido |
 
-2. **Netlify (front).** El proyecto `movi-info` ya está creado. Hay que **enlazarle el
-   repositorio**, no crear uno nuevo: en https://app.netlify.com/projects/movi-info →
-   "Build & deploy" → "Link repository" → este repositorio. Usar "Add new site" dejaría dos
-   proyectos y el dominio acabaría en el que no es.
+2. **Netlify (front).** El proyecto `movi-info` ya está creado y **no se enlaza al
+   repositorio**: publica GitHub Actions con `netlify-cli`, igual que el otro proyecto de la
+   misma cuenta. El job `deploy` de `.github/workflows/ci.yml` se encarga, solo en `main` y
+   solo si el job `front` ha pasado.
 
-   No hay que rellenar nada del formulario de build: Netlify lee `netlify.toml` y toma de ahí
-   el directorio base, el comando y la carpeta a publicar.
+   Hay que dar de alta dos secretos en el repositorio (Settings → Secrets and variables →
+   Actions):
+
+   | Secreto | De dónde sale |
+   |---|---|
+   | `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → "New access token" |
+   | `NETLIFY_SITE_ID` | `fc5ad9a3-1cb7-453a-bc5f-1721c379f86a` (Project configuration → Project ID) |
+
+   Como Netlify no construye nada, no ve el `netlify.toml`: el proxy de `/api/*`, el fallback
+   de SPA y las cabeceras están en `front-react/public/_redirects` y
+   `front-react/public/_headers`, que Vite copia a `dist/` y viajan dentro del artefacto
+   publicado.
 
 3. **Dominio.** En Netlify, "Domain management" → "Add a domain" →
    `movie-info.rubenalvarezgonzalez.eu`.
@@ -103,9 +113,11 @@ mientras el contenedor arranca. Las siguientes van a velocidad normal.
 
 | Dónde | Fichero | Qué hace |
 |---|---|---|
-| Netlify | `netlify.toml` | Build del front, proxy `/api/*`, fallback de SPA y cabeceras |
+| Netlify | `front-react/public/_redirects` | Proxy `/api/*` hacia Render y fallback de SPA |
+| Netlify | `front-react/public/_headers` | Cabeceras de seguridad y caché de los assets |
+| Netlify | `netlify.toml` | Solo documenta cómo se construye el front; Netlify no lo lee, porque no construye |
 | Render | `render.yaml` | Servicio Docker del back, plan gratuito y healthcheck en `/health` |
-| GitHub | `.github/workflows/ci.yml` | Compila y prueba front y back, y construye la imagen Docker |
+| GitHub | `.github/workflows/ci.yml` | Compila y prueba front y back, construye la imagen Docker y publica el front en Netlify |
 
 ### Variables de entorno
 
