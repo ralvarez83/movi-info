@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -11,38 +11,23 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="5.0.0-preview0011" />
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="coverlet.msbuild" Version="6.0.2">
+    <PackageReference Include="coverlet.collector" Version="10.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="coverlet.msbuild" Version="10.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.10" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="Xunit.Gherkin.Quick" Version="4.5.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <!--
-    Xunit.Gherkin.Quick, y su dependencia Gherkin, arrastran el metapaquete NETStandard.Library
-    1.6.1, que resuelve System.Net.Http y System.Text.RegularExpressions en la 4.3.0, ambas con
-    avisos de severidad alta. No hay nada más nuevo a lo que subir: la 4.5.0 es la última
-    versión publicada de Xunit.Gherkin.Quick.
-
-    Apuntando a net8.0 esos dos paquetes son inertes, porque los tipos los aporta el propio
-    framework, pero el análisis de vulnerabilidades los sigue señalando. Una referencia directa
-    gana sobre la resolución transitiva, así que se fijan aquí ya parcheados.
-
-    Esto solo afecta al proyecto de pruebas: Web.API nunca los ha arrastrado, de modo que la
-    imagen que se despliega no los incluye.
-  -->
-  <ItemGroup>
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>

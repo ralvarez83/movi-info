@@ -24,7 +24,7 @@ movie-info.rubenalvarezgonzalez.eu   (DNS en IONOS)
       v
    Netlify  ---- sirve el resultado estático de "vite build"
       |
-      +-- /api/*  --proxy-->  Render  (contenedor .NET 8)
+      +-- /api/*  --proxy-->  Render  (contenedor .NET 10)
                                  |
                                  v
                         api.themoviedb.org
@@ -153,8 +153,10 @@ errores en cada petición.
   `npm audit` era retroceder a la 7.11.0.
 
   En el back, las dos vulnerables eran transitivas y solo del proyecto de pruebas; `Web.API`
-  nunca estuvo afectado. El detalle de por qué hizo falta fijarlas a mano está comentado en
-  `Test/Test.csproj`.
+  nunca estuvo afectado. Se arreglaron subiendo xunit y su runner, y fijando a mano las dos que
+  aún arrastraba `Xunit.Gherkin.Quick`. Al pasar a .NET 10 ese apaño dejó de hacer falta: NuGet
+  poda por su cuenta los paquetes que aporta el framework, así que las referencias manuales se
+  han podido retirar.
 
 ## Front
 Las tecnologías utilizadas para la capa de Front son:
@@ -168,7 +170,7 @@ Las tecnologías utilizadas para la capa de Front son:
 
 ## Back
 Las tecnologías utilizadas para la capa de Back son:
-- DotNet Core 8
+- .NET 10
 - LinQ
 - Docker (docker-compose, network, build)
 - API Rest

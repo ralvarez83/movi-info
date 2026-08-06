@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Web.API/bin/Debug/net8.0/Web.API.dll",
+      "program": "${workspaceFolder}/Web.API/bin/Debug/net10.0/Web.API.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Web.API",
       "stopAtEntry": false,

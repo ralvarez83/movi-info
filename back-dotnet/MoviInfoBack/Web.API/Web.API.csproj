@@ -1,16 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ErrorOr" Version="2.0.1" />
+    <PackageReference Include="ErrorOr" Version="2.1.1" />
+    <!--
+      MediatR se queda deliberadamente en la 12.x. A partir de la 13 dejó de publicarse bajo
+      Apache-2.0 y pasa a una licencia propia (mediatr.io), de modo que subirlo no es una
+      actualización rutinaria: hay que leer sus términos antes, sobre todo si el proyecto deja
+      de ser un ejercicio personal. Mismo motivo en Movies.csproj y Shared.csproj.
+    -->
     <PackageReference Include="MediatR" Version="12.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>

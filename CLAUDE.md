@@ -7,7 +7,7 @@ Aplicación de información de películas, con el front y el back separados:
 | Carpeta | Qué es |
 |---|---|
 | `front-react/` | SPA de React + Vite en TypeScript. Arquitectura hexagonal en `src/Contexts/` |
-| `back-dotnet/MoviInfoBack/` | API en .NET 8. Proyectos `Web.API`, `Movies`, `Shared` y `Test` |
+| `back-dotnet/MoviInfoBack/` | API en .NET 10. Proyectos `Web.API`, `Movies`, `Shared` y `Test` |
 
 El back es el único que habla con TheMovieDB; el front no lleva token ninguno.
 
@@ -69,8 +69,9 @@ Puntos que no son evidentes y ya han costado un rato:
   de `.github/workflows/ci.yml`), así que Netlify no llega a leer `netlify.toml`. El proxy, el
   fallback de SPA y las cabeceras viven en `front-react/public/_redirects` y
   `front-react/public/_headers`, que Vite copia a `dist/` y viajan en el artefacto.
-- **`netlify-cli` exige Node >=22.12**, pero el front se construye con la 20. El job cambia de
-  versión entre el build y el despliegue justamente por eso.
+- **Todo el front va con Node 22**, en el CI y en `netlify.toml`. Lo exigen tanto `netlify-cli`
+  (>=22.12) como `react-router` 8 (>=22.22.0), así que no se puede bajar sin romper el
+  despliegue.
 - **El token de TMDB va sin el prefijo `Bearer`.** El código lo antepone (`AuthorisationType`
   vale `"Bearer"` en `appsettings.json`). Con el prefijo puesto, la cabecera sale duplicada y
   TMDB responde 401 a todo, pero `/health` sigue devolviendo 200 porque no llama a TMDB. Para
@@ -89,11 +90,11 @@ El SDK de .NET **no viene preinstalado**, y la política de red por defecto bloq
 CONNECT builds.dotnet.microsoft.com:443 -> HTTP/1.1 403 Forbidden
 ```
 
-No hace falta pelearse con eso: `dotnet-sdk-8.0` está en los repos de Ubuntu 24.04, que sí
-están permitidos. Instalarlo así funciona y da la misma versión 8.0.1xx que pide el CI:
+No hace falta pelearse con eso: `dotnet-sdk-10.0` está en los repos de Ubuntu 24.04, que sí
+están permitidos. Instalarlo así funciona y da la misma versión 10.0.1xx que pide el CI:
 
 ```bash
-apt-get update && apt-get install -y dotnet-sdk-8.0
+apt-get update && apt-get install -y dotnet-sdk-10.0
 ```
 
 Merece la pena hacerlo al empezar si hay que tocar el back, porque permite compilar y ejecutar
