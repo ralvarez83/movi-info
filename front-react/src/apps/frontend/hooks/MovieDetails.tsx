@@ -40,13 +40,7 @@ export function useMovieDetails(movieId:string, repository: MovieRepository): mo
     })
 
     // setIsLoading(false);
-    // movieId y repository faltan a propósito en las dependencias, y eso tiene una consecuencia
-    // real: si se navega de una película a otra sin desmontar el componente, no se vuelve a
-    // pedir la ficha. Hoy no se nota porque a /movie/:id solo se llega desde el listado, que sí
-    // desmonta. Añadirlas requiere antes estabilizar repository, que App.tsx crea nuevo en cada
-    // render, o el efecto entraría en bucle.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [movieId, repository]);
   
   return{
     movie,

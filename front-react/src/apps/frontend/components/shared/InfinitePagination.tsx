@@ -10,33 +10,32 @@ interface Props {
 type PropsWithChildren<P> = P & { children?: ReactNode };
 
 
-export const InfinitePagination: React.FC<PropsWithChildren<Props>> = (props: PropsWithChildren<Props>) => {
+// Las props se desestructuran aquí, y no dentro del efecto, para poder listarlas de una en una
+// como dependencias: usar props.loQueSea dentro obligaría a depender del objeto props entero,
+// que cambia en cuanto cambia cualquier prop.
+export const InfinitePagination: React.FC<PropsWithChildren<Props>> = ({ dataList, getMoreData, children }) => {
   const observerTargetEndPage = useRef(null);
 
   useEffect(() => {
+    // Definido dentro del efecto: fuera se recreaba en cada render y no podía figurar como
+    // dependencia. Lo único que necesita de fuera es getMoreData, que useMoviesState memoriza.
+    const onIntersection = (entries: IntersectionObserverEntry[]) => {
+      const firstEntry = entries[0]
+      if (firstEntry.isIntersecting) getMoreData();
+    }
+
     const observer = new IntersectionObserver(onIntersection);
-    
+
     if(observer && observerTargetEndPage.current) observer.observe(observerTargetEndPage.current);
-    
+
     return () => {
       if (observer) observer.disconnect();
     };
-    // getMoreData falta a propósito en las dependencias. La función que llega desde
-    // useMoviesState se recrea en cada render y captura movieList y pagination, así que
-    // incluirla volvería a crear el IntersectionObserver continuamente. El efecto se apoya en
-    // que dataList cambia justo después de cada carga, que es cuando toca volver a observar.
-    // Arreglarlo en condiciones pasa por memorizar getMovies en el hook.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.dataList])
-  
-  const onIntersection = async(entries:IntersectionObserverEntry[]) => {
-    const firstEntry = entries[0]
-    if (firstEntry.isIntersecting) props.getMoreData();
-  }
-    
+  }, [dataList, getMoreData])
+
   return (
     <>
-      {props.children}
+      {children}
       <div ref={observerTargetEndPage}></div>
     </>
   )

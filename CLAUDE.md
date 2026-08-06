@@ -114,18 +114,25 @@ de un cambio de DNS sí se puede comprobar desde aquí. `dig` no viene instalado
 
 Docker tiene CLI pero **no hay demonio**, de modo que las imágenes solo se construyen en CI.
 
-## Pendientes conocidos, que no bloquean
+## Cómo encajan los hooks del front
 
-Dos avisos de `react-hooks/exhaustive-deps` están silenciados con un comentario que explica el
-porqué en cada sitio. No son ruido, son deuda real:
+No queda ningún `eslint-disable` en el proyecto, y conviene que siga así. Tres piezas se
+sostienen entre sí, de modo que tocar una sin mirar las otras vuelve a romper el equilibrio:
 
-- `hooks/MovieDetails.tsx`: el efecto tiene `[]`, así que **navegar de una película a otra sin
-  desmontar no vuelve a pedir la ficha**. Hoy no se nota porque a `/movie/:id` solo se llega
-  desde el listado, que sí desmonta. Para arreglarlo hay que estabilizar antes el `repository`,
-  que `App.tsx` crea nuevo en cada render, o el efecto entra en bucle.
-- `components/shared/InfinitePagination.tsx`: falta `getMoreData`, que `useMoviesState` recrea
-  en cada render capturando `movieList` y `pagination`. Incluirla recrearía el
-  `IntersectionObserver` continuamente. El arreglo pasa por memorizar `getMovies` en el hook.
+- **`App.tsx` memoriza el `repository`** con `useMemo`. Antes creaba uno nuevo en cada render, y
+  como los hooks lo reciben por parámetro, ninguno podía usarlo como dependencia sin provocar un
+  bucle. Quitar ese `useMemo` obliga a dejar listas de dependencias incompletas otra vez.
+- **`useMoviesState` memoriza `getMovies`** con `useCallback`, y acumula con actualización
+  funcional (`setMoviesList(prev => ...)`) para no depender de `movieList`. De su identidad
+  cuelga el efecto de `InfinitePagination`.
+- **`useMoviesState` guarda un `isFetching` en un `useRef`.** El observador puede dispararse otra
+  vez antes de que llegue la respuesta anterior; sin ese guardia, las dos peticiones parten de la
+  misma paginación y acaban añadiendo las mismas películas, lo que se manifiesta como claves
+  duplicadas de React.
+
+En las pruebas, el doble de `IntersectionObserver` invoca el callback **de forma síncrona al
+construirse**, así que cada re-ejecución del efecto provoca una carga inmediata. Es lo que hace
+que ese guardia sea imprescindible para que las pruebas sean deterministas.
 
 ## Vulnerabilidades
 
